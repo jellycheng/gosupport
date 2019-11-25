@@ -28,30 +28,34 @@ func Fail() *Response {
 	return res
 }
 
-func (res *Response) SetCode(code int)  {
+func (res *Response) SetCode(code int) *Response {
 	res.Code = code
+	return res
 }
 func (res *Response) GetCode() int  {
 	return res.Code
 }
 
-func (res *Response) SetMsg(msg string)  {
+func (res *Response) SetMsg(msg string) *Response {
 	res.Msg = msg
+	return res
 }
 func (res *Response) GetMsg() string  {
 	return res.Msg
 }
 
-func (res *Response) SetData(data interface{})  {
+func (res *Response) SetData(data interface{}) *Response {
 	res.Data = data
+	return res
 }
 
 func (res *Response) GetData() interface{}  {
 	return res.Data
 }
 
-func (res *Response) SetTraceid(trace_id string)  {
+func (res *Response) SetTraceid(trace_id string) *Response {
 	res.Trace_id = trace_id
+	return res
 }
 func (res *Response) GetTraceid() string  {
 	return res.Trace_id

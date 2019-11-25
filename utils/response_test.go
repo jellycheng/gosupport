@@ -63,4 +63,15 @@ func TestOk(t *testing.T) {
 		fmt.Println(string(json6Str)) //{"userid":1021,"nickname":"张三","age":18}
 	}
 
+	//========
+	res4 := &Response{Code:0}
+	res4.SetData(&userinfo{123, "亚瑟", 19}).SetCode(0).SetMsg("ok")
+	if json6Str, err := json.Marshal(res4); err == nil {
+		//{"code":0,"data":{"userid":123,"nickname":"亚瑟","age":19},"msg":"ok"}
+		fmt.Println(string(json6Str))
+	} else {
+		t.Error("json序列化错误6")
+	}
+
+
 }

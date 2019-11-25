@@ -16,3 +16,15 @@ func TestIntSum(t *testing.T) {
 
 
 }
+
+func TestToJson(t *testing.T) {
+	type UserInfo struct {
+		Userid  int         `json:"userid"`
+		Nickname   string      `json:"nickname"`
+		Age  int         `json:"age"`
+	}
+
+	//{"userid":123,"nickname":"张三","age":28}
+	fmt.Println(ToJson(&UserInfo{Userid:123, Age:28, Nickname:"张三"}))
+
+}
