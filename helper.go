@@ -1,6 +1,9 @@
 package gosupport
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strconv"
+)
 
 //求和
 func IntSum(nums ...int) int {
@@ -25,3 +28,17 @@ func ToJson(v interface{}) string {
 	return string(b)
 }
 
+func MyAssert(guard bool, str string) {
+	if !guard {
+		panic(str)
+	}
+}
+
+
+func Str2Int(str string) int {
+	if i, err := strconv.Atoi(str); err != nil {
+		return 0
+	} else {
+		return i
+	}
+}

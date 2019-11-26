@@ -8,6 +8,11 @@ type Response struct {
 	Trace_id   string      `json:"trace_id,omitempty"`
 }
 
+func NewResponse() *Response {
+	res := &Response{Code: 0, Data: struct { }{} }
+	return res
+}
+
 func Success() *Response {
 	res := &Response{
 		Code:  0,
