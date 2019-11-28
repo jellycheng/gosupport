@@ -2,8 +2,20 @@ package gosupport
 
 import (
 	"encoding/json"
+	"os"
 	"strconv"
 )
+
+/*
+ * 获取环境变量值
+ */
+func GetEnv(env, defaultValue string) string {
+	v := os.Getenv(env)
+	if v == "" {
+		return defaultValue
+	}
+	return v
+}
 
 //求和
 func IntSum(nums ...int) int {
