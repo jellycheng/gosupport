@@ -2,6 +2,7 @@ package gosupport
 
 import (
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"os"
 	"strconv"
@@ -48,6 +49,17 @@ func MyAssert(guard bool, str string) {
 	}
 }
 
+func CheckErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func PrintErr(err error) {
+	if err != nil {
+		fmt.Println(err)
+	}
+}
 
 func Str2Int(str string) int {
 	if i, err := strconv.Atoi(str); err != nil {
@@ -95,3 +107,20 @@ func RandStr4Byte(n int, way int) string {
 	ret = string(b)
 	return ret
 }
+
+//截取字符串 start 起点下标 end 终点下标(不包括)
+func Substr(str string, start int, end int) string {
+	rs := []rune(str)
+	length := len(rs)
+	if start < 0 || start > length {
+		return ""
+	}
+	if end < 0 {
+		return ""
+	}
+	if end > length {
+		end = length
+	}
+	return string(rs[start:end])
+}
+
