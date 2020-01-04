@@ -1,6 +1,6 @@
 
 ## 请求方式代号
-```$xslt
+```
 package http
 
 // http.MethodPost

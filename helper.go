@@ -124,3 +124,8 @@ func Substr(str string, start int, end int) string {
 	return string(rs[start:end])
 }
 
+//获取变量or值的类型
+func Typeof(v interface{}) string {
+	return fmt.Sprintf("%T", v)
+}
+
