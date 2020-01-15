@@ -52,6 +52,7 @@ func GetTableFields(connect *sql.DB, tbl string) (map[int]map[string]string, err
 	if err !=nil {
 		return ret, err
 	}
+	defer rows.Close()
 	cols,err := rows.Columns() //获取所有字段
 	//一行所有列的值，用[]byte表示
 	vals := make([][]byte, len(cols));
