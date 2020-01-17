@@ -2,6 +2,7 @@ package dbutils
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -44,9 +45,9 @@ func GetDsn(dbConfig map[string]interface{}) string {
 
 
 //获取表字段信息
-func GetTableFields(connect *sql.DB, tbl string) (map[int]map[string]string, error) {
+func GetTableFields(connect *sql.DB, tbl string) ([]map[string]string, error) {
 	//结果
-	ret :=map[int]map[string]string{}
+	ret := []map[string]string{}
 	sqlStr := fmt.Sprintf("show full fields from %s;", tbl);
 	rows, err:=connect.Query(sqlStr)
 	if err !=nil {
@@ -61,7 +62,6 @@ func GetTableFields(connect *sql.DB, tbl string) (map[int]map[string]string, err
 	for k, _ := range vals {
 		scans[k] = &vals[k];
 	}
-	i := 0;
 	for rows.Next() {
 		//每行数据
 		row := make(map[string]string)
@@ -71,8 +71,8 @@ func GetTableFields(connect *sql.DB, tbl string) (map[int]map[string]string, err
 				//把[]byte数据转成string,放入结果集
 				row[key] = string(v)
 			}
-			ret[i] = row
-			i++
+			ret = append(ret, row)
+
 		} else {
 			return ret, err
 		}
@@ -160,9 +160,9 @@ func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]
 }
 
 //查询多条记录
-func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) (map[int]map[string]string, error)  {
+func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) ([]map[string]string, error)  {
 	//结果
-	ret :=map[int]map[string]string{}
+	ret := []map[string]string{}
 
 	rows,err := connect.Query(sqlStr, args...)
 	if err !=nil {
@@ -178,7 +178,7 @@ func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) (map[int]ma
 	for k, _ := range vals {
 		scans[k] = &vals[k];
 	}
-	i := 0;
+
 	for rows.Next() {
 		//每行数据
 		row := make(map[string]string)
@@ -188,8 +188,8 @@ func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) (map[int]ma
 				//把[]byte数据转成string,放入结果集
 				row[key] = string(v)
 			}
-			ret[i] = row
-			i++
+			ret = append(ret, row)
+
 		} else {
 			return ret, err
 		}
@@ -217,3 +217,45 @@ func GetDbConnect(dbnameCode, dsn string) *sql.DB  {
 	return db
 }
 
+
+//获取所有表名
+func ShowTables(connect *sql.DB) ([]string) {
+	ret := []string{}
+	fieldName := ""
+	sql := "show tables;"
+	tables, err := SelectRows(connect, sql)
+	if err == nil {
+		for _,v := range tables {
+			for field, _ := range v {
+				fieldName = field
+				break
+			}
+			if fieldName != "" {
+				break
+			}
+		}
+
+		for _,v := range tables {
+			tblName,ok := v[fieldName]
+			if ok {
+				ret = append(ret, tblName)
+			}
+		}
+	}
+	return ret
+}
+
+//获取创建表sql语句
+func ShowCreateTable(connect *sql.DB, tblName string) (string, error) {
+	ret := ""
+	sqlStr := fmt.Sprintf("show create table `%s`;", tblName)
+	res,err := SelectOne(connect, sqlStr)
+	if err != nil {
+		return ret, err
+	}
+	tblSql,ok := res["Create Table"]
+	if ok {
+		return tblSql, nil
+	}
+	return ret, errors.New("获取表结构失败")
+}
