@@ -205,4 +205,15 @@ func DbConnect(dsn string) *sql.DB {
 	return db
 }
 
+var dbObj = make(map[string]*sql.DB)
+
+func GetDbConnect(dbnameCode, dsn string) *sql.DB  {
+	db,ok := dbObj[dbnameCode]
+	if ok {
+		return db
+	}
+	db = DbConnect(dsn)
+	dbObj[dbnameCode] = db
+	return db
+}
 
