@@ -122,3 +122,87 @@ func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, 
 	num, err = res.RowsAffected()
 	return
 }
+
+
+//查询单条记录
+func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]string, error)  {
+	//结果
+	ret := make(map[string]string)
+	rows,err := connect.Query(sqlStr, args...)
+	if err !=nil {
+		return ret, err
+	}
+	defer rows.Close()
+	//查询到的字段名，返回的是一个string数组切片
+	cols, err := rows.Columns()
+	//一行所有列的值，用[]byte表示
+	vals := make([][]byte, len(cols));
+	//填充一行数据
+	scans := make([]interface{}, len(cols));
+	for k, _ := range vals {
+		scans[k] = &vals[k];
+	}
+
+	for rows.Next() {
+		if err := rows.Scan(scans...);err ==nil {
+			for k, v := range vals { //遍历结果
+				key := cols[k]; //字段名
+				//把[]byte数据转成string,放入结果集
+				ret[key] = string(v)
+			}
+			break
+		} else {
+			return ret, err
+		}
+	}
+	return ret, nil
+
+}
+
+//查询多条记录
+func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) (map[int]map[string]string, error)  {
+	//结果
+	ret :=map[int]map[string]string{}
+
+	rows,err := connect.Query(sqlStr, args...)
+	if err !=nil {
+		return ret, err
+	}
+	defer rows.Close()
+	//查询到的字段名，返回的是一个string数组切片
+	cols, err := rows.Columns()
+	//一行所有列的值，用[]byte表示
+	vals := make([][]byte, len(cols));
+	//填充一行数据
+	scans := make([]interface{}, len(cols));
+	for k, _ := range vals {
+		scans[k] = &vals[k];
+	}
+	i := 0;
+	for rows.Next() {
+		//每行数据
+		row := make(map[string]string)
+		if err := rows.Scan(scans...);err ==nil {
+			for k, v := range vals { //遍历结果
+				key := cols[k]; //字段名
+				//把[]byte数据转成string,放入结果集
+				row[key] = string(v)
+			}
+			ret[i] = row
+			i++
+		} else {
+			return ret, err
+		}
+	}
+	return ret, nil
+}
+
+func DbConnect(dsn string) *sql.DB {
+	db, err := sql.Open("mysql", dsn) //返回sql.DB结构体指针类型对象
+	if err != nil {
+		panic("db连接发生错误")
+	}
+	return db
+}
+
+
