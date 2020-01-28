@@ -17,6 +17,7 @@ type HttpRequest struct {
 	url             string
 	dialTimeout     time.Duration
 	responseTimeOut time.Duration
+	timeout         time.Duration  //请求超时
 	headers         map[string]string
 	cookies         map[string]string
 	queries         map[string]string
@@ -26,19 +27,33 @@ type HttpRequest struct {
 // 创建一个Request对象
 func NewHttpRequest() *HttpRequest {
 	r := &HttpRequest{}
-	r.dialTimeout = 10
-	r.responseTimeOut = 10
+	r.dialTimeout = 10 * time.Second
+	r.responseTimeOut = 10 * time.Second
+	r.timeout = 5 * time.Second
+	r.headers = make(map[string]string)
+	r.cookies = make(map[string]string)
+	r.queries = make(map[string]string)
+	r.postData = make(map[string]interface{})
 	return r
 }
 
-func (this *HttpRequest) SetDialTimeOut(TimeOutSecond int) *HttpRequest {
+func (this *HttpRequest) SetDialTimeOut(TimeOutSecond int64) *HttpRequest {
 	this.dialTimeout = time.Duration(TimeOutSecond)
 	return this
 }
 
-func (this *HttpRequest) SetResponseTimeOut(TimeOutSecond int) *HttpRequest {
+func (this *HttpRequest) SetResponseTimeOut(TimeOutSecond int64) *HttpRequest {
 	this.responseTimeOut = time.Duration(TimeOutSecond)
 	return this
+}
+
+func (this *HttpRequest) SetTimeout(TimeOutSecond int64) *HttpRequest {
+	this.timeout = time.Duration(TimeOutSecond)
+	return this
+}
+
+func (this *HttpRequest) GetTimeout() time.Duration {
+	return this.timeout
 }
 
 // 设置请求方法,返回Request结构体对象用于链式调用
@@ -144,7 +159,7 @@ func (this *HttpRequest) send() (*HttpResponse, error) {
 
 	// 初始化http.Client对象
 	this.cli = &http.Client{
-
+					Timeout: this.timeout,
 				}
 
 	//处理参数

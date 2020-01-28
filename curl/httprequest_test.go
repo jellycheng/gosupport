@@ -3,11 +3,14 @@ package curl
 import (
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestHttpRequest_Get(t *testing.T) {
 	req1 := NewHttpRequest()
-
+	fmt.Println("默认超时(单位纳秒)为" , int64(req1.GetTimeout()))
+	//设置超时
+	req1.SetTimeout(int64(15 * time.Second))
 	res1, err := req1.SetUrl("http://devapi.nfangbian.com/test.php?a=1&b=hi123").Get()
 	if err==nil {
 		fmt.Println("响应结果1：", res1.GetBody())
@@ -43,6 +46,6 @@ func TestHttpRequest_Get(t *testing.T) {
 	} else {
 		fmt.Println(err)
 	}
-
+	fmt.Println("超时设置(单位纳秒)为" , int64(req1.GetTimeout()))
 }
 
