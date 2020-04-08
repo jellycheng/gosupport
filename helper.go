@@ -9,6 +9,11 @@ import (
 	"time"
 )
 
+//标识性接口
+type IdentifyInterface interface {
+
+}
+
 /*
  * 获取环境变量值
  */
