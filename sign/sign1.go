@@ -2,7 +2,7 @@ package sign
 
 import (
 	"fmt"
-	"gosupport"
+	"github.com/jellycheng/gosupport"
 	"sort"
 	"strings"
 )
