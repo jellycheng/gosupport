@@ -10,8 +10,14 @@ import (
 	"gosupport"
 )
 
-//特殊字符
-const doubleQuoteSpecialChars = "\\\n\r\"!$`"
+
+const (
+	//特殊字符
+	doubleQuoteSpecialChars = "\\\n\r\"!$`"
+	//env存储方式
+	StoreTypeEnv = iota
+	StoreTypeDataManage
+)
 
 var (
 	//export OPTION_A=2
@@ -25,18 +31,22 @@ var (
 
 //加载.env文件，支持多个env文件，但不覆盖已经在的key值
 func LoadEnv(filenames ...string) (err error)  {
-	return load(false, filenames...)
+	return load(false, StoreTypeEnv, filenames...)
 }
 
 //加载.env文件，支持多个env文件，会覆盖已经在的key值
 func Overload(filenames ...string) (err error) {
-	return load(true, filenames...)
+	return load(true, StoreTypeEnv, filenames...)
 }
 
-func load(isOverload bool, filenames ...string) (err error) {
+func LoadEnv2DataManage(filenames ...string) (err error)  {
+	return load(false, StoreTypeDataManage, filenames...)
+}
+
+func load(isOverload bool, storeType int, filenames ...string) (err error) {
 	filenames = filenamesOrDefault(filenames)
 	for _, filename := range filenames {//遍历文件
-		err = loadFile(filename, isOverload)
+		err = loadFile(filename, isOverload, storeType)
 		if err != nil {
 			return
 		}
@@ -52,7 +62,7 @@ func filenamesOrDefault(filenames []string) []string {
 }
 
 //加载文件
-func loadFile(filename string, overload bool) error {
+func loadFile(filename string, overload bool,storeType int) error {
 	envMap, err := readFile(filename) //读文件并分析内容
 	if err != nil {
 		return err
@@ -67,7 +77,13 @@ func loadFile(filename string, overload bool) error {
 
 	for key, value := range envMap {
 		if !currentEnv[key] || overload {
-			os.Setenv(key, value)
+			if storeType == StoreTypeDataManage {
+				globalenv := gosupport.NewGlobalEnvSingleton()
+				globalenv.Set(key, value)
+			} else if storeType == StoreTypeEnv {
+				Set(key, value)
+			}
+
 		}
 	}
 

@@ -38,6 +38,14 @@ func (dm *DataManage) Get(key string) (value interface{}, exists bool) {
 	return
 }
 
+func (dm *DataManage) GetData() (map[string]interface{}) {
+	if dm.DataMutex == nil {
+		dm.DataMutex = &sync.RWMutex{}
+	}
+
+	return dm.Data
+}
+
 func (dm *DataManage) MustGet(key string) interface{} {
 	if value, exists := dm.Get(key); exists {
 		return value
@@ -98,3 +106,18 @@ func NewGlobalCfgSingleton() *DataManage {
 	return globalcfgDM_1
 }
 
+var muGlobalEnvDM_1 sync.Mutex
+var globalEnvDM_1 *DataManage
+var globalEnvInit_1 uint32
+func NewGlobalEnvSingleton() *DataManage {
+	if atomic.LoadUint32(&globalEnvInit_1) == 1 {//确保原子性
+		return globalEnvDM_1
+	}
+	muGlobalEnvDM_1.Lock()
+	defer muGlobalEnvDM_1.Unlock()
+	if globalEnvInit_1 == 0 { //未初始化
+		globalEnvDM_1 = new(DataManage)
+		atomic.StoreUint32(&globalEnvInit_1, 1)
+	}
+	return globalEnvDM_1
+}
