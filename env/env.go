@@ -2,12 +2,12 @@ package env
 
 import (
 	"bufio"
+	"errors"
+	"github.com/jellycheng/gosupport"
 	"io"
 	"os"
 	"regexp"
 	"strings"
-	"errors"
-	"gosupport"
 )
 
 

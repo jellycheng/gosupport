@@ -2,7 +2,7 @@ package env
 
 import (
 	"fmt"
-	"gosupport"
+	"github.com/jellycheng/gosupport"
 	"os"
 	"strings"
 	"testing"
