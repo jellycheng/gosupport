@@ -11,9 +11,12 @@ import (
 	"time"
 )
 
-//标识性接口
-type IdentifyInterface interface {
+func Exit(status int) {
+	os.Exit(status)
+}
 
+func Die(status int) {
+	os.Exit(status)
 }
 
 /*
