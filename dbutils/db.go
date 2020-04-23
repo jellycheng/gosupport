@@ -33,7 +33,7 @@ func GetDsn(dbConfig map[string]interface{}) string {
 		charset = "utf8"
 	}
 
-	param, ok := dbConfig["param"]
+	param, ok := dbConfig["extparam"]
 	if ok && param != "" {
 		param = fmt.Sprintf("&%s", param)
 	} else {
