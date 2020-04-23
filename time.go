@@ -5,9 +5,25 @@ import (
 	"time"
 )
 
-//该文件函数均以Time开头
+//该文件函数大部分以Time开头
 
 const  TIME_FORMAT = "2006-01-02 15:04:05"
+
+func Time() int64 {
+	return time.Now().Unix()
+}
+
+func Strtotime(format, strtime string) (int64, error) {
+	t, err := time.Parse(format, strtime)
+	if err != nil {
+		return 0, err
+	}
+	return t.Unix(), nil
+}
+
+func Date(format string, timestamp int64) string {
+	return time.Unix(timestamp, 0).Format(format)
+}
 
 //返回当前时间结构体指针类型
 func TimeNowPtr() *time.Time {
