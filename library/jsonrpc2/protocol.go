@@ -1,13 +1,16 @@
 package jsonrpc2
 
+
 //https://www.jsonrpc.org/specification
 
 const (
 	JsonrpcVersion = "2.0" //版本
 	CodeSuccess = 0  //成功
-	CodeParseError = -32700 //分析错误
+	CodeParseError     = -32700 //分析错误
 	CodeInvalidRequest = -32600 //无效请求
 	CodeMethodNotFound = -32601 //找不到方法
+	CodeInvalidParams  = -32602  //无效的方法参数
+	CodeInternalError  = -32603 //Internal error内部错误	JSON-RPC内部错误
 
 )
 
@@ -19,6 +22,10 @@ type RPCRequest struct {
 	Id      interface{}      `json:"id"`  //字符串、int、null
 }
 
+func (req RPCRequest)ToJson() string {
+	return ToJson(req)
+}
+
 //响应对象
 type RPCResponse struct {
 	Jsonrpc string      `json:"jsonrpc"`
@@ -27,11 +34,19 @@ type RPCResponse struct {
 	Id      interface{}      `json:"id"`
 }
 
+func (rep RPCResponse)ToJson() string {
+	return ToJson(rep)
+}
+
 //错误对象
 type RPCError struct {
 	Code    int         `json:"code"`    //整数
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
+}
+
+func (ree RPCError)ToJson() string {
+	return ToJson(ree)
 }
 
 

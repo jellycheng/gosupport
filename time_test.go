@@ -33,3 +33,12 @@ func TestTimeFormat2Date(t *testing.T) {
 	fmt.Println(timestamp2DateTime(1569152644, 7))
 
 }
+
+func TestDateT(t *testing.T) {
+	curNow := time.Now()
+	fmt.Println(DateT("Y-m-d H:i:s", curNow))
+
+	fmt.Println(DateT("y-m-d h:ii:ss", curNow))
+
+	fmt.Println(DateT("Y/m/d", curNow))
+}

@@ -2,6 +2,7 @@ package gosupport
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -155,4 +156,40 @@ func timestamp2DateTime(timestamp int, way int) string  {
 			ret = fmt.Sprintf("%d/%02d/%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
 	}
 	return ret
+}
+
+
+// Y年，4位
+// y年，后2位
+// m月份，有前导0
+// n月份，无加前导0
+// d日，有前导0
+// j日，无加前导0
+// H 24小时制，有前导0
+// G 24小时制，无前导0
+// h 12小时制，有前导0
+// g 12小时制，无前导0
+// i 分钟，有前导0
+// ii 分钟，无前导0
+// s 秒，有前导0
+// ss 秒，无前导0
+//类似php的写法 Y-m-d H:i:s
+func DateT(format string, t time.Time) string {
+	res := strings.Replace(format, "Y", t.Format("2006"), -1)
+	res = strings.Replace(res, "y", t.Format("06"), -1)
+	res = strings.Replace(res, "m", t.Format("01"), -1)
+	res = strings.Replace(res, "n", t.Format("1"), -1)
+	res = strings.Replace(res, "d", t.Format("02"), -1)
+	res = strings.Replace(res, "j", t.Format("2"), -1)
+
+	res = strings.Replace(res, "H", fmt.Sprintf("%02d", t.Hour()), -1)
+	res = strings.Replace(res, "G", fmt.Sprintf("%d", t.Hour()), -1)
+	res = strings.Replace(res, "h", t.Format("03"), -1)
+	res = strings.Replace(res, "g", t.Format("3"), -1)
+	res = strings.Replace(res, "ii", t.Format("4"), -1)
+	res = strings.Replace(res, "i", t.Format("04"), -1)
+	res = strings.Replace(res, "ss", t.Format("5"), -1)
+	res = strings.Replace(res, "s", t.Format("05"), -1)
+
+	return res
 }
