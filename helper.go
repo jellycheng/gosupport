@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"strconv"
 	"time"
+	"regexp"
 )
 
 func Exit(status int) {
@@ -104,6 +105,7 @@ func RandStr4Byte(n int, way int) string {
 	case 7:
 		letterStr = []byte("abcdefghjkmnpqrstwxyz23456789")
 	case 1:
+		fallthrough
 	default:
 		letterStr = []byte("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
@@ -162,3 +164,28 @@ func StrInSlice(a string, list []string) bool {
 	}
 	return false
 }
+
+//返回 xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+func FromatUUIDString(s string) string {
+	pattern01 := `^(.{8})(.{0,4})(.{0,4})(.{0,4})(.{1,})$`
+	re, err := regexp.Compile(pattern01)
+	if err!=nil {
+		return s
+	} else {
+		newStr := re.ReplaceAllString(s, "${1}-${2}-${3}-${4}-${5}")
+		return newStr
+	}
+}
+
+func Uniq(salt string, isFormat bool) string  {
+	ret := fmt.Sprintf("%s:%s:%v", salt, RandStr4Byte(6,1), time.Now().UnixNano())
+	ret = Md5V1(ret)
+	if isFormat {
+		return FromatUUIDString(ret)
+	} else {
+		return ret
+	}
+
+}
+
+

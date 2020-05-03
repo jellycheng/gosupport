@@ -2,6 +2,7 @@ package dbutils
 
 import (
 	"fmt"
+	"github.com/jellycheng/gosupport"
 )
 
 type MysqlDsn struct {
@@ -24,7 +25,11 @@ func (m *MysqlDsn) ToDsn() string {
 }
 
 func (m *MysqlDsn) Key() string {
-	return fmt.Sprintf("%s:%s:%s", m.host, m.port, m.dbname)
+	str := fmt.Sprintf("%s:%s:%s:%s", m.host, m.port, m.dbname, m.username)
+	if len(str)>32 {
+		str = gosupport.Md5V1(str)
+	}
+	return str
 }
 
 func (m *MysqlDsn) GetHost() string  {
@@ -55,7 +60,7 @@ func (m *MysqlDsn) GetEextparam() string  {
 	return m.extparam
 }
 
-//mysqlDsnObj := dbutils.NewMysqlDsn(map[string]interface{}{"user_name":"root","password":"123456","port":3307})
+//mysqlDsnObj := dbutils.NewMysqlDsn(map[string]interface{}{"dbname":"db_user","username":"root","password":"123456","port":3307})
 func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 	dsnObj := &MysqlDsn{}
 
