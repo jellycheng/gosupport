@@ -29,6 +29,9 @@ func GetHashOrd(str string) int64 {
 	return ret
 }
 
-
-
+//返回0～127
+func GetHashOrd127(str string) int64 {
+	ret := GetHashOrd(str)
+	return ret%128
+}
 

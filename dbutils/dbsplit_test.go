@@ -31,4 +31,5 @@ func TestNewSplitDbAndTbl(t *testing.T) {
 
 	strUserid2 := "abc123"
 	fmt.Println(strUserid2, dt.GetDBBaseByStrUserid(strUserid2))
+	fmt.Println(strUserid2, GetHashOrd127(strUserid2))
 }
