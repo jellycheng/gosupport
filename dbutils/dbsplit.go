@@ -82,7 +82,7 @@ func (t SplitDbAndTbl)GetDBBaseByStrUserid(userid string) map[string]int64 {
 
 	newUserid := GetHashOrd(userid)
 	//int64到string
-	strUserid :=strconv.FormatInt(newUserid,10)
+	strUserid :=strconv.FormatInt(newUserid%128,10)
 	dbN ,err:=t.GetDbNum(strUserid)
 	if err==nil {
 		ret["db_sn"] = dbN
