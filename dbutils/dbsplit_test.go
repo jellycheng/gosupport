@@ -2,6 +2,7 @@ package dbutils
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -23,4 +24,11 @@ func TestNewSplitDbAndTbl(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 
+	userid2, _ := strconv.ParseInt(userid, 10, 64)
+	fmt.Println(userid2, dt.GetDBBaseByUserid(uint64(userid2)))
+
+	fmt.Println(dt.GetDBBaseByStrUserid(userid))
+
+	strUserid2 := "abc123"
+	fmt.Println(strUserid2, dt.GetDBBaseByStrUserid(strUserid2))
 }

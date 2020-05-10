@@ -188,7 +188,7 @@ func Uniq(salt string, isFormat bool) string  {
 
 }
 
-//字符串是否为数字字符串
+//字符串是否为整数数字字符串
 func IsNumber(str string) bool {
 	isMatch,err := regexp.MatchString("^[1-9][0-9]*$", str)
 	if err!=nil {
@@ -201,7 +201,16 @@ func IsNumber(str string) bool {
 	}
 }
 
-func GetHashOrd()  {
 
+//字符串是否为浮点数字符串
+func IsFloatNumber(str string) bool {
+	isMatch,err := regexp.MatchString("^[0-9]+[.]?[0-9]*$", str)
+	if err!=nil {
+		return false
+	}
+	if isMatch {
+		return true
+	} else {
+		return false
+	}
 }
-

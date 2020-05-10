@@ -17,3 +17,9 @@ const (
 	V10
 )
 
+const (
+	//空字符串
+	Empty = ""
+)
+
+

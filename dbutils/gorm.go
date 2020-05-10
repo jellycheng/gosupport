@@ -22,7 +22,7 @@ func (mysqlInstance *MysqlGormInstance) GetMysql(dsnKey string) *gorm.DB {
 }
 
 //私有
-func (mysqlInstance *MysqlGormInstance) registerMysqlDsn(dsn string, db *gorm.DB) *gorm.DB {
+func (mysqlInstance *MysqlGormInstance) registerMysql(dsn string, db *gorm.DB) *gorm.DB {
 	//db.DB().SetConnMaxLifetime(time.Duration(10))
 	//db.DB().SetMaxOpenConns(10000)
 	//db.DB().SetMaxIdleConns(100)
@@ -51,7 +51,7 @@ func NewMysqlGorm(mysqlDsn MysqlDsn) *gorm.DB {
 		return nil
 	} else {//注册
 		//registerScopes(d)
-		return mysqlGormObj.registerMysqlDsn(mysqlDsn.Key(), d)
+		return mysqlGormObj.registerMysql(mysqlDsn.Key(), d)
 	}
 
 }

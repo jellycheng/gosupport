@@ -1,6 +1,8 @@
 package dbutils
 
-import "strconv"
+import (
+	"strconv"
+)
 
 //分库分表算法
 
@@ -53,3 +55,43 @@ func (t SplitDbAndTbl)GetTblNum(sVal string) (tblnum int64, err error) {
 }
 
 
+func (t SplitDbAndTbl)GetDBBaseByUserid(userid uint64) map[string]int64 {
+	var ret map[string]int64 = map[string]int64 {
+		"db_sn":1,
+		"tbl_sn":1,
+	}
+	dbN ,err:=t.GetDbNum(strconv.FormatUint(userid, 10))
+	if err==nil {
+		ret["db_sn"] = dbN
+	}
+
+	tbN ,err:=t.GetTblNum(strconv.FormatUint(userid, 10))
+	if err==nil {
+		ret["tbl_sn"] = tbN
+	}
+
+	return ret
+}
+
+//字符串型的用户ID
+func (t SplitDbAndTbl)GetDBBaseByStrUserid(userid string) map[string]int64 {
+	var ret map[string]int64 = map[string]int64 {
+		"db_sn":1,
+		"tbl_sn":1,
+	}
+
+	newUserid := GetHashOrd(userid)
+	//int64到string
+	strUserid :=strconv.FormatInt(newUserid,10)
+	dbN ,err:=t.GetDbNum(strUserid)
+	if err==nil {
+		ret["db_sn"] = dbN
+	}
+
+	tbN ,err:=t.GetTblNum(strUserid)
+	if err==nil {
+		ret["tbl_sn"] = tbN
+	}
+
+	return ret
+}
