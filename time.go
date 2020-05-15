@@ -193,3 +193,35 @@ func DateT(format string, t time.Time) string {
 
 	return res
 }
+
+
+
+/**
+1分钟以内显示为：刚刚
+1小时以内显示为：N分钟前
+当天以内显示为：今天 N点N分（如：今天 22:33）
+昨天时间显示为：昨天 N点N分（如：昨天 10:15）
+在今年显示为：N月N日 N点N分（如：02月03日 09:33）
+今年以前显示为：N年N月N日 N点N分（如：2020年09月18日 15:59）
+*/
+func SubTimeStr(t2 time.Time) string {
+	var ret string
+	t1 := time.Now()
+	t1UnixTime := t1.Unix() //当前时间
+	t2UnixTime := t2.Unix()
+	subVal := t1UnixTime - t2UnixTime
+	if subVal <= 60 {
+		ret = "刚刚"
+	} else if subVal <= 60 * 60 {
+		ret = fmt.Sprintf("%d分钟前", subVal/60)
+	} else if subVal <= 60 * 60 * 24 {
+		ret = fmt.Sprintf("今天 %s", t2.Format("15:04"))
+	} else if subVal <= 60 * 60 * 24*2 {
+		ret = fmt.Sprintf("昨天 %s", t2.Format("15:04"))
+	} else if t1.Format("2006") == t2.Format("2006") {
+		ret = t2.Format("01-02 15:04")
+	} else {
+		ret = t2.Format("2006-01-02 15:04:05")
+	}
+	return ret
+}
