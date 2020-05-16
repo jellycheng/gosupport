@@ -20,6 +20,12 @@ const (
 const (
 	//空字符串
 	Empty = ""
+	
+	//签名方式
+	SignTypeMD5        = "MD5"
+	SignTypeHmacSHA256 = "HMAC-SHA256"
+
+
 )
 
 
