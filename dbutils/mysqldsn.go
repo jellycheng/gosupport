@@ -20,8 +20,8 @@ func (m *MysqlDsn) ToDsn() string {
 	if m.extparam != "" {
 		param = fmt.Sprintf("&%s", m.extparam)
 	}
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8%s",
-						m.username, m.password, m.host, m.port, m.dbname, param)
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s%s",
+						m.username, m.password, m.host, m.port, m.dbname,m.charset, param)
 }
 
 func (m *MysqlDsn) Key() string {
@@ -56,7 +56,7 @@ func (m *MysqlDsn) GetCharset() string  {
 	return m.charset
 }
 
-func (m *MysqlDsn) GetEextparam() string  {
+func (m *MysqlDsn) GetExtparam() string  {
 	return m.extparam
 }
 
