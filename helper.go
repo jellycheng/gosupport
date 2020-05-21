@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"runtime"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -213,4 +214,29 @@ func IsFloatNumber(str string) bool {
 	} else {
 		return false
 	}
+}
+
+//获取当前go版本
+func GetGoVersion() string  {
+	return strings.Trim(runtime.Version(), "go")
+}
+
+//gosupport.GenerateUserAgent("user-service", "1.0.0")
+func GenerateUserAgent(appname string, ext ...string) string  {
+	appversion := ""
+	extString := ""
+	if len(ext)>1 {
+		appversion = "/" + ext[0]
+		newExtData := ext[1:]
+		for _,v := range newExtData {
+			extString += " " + v
+		}
+
+	} else if len(ext) == 1 {
+		appversion = "/" + ext[0]
+	}
+
+	userAgent := fmt.Sprintf(
+		"cjs Golang/%s (%s; %s) %s%s%s", GetGoVersion(), runtime.GOOS, runtime.GOARCH, appname, appversion,extString)
+	return userAgent
 }
