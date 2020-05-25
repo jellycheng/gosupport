@@ -27,6 +27,9 @@ var (
 	escapeRegex        = regexp.MustCompile(`\\.`)
 	unescapeCharsRegex = regexp.MustCompile(`\\([^$])`)
 	expandVarRegex = regexp.MustCompile(`(\\)?(\$)(\()?\{?([A-Z0-9_]+)?\}?`)
+
+	currentEnv = map[string]bool{}
+	currentDM = map[string]bool{}
 )
 
 //加载.env文件，支持多个env文件，但不覆盖已经在的key值
@@ -68,22 +71,26 @@ func loadFile(filename string, overload bool,storeType int) error {
 		return err
 	}
 
-	currentEnv := map[string]bool{}
-	rawEnv := os.Environ()
-	for _, rawEnvLine := range rawEnv {
-		key := strings.Split(rawEnvLine, "=")[0]
-		currentEnv[key] = true
-	}
+	if storeType == StoreTypeEnv {
+		rawEnv := os.Environ()
+		for _, rawEnvLine := range rawEnv {
+			key := strings.Split(rawEnvLine, "=")[0]
+			currentEnv[key] = true
+		}
+		for key, value := range envMap {
+			if !currentEnv[key] || overload {
+				Set(key, value)
+				currentEnv[key] = true
+			}
+		}
 
-	for key, value := range envMap {
-		if !currentEnv[key] || overload {
-			if storeType == StoreTypeDataManage {
+	} else if storeType == StoreTypeDataManage {
+		for key, value := range envMap {
+			if !currentDM[key] || overload {
 				globalenv := gosupport.NewGlobalEnvSingleton()
 				globalenv.Set(key, value)
-			} else if storeType == StoreTypeEnv {
-				Set(key, value)
+				currentDM[key] = true
 			}
-
 		}
 	}
 
