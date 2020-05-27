@@ -241,6 +241,26 @@ func GenerateUserAgent(appname string, ext ...string) string  {
 	return userAgent
 }
 
+//判断code值是否为0，c := '0'认为是int32类型对应ascii值为48
+func IsZeroCode(code interface{}) bool {
+	var ret bool = false
+	switch v:=code.(type) {
+	case float64, float32, int,int8,int16,int32,int64,uint,uint8,uint16,uint32,uint64:
+		//byte是uint8，rune是int32
+		if fmt.Sprintf("%v", v) == "0" {
+			ret = true
+		}
+
+	case string:
+		if v == "0" {
+			ret = true
+		}
+	default:
+		ret =false
+	}
+
+	return ret
+}
 
 //===============类型转换方法
 
