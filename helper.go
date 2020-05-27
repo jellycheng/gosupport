@@ -240,3 +240,27 @@ func GenerateUserAgent(appname string, ext ...string) string  {
 		"cjs Golang/%s (%s; %s) %s%s%s", GetGoVersion(), runtime.GOOS, runtime.GOARCH, appname, appversion,extString)
 	return userAgent
 }
+
+
+//===============类型转换方法
+
+//float64类型转int64，丢弃小数部分
+func Float64Toint64(fNum float64) (int64, error)  {
+	s := fmt.Sprintf("%1.3f", fNum)
+	sSlice := strings.SplitN(s, ".", 2)
+	ret, err := strconv.ParseInt(sSlice[0], 10, 64)
+	return ret, err
+}
+
+
+//float64类型转int，丢弃小数部分
+func Float64Toint(fNum float64) (int, error)  {
+	s := fmt.Sprintf("%1.3f", fNum)
+	sSlice := strings.SplitN(s, ".", 2)
+	if ret ,err := strconv.Atoi(sSlice[0]);err == nil {
+		return ret,nil
+	} else {
+		return 0, err
+	}
+}
+
