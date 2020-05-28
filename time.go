@@ -209,14 +209,18 @@ func SubTimeStr(t2 time.Time) string {
 	t1 := time.Now()
 	t1UnixTime := t1.Unix() //当前时间
 	t2UnixTime := t2.Unix()
+	if t1UnixTime<t2UnixTime {
+		ret = t2.Format("2006-01-02 15:04:05")
+		return ret
+	}
 	subVal := t1UnixTime - t2UnixTime
 	if subVal <= 60 {
 		ret = "刚刚"
 	} else if subVal <= 60 * 60 {
 		ret = fmt.Sprintf("%d分钟前", subVal/60)
-	} else if subVal <= 60 * 60 * 24 {
+	} else if t1.Format("20060102") == t2.Format("20060102") {
 		ret = fmt.Sprintf("今天 %s", t2.Format("15:04"))
-	} else if subVal <= 60 * 60 * 24*2 {
+	} else if t1.Format("20060102") == time.Unix(t2.Unix() + 86400, 0).Format("20060102") {
 		ret = fmt.Sprintf("昨天 %s", t2.Format("15:04"))
 	} else if t1.Format("2006") == t2.Format("2006") {
 		ret = t2.Format("01-02 15:04")
@@ -225,3 +229,39 @@ func SubTimeStr(t2 time.Time) string {
 	}
 	return ret
 }
+
+
+/**
+ * 已运行时长: d天h小时m分钟s秒
+ */
+func AlreadyTimeStr(t2 time.Time) string {
+	var ret string
+	t1 := time.Now()
+	t1UnixTime := t1.Unix() //当前时间秒
+	t2UnixTime := t2.Unix()
+	if t1UnixTime<t2UnixTime {
+		ret = "时间倒挂了"
+		return ret
+	}
+	var day int64 //天
+	var hour int64 //小时
+	var minute int64 //分
+	var second int64 //秒
+	//总时差
+	subVal := t1UnixTime - t2UnixTime
+	if subVal/86400>0 { //超过1天
+		day = subVal/86400
+	}
+	if subVal%86400 >0 { //1天内
+		hour = (subVal%86400)/3600 //小时
+	}
+	if subVal%3600>0 { //1小时内
+		minute = (subVal%3600)/60 //分
+	}
+	if subVal % 60>0 {
+		second = subVal % 60
+	}
+	ret = fmt.Sprintf("%d天%d小时%d分%d秒", day,hour,minute,second)
+	return ret
+}
+
