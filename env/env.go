@@ -46,6 +46,10 @@ func LoadEnv2DataManage(filenames ...string) (err error)  {
 	return load(false, StoreTypeDataManage, filenames...)
 }
 
+func OverloadEnv2DataManage(filenames ...string) (err error)  {
+	return load(true, StoreTypeDataManage, filenames...)
+}
+
 func load(isOverload bool, storeType int, filenames ...string) (err error) {
 	filenames = filenamesOrDefault(filenames)
 	for _, filename := range filenames {//遍历文件
@@ -85,9 +89,9 @@ func loadFile(filename string, overload bool,storeType int) error {
 		}
 
 	} else if storeType == StoreTypeDataManage {
+		globalenv := gosupport.NewGlobalEnvSingleton()
 		for key, value := range envMap {
 			if !currentDM[key] || overload {
-				globalenv := gosupport.NewGlobalEnvSingleton()
 				globalenv.Set(key, value)
 				currentDM[key] = true
 			}
