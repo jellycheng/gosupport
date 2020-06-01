@@ -3,7 +3,7 @@ package curl
 import (
 	"io/ioutil"
 	"net/http"
-	"net/url"
+	neturl "net/url"
 	"strings"
 )
 
@@ -54,7 +54,7 @@ func HttpPostJson(url string, param string) (string, error)  {
 /**
  * param := url.Values{"参数名1": {"值1"}, "参数名2": {"值1","值N"}}
  */
-func HttpPostForm(url string, param url.Values) (string, error)  {
+func HttpPostForm(url string, param neturl.Values) (string, error)  {
 	resp, err := http.PostForm(url, param)
 	if err!=nil {
 		return "", err
