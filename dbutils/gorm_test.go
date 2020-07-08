@@ -23,6 +23,7 @@ func (SystemModel)TableName() string {
 }
 
 func TestNewMysqlGorm222(t *testing.T) {
+	//数据库配置
 	mysqlDsnObj := NewMysqlDsn(map[string]interface{}{
 		"host":"10.30.60.122",
 		"username":"devreadonly",
@@ -30,12 +31,15 @@ func TestNewMysqlGorm222(t *testing.T) {
 		"port":3306,
 		"dbname":"towngas_daojia_common",
 	})
-
-	fmt.Println(mysqlDsnObj)
+	//打印dsn串
+	fmt.Println(mysqlDsnObj.ToDsn())
+	//根据db配置获取*gorm.DB对象
 	gormDb := NewMysqlGorm(*mysqlDsnObj)
-	//查询
+	//gorm设置 todo，如 log、debug、连接配置等
+
+	//执行查询sql: SELECT * FROM `t_system`  WHERE (system_name='xxx后台管理')
 	var systemModel SystemModel
-	gormDb.Where("system_name=?", "xxx后台管理").Find(&systemModel)
+	gormDb.Debug().Where("system_name=?", "xxx后台管理").Find(&systemModel)
 	fmt.Println(systemModel)
 
 }

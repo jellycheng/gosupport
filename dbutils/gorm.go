@@ -23,12 +23,7 @@ func (mysqlInstance *MysqlGormInstance) GetMysql(dsnKey string) *gorm.DB {
 
 //私有
 func (mysqlInstance *MysqlGormInstance) registerMysql(dsn string, db *gorm.DB) *gorm.DB {
-	//db.DB().SetConnMaxLifetime(time.Duration(10))
-	//db.DB().SetMaxOpenConns(10000)
-	//db.DB().SetMaxIdleConns(100)
-	//db.SetLogger(new(Logger))
 	mysqlInstance.mysql[dsn] = db
-
 	return db
 }
 
