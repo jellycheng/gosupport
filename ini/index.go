@@ -1,5 +1,6 @@
 package ini
 
+//todo待完善，本目录代码暂不要去使用
 //*.ini配置文件解析
 
 type config struct {

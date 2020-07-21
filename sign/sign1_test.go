@@ -20,4 +20,15 @@ func TestNewApiSign01(t *testing.T) {
 	fmt.Println(apisign2.Md5Sign())
 	fmt.Println(apisign2.GetSignString())
 
+	fmt.Println()
+
+	apisign3 := new(Apisign01)
+	apisign3.SetSecret("密钥123")
+	//apisign3.SetParams(make(map[string]interface{}))
+	//apisign3.SetParams(map[string]interface{}{})
+	apisign3.SetParams(map[string]interface{}{"xyz":99})
+	apisign3.AppendParam("username", "tom").AppendParam("age", 18)
+	fmt.Println(apisign3.Md5Sign())
+	fmt.Println(apisign3.GetSignString())
+
 }

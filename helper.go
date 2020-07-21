@@ -54,6 +54,18 @@ func ToJson(v interface{}) string {
 	}
 	return string(b)
 }
+//返回红色，用于在终端打印红色字，如：fmt.Println(gosupport.ToRed("hello world"))
+func ToRed(str string) string {
+	return fmt.Sprintf("\033[31m%s\033[0m", str)
+}
+
+func ToGreen(str string) string {
+	return fmt.Sprintf("\033[32m%s\033[0m", str)
+}
+
+func ToYellow(str string) string {
+	return fmt.Sprintf("\033[33m%s\033[0m", str)
+}
 
 func MyAssert(guard bool, str string) {
 	if !guard {
