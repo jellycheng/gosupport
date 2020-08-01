@@ -44,3 +44,23 @@ func IsDir(path string) bool {
 	}
 	return s.IsDir()
 }
+
+//获取文件大小
+func FileSize(file string) (int64, error) {
+	f, err := os.Stat(file)
+	if err != nil {
+		return 0, err
+	}
+	return f.Size(), nil
+}
+
+//获取文件修改时间
+func FileMTime(file string) (int64, error) {
+	f, err := os.Stat(file)
+	if err != nil {
+		return 0, err
+	}
+	return f.ModTime().Unix(), nil
+}
+
+

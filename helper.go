@@ -249,6 +249,10 @@ func IsZeroCode(code interface{}) bool {
 	return ret
 }
 
+func Nl2br(str string) string {
+	return strings.Replace(str, "\n", "<br/>", -1)
+}
+
 //===============类型转换方法
 
 //float64类型转int64，丢弃小数部分
