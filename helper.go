@@ -177,6 +177,15 @@ func StrInSlice(a string, list []string) bool {
 	}
 	return false
 }
+//示例：fmt.Println(gosupport.int64InSlice(9, []int64{5, 6, 9}))
+func int64InSlice(a int64, list []int64) bool {
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
+}
 
 //返回 xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 func FromatUUIDString(s string) string {

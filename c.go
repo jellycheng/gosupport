@@ -28,4 +28,9 @@ const (
 
 )
 
-
+type Scheme string
+const (
+	HTTP  Scheme = "http"
+	HTTPS Scheme = "https"
+	FTP   Scheme = "ftp"
+)
