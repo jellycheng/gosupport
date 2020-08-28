@@ -54,13 +54,15 @@ func checkRegexp(val string, reg string) bool {
 }
 
 
-//字符串是否为整数数字字符串
+//字符串是否为正整数数字字符串
 func IsNumber(str string) bool {
 	isMatch,err := regexp.MatchString("^[1-9][0-9]*$", str)
 	if err!=nil {
 		return false
 	}
 	if isMatch {
+		return true
+	} else if str == "0" {
 		return true
 	} else {
 		return false
