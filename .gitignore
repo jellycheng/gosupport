@@ -11,3 +11,5 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 cjs_test.go
+go.sum
+.DS_Store
