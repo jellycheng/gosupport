@@ -1,6 +1,7 @@
 package gosupport
 
 import (
+	"io"
 	"io/ioutil"
 	"os"
 )
@@ -13,6 +14,22 @@ func FileGetContents(filename string) (string, error) {
 		return "", err
 	}
 	return string(content), nil
+}
+
+//写内容
+func FilePutContents(filename string, content string, perm ...os.FileMode) (int, error) {
+	var fileMode os.FileMode
+	if (len(perm) == 0) {
+		fileMode = 0666
+	} else {
+		fileMode = perm[0]
+	}
+	if f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, fileMode); err == nil{
+		n, err2 := io.WriteString(f, content)
+		return n, err2
+	} else {
+		return 0, err
+	}
 }
 
 // 判断文件/文件夹是否存在，true存在，false不存在
