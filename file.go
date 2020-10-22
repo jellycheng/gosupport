@@ -25,6 +25,7 @@ func FilePutContents(filename string, content string, perm ...os.FileMode) (int,
 		fileMode = perm[0]
 	}
 	if f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, fileMode); err == nil{
+		defer f.Close()
 		n, err2 := io.WriteString(f, content)
 		return n, err2
 	} else {
