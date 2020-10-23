@@ -1,8 +1,10 @@
 package gosupport
 
 import (
+	"regexp"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 )
 
 /**
@@ -50,5 +52,66 @@ func CreateAnchor(str string) string {
 		}
 	}
 	return string(anchorName)
+}
+
+//转为小驼峰格式： 空格的首字母转大写，如：hello world_abc厉害 转 helloWorld_abc厉害
+func ToCamelCase(str string) string {
+	str = strings.TrimSpace(str)
+	if utf8.RuneCountInString(str) < 2 {
+		return str
+	}
+	var buff strings.Builder
+	var temp string
+	for _, r := range str {
+		c := string(r)
+		if c != " " {
+			if temp == " " {
+				c = strings.ToUpper(c)
+			}
+			_, _ = buff.WriteString(c)
+		}
+		temp = c
+	}
+	return buff.String()
+}
+
+
+//转为snake格式: 全部转小写，空格转_，如：Abc_Xy z_eLsW中国 转 abc_xy_z_elsw中国
+func ToSnakeCase(str string) string {
+	str = strings.TrimSpace(strings.ToLower(str))
+	return strings.Replace(str, " ", "_", -1)
+}
+
+
+//下划线写法转为驼峰写法，如：img_key 转 ImgKey
+func Case2Camel(name string) string {
+	name = strings.Replace(name, "_", " ", -1)
+	name = strings.Title(name)
+	return strings.Replace(name, " ", "", -1)
+}
+//驼峰转下化线
+func Camel2Case(name string) string {
+	var wordBarrierRegex = regexp.MustCompile(`(\w)([A-Z])`)
+	sb := wordBarrierRegex.ReplaceAll(
+		[]byte(name),
+		[]byte(`${1}_${2}`),
+	)
+	return string(sb)
+}
+
+//首字母大写
+func Ucfirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToUpper(v)) + str[i+1:]
+	}
+	return ""
+}
+
+//首字母小写
+func Lcfirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToLower(v)) + str[i+1:]
+	}
+	return ""
 }
 
