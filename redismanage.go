@@ -171,6 +171,13 @@ func (this RedisGroupManage)Get(groupName string) (redisinfo, error) {
 	}
 	return redisinfo{},errors.New(fmt.Sprintf("redis组%s未配置", groupName))
 }
+//获取当前redis组的配置key前缀
+func (this RedisGroupManage)GetPrefix(groupName string) string  {
+	if ret, ok := this.redisGroup[groupName];ok {
+		return ret.GetPrefix()
+	}
+	return ""
+}
 
 //单例
 var muRedisgroup_1 sync.Mutex
