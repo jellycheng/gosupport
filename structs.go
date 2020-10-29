@@ -40,4 +40,9 @@ func InitStruct4DefaultTag(bean interface{}) {
 	}
 }
 
+//返回空结构体
+func EmptyStruct() struct{} {
+	return struct {
 
+	}{}
+}
