@@ -1,8 +1,10 @@
 package jsonrpc2
 
 import (
+	"encoding/json"
 	"fmt"
 	"testing"
+	"time"
 )
 
 func TestRpc(t *testing.T) {
@@ -17,11 +19,11 @@ func TestRpc(t *testing.T) {
 	}
 	//结构体对象转json字符串
 	jsonRpcStr01 := rpcObj.ToJson()
-	fmt.Println(jsonRpcStr01)
+	fmt.Println(jsonRpcStr01) //{"jsonrpc":"2.0","method":"User\\Account.getUserInfo","params":"hello world","id":"1233456"}
 
 	//json字符串转结构体对象
 	var reqRpcObj RPCRequest = JsonToRPCRequestStruct(jsonRpcStr01)
-	fmt.Println(reqRpcObj.Method)
+	fmt.Println(reqRpcObj.Method) //User\Account.getUserInfo
 
 
 	//拼装批量协议
@@ -45,7 +47,26 @@ func TestRpc(t *testing.T) {
 	batchRpc = append(batchRpc, rpcObj2)
 	batchRpc = append(batchRpc, rpcObj3)
 	jsonRpcStr4Batch := ToJson(batchRpc)
+	//[{"jsonrpc":"2.0","method":"User\\Address.getAddressList","params":[10,20,50],"id":"12334567"},
+	//{"jsonrpc":"2.0","method":"User\\Account.getUserInfo2","params":["uid123","uid456","uid789"],"id":"12334568"}]
 	fmt.Println(jsonRpcStr4Batch)
 
+}
+
+func TestRpc02(t *testing.T)  {
+	 url := "http://cart.devci01.s.dev.xxx.com/rpc.php"
+	 rpcObj := NewRpcClient(url, int64(15 * time.Second))
+	 param := map[string]interface{}{
+						 "owner":"3427234",
+						 "selected": 1,
+						 "cart_type": 0,
+						 "owner_type": 1,
+					 }
+
+	 content, _ := rpcObj.Call(`Cart\Search.listGoods`, param).GetResult()
+	 fmt.Println(content)
+	 var jsonMap map[string]interface{}
+	 json.Unmarshal([]byte(content), &jsonMap)
+	 fmt.Println(jsonMap)
 }
 
