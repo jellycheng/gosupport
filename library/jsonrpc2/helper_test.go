@@ -62,8 +62,13 @@ func TestRpc02(t *testing.T)  {
 						 "cart_type": 0,
 						 "owner_type": 1,
 					 }
-
-	 content, _ := rpcObj.Call(`Cart\Search.listGoods`, param).GetResult()
+	headers := map[string]string{
+		"X-FROM-SERVICE": "community-service",
+		"Content-Type":  "application/json",
+		"BRANCHNAME":  "master",
+		"X-ENTERPRISE-ID":  "10000",
+	}
+	 content, _ := rpcObj.SetId("abc-123-xyz-66").AddHeaders(headers).Call(`Cart\Search.listGoods`, param).GetResult()
 	 fmt.Println(content)
 	 var jsonMap map[string]interface{}
 	 json.Unmarshal([]byte(content), &jsonMap)
