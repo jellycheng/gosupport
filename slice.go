@@ -2,6 +2,7 @@ package gosupport
 
 import (
 	"fmt"
+	"strings"
 )
 
 //切片相关的处理方法
@@ -164,4 +165,57 @@ func RemoveRepeatContent(data interface{}) (interface{},error)  {
 			return nil, err
 	}
 
+}
+
+//把切片内容拼接成字符串
+func SliceJointoString(data interface{}, sep string, isRemove bool) (string, error) {
+	var tmpData interface{}
+	if isRemove {
+		if res, err := RemoveRepeatContent(data);err !=nil {
+			return "", err
+		} else {
+			tmpData = res
+		}
+	} else {
+		tmpData = data
+	}
+	var tmpStringSlice []string
+	switch slice := tmpData.(type) {
+		case []string:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []int:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []int8:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []int16:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []int32:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []int64:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []float32:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		case []float64:
+			for _, v := range slice {
+				tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+			}
+		default:
+			err := SliceErrorf("Unknown type: %T", slice)
+			return "", err
+	}
+	return strings.Join(tmpStringSlice, sep), nil
 }
