@@ -265,3 +265,8 @@ func AlreadyTimeStr(t2 time.Time) string {
 	return ret
 }
 
+// 计算日期相差多少天：t1-t2
+func SubDays(t1, t2 time.Time) (day int) {
+	day = int(t1.Sub(t2).Hours() / 24)
+	return
+}

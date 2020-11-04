@@ -42,3 +42,11 @@ func TestDateT(t *testing.T) {
 
 	fmt.Println(DateT("Y/m/d", curNow))
 }
+
+func TestSubDays(t *testing.T) {
+	//相差天数
+	hour,_ := time.ParseDuration("-25h") //25小时前
+	t2 := time.Now().Add(hour)
+	fmt.Println(SubDays(time.Now(), t2))
+
+}
