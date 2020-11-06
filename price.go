@@ -17,6 +17,7 @@ func Fen2yuan(price int64, isTrimZero bool) string {
 	if tmpPrice02<10 && tmpPrice02 >0 {
 		formatPrice = fmt.Sprintf("%d.0%d", tmpPrice01, tmpPrice02)
 	} else if tmpPrice02 == 0 {
+		isTrimZero = false
 		formatPrice = fmt.Sprintf("%d", tmpPrice01)
 	} else {
 		formatPrice = fmt.Sprintf("%d.%d", tmpPrice01, tmpPrice02)
