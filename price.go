@@ -8,9 +8,9 @@ import (
 /**
 	分转元
 	price := 1909
-	s1 := fen2yuan(int64(price), true)
+	s1 := gosupport.Fen2yuan(int64(price), true)
  */
-func fen2yuan(price int64, isTrimZero bool) string {
+func Fen2yuan(price int64, isTrimZero bool) string {
 	tmpPrice01 := price/100
 	tmpPrice02 := price - tmpPrice01 * 100
 	formatPrice := ""
