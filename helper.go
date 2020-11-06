@@ -271,6 +271,16 @@ func Nl2br(str string) string {
 	return strings.Replace(str, "\n", "<br/>", -1)
 }
 
+//获取调用我的函数名，即获取当前方法名，返回 包名.方法名、包名.结构体名.方法名
+func GetCallFuncName() string {
+	//func Caller(skip int) (pc uintptr, file string, line int, ok bool)
+	if pc, _, _, ok := runtime.Caller(1);ok {
+		f := runtime.FuncForPC(pc)
+		return f.Name()
+	}
+	return ""
+}
+
 //===============类型转换方法
 
 //float64类型转int64，丢弃小数部分

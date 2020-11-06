@@ -197,24 +197,27 @@ func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) ([]map[stri
 	return ret, nil
 }
 
-func DbConnect(dsn string) *sql.DB {
-	db, err := sql.Open("mysql", dsn) //返回sql.DB结构体指针类型对象
+func DbConnect(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("mysql", dsn) //返回*sql.DB结构体指针类型对象
 	if err != nil {
-		panic("db连接发生错误")
+		return nil, errors.New("db连接发生错误")
 	}
-	return db
+	return db, nil
 }
 
 var dbObj = make(map[string]*sql.DB)
 
-func GetDbConnect(dbnameCode, dsn string) *sql.DB  {
+func GetDbConnect(dbnameCode, dsn string) (*sql.DB, error)  {
 	db,ok := dbObj[dbnameCode]
 	if ok {
-		return db
+		return db,nil
 	}
-	db = DbConnect(dsn)
-	dbObj[dbnameCode] = db
-	return db
+	if db, err := DbConnect(dsn); err==nil{
+		dbObj[dbnameCode] = db
+		return db, nil
+	} else {
+		return db,err
+	}
 }
 
 
