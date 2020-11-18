@@ -8,7 +8,7 @@ import (
 
 const (
 	//默认组名
-	DefaultGroupName = "DEFAULT"
+	DefaultGroupName = "default"
 )
 
 var (

@@ -10,14 +10,14 @@ func TestNewIniConfig(t *testing.T) {
 	obj := NewIniConfig(file)
 	fmt.Println(obj.GetIniFile())
 	if err := obj.ParseIniFile();err == nil {
-		if val,err := obj.GetValue("author", "NAME");err == nil {
+		if val,err := obj.GetValue("redis", "hosts");err == nil {
 			fmt.Println(val)
 		} else {
 			fmt.Println(err.Error())
 		}
 
-		fmt.Println(obj.MustGetValue("author", "E-MAIL"))
-		obj.DelValue("author", "E-MAIL")
+		fmt.Println(obj.MustGetValue("default", "app_env"))
+		obj.DelValue("default", "app_env")
 		fmt.Println(obj.GetConfigData())
 
 	}
