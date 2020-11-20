@@ -10,20 +10,46 @@ import (
 
 const  TIME_FORMAT = "2006-01-02 15:04:05"
 
-func Time() int64 {
-	return time.Now().Unix()
+//获取上海时区
+func GetShanghaiTimezone() *time.Location {
+	loc, _:= time.LoadLocation("Asia/Shanghai")
+	return loc
 }
 
-func Strtotime(format, strtime string) (int64, error) {
-	t, err := time.Parse(format, strtime)
+func Time(timezone ...*time.Location) int64 {
+	var loc *time.Location
+	if len(timezone) == 0 {
+		loc = GetShanghaiTimezone()
+	} else {
+		loc = timezone[0]
+	}
+	return time.Now().In(loc).Unix()
+}
+
+//unixTime,_ := gosupport.Strtotime(gosupport.TIME_FORMAT,"2021-01-02 02:36:43")
+func Strtotime(format, strtime string,timezone ...*time.Location) (int64, error) {
+	var loc *time.Location
+	if len(timezone) == 0 {
+		loc = GetShanghaiTimezone()
+	} else {
+		loc = timezone[0]
+	}
+	t, err := time.ParseInLocation(format, strtime, loc)
 	if err != nil {
 		return 0, err
 	}
 	return t.Unix(), nil
 }
 
-func Date(format string, timestamp int64) string {
-	return time.Unix(timestamp, 0).Format(format)
+//gosupport.Date(gosupport.TIME_FORMAT, unixTime时间戳)
+func Date(format string, timestamp int64, timezone ...*time.Location) string {
+	var loc *time.Location
+	if len(timezone) == 0 {
+		loc = GetShanghaiTimezone()
+	} else {
+		loc = timezone[0]
+	}
+	return time.Unix(timestamp, 0).In(loc).Format(format)
 }
 
 //返回当前时间结构体指针类型
