@@ -27,7 +27,7 @@ func TestNewApiSign01(t *testing.T) {
 	//apisign3.SetParams(make(map[string]interface{}))
 	//apisign3.SetParams(map[string]interface{}{})
 	apisign3.SetParams(map[string]interface{}{"xyz":99})
-	apisign3.AppendParam("username", "tom").AppendParam("age", 18)
+	apisign3.AppendParam("username", "tom").AppendParam("age", 18).AppendParam("99", 199).AppendParam("0", 70)
 	fmt.Println(apisign3.Md5Sign())
 	fmt.Println(apisign3.GetSignString())
 

@@ -51,10 +51,12 @@ func (this *Apisign01) Md5Sign() (string)  {
 	builder := strings.Builder{}
 	if len(keys) != 0 {
 		for _, v := range keys {
-			builder.WriteString(v)
-			builder.WriteString("=")
-			builder.WriteString(fmt.Sprint(this.params[v]))
-			builder.WriteString("&")
+			//builder.WriteString(v)
+			//builder.WriteString("=")
+			//builder.WriteString(fmt.Sprint(this.params[v]))
+			//builder.WriteString("&")
+			builder.WriteString(fmt.Sprintf("%s=%s&", v, fmt.Sprint(this.params[v])))
+
 		}
 		builder.WriteString("key=" + this.secret)
 	} else {
