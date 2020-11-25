@@ -33,4 +33,32 @@ func TestUpdateSql(t *testing.T) {
 	sql, _ := sqlObj.GetSQL()
 	fmt.Println(sql)
 
+	sqlObj2 := NewSQLBuilderUpdate().SetTable("bbs_user").SetUpdateData([]string{"qq","username"}, 123, 444).AndWhere("uid","=",5)
+	sqlObj2.SetLimit("3")
+	sqlObj2.SetOrderBy("uid asc")
+	sql2, _ := sqlObj2.GetSQL()
+	fmt.Println(sql2, sqlObj2.GetParamValues(), sqlObj2.GetSetParamValues(),sqlObj2.GetWhereParamValues())
+
 }
+
+//go test -run="TestDeleteSql"
+func TestDeleteSql(t *testing.T) {
+	sqlObj1 := NewSQLBuilderDelete().SetTable("bbs_user")
+	sql1, _ := sqlObj1.GetSQL()
+	fmt.Println(sql1)
+
+	sqlObj2 := NewSQLBuilderDelete().SetTable("bbs_user").SetLimit("2").SetOrderBy("uid asc")
+	sql2, _ := sqlObj2.GetSQL()
+	fmt.Println(sql2)
+
+	sqlObj3 := NewSQLBuilderDelete().SetTable("bbs_user").AndWhere("uid", "=", 9)
+	sqlObj3.AndWhere("username", "=", "admin")
+	sqlObj3.SetLimit("3").SetOrderBy("uid desc")
+	sqlObj3.OrWhere("qq", "=", 123)
+	sql3, _ := sqlObj3.GetSQL()
+	fmt.Println(sql3, sqlObj3.GetWhereParamValues())
+
+
+
+}
+

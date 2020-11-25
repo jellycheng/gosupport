@@ -25,6 +25,15 @@ func (sqlb *SQLBuilderUpdate) SetTable(tbl string) *SQLBuilderUpdate {
 	return sqlb
 }
 
+func (sqlb *SQLBuilderUpdate) SetLimit(rowCount string) *SQLBuilderUpdate {
+	sqlb.limit = rowCount
+	return sqlb
+}
+
+func (sqlb *SQLBuilderUpdate) SetOrderBy(order string) *SQLBuilderUpdate {
+	sqlb.orderBy = order
+	return sqlb
+}
 
 func (sqlb *SQLBuilderUpdate) SetUpdateData(fileds []string, values ...interface{}) *SQLBuilderUpdate {
 	fieldLen := len(fileds)
@@ -34,7 +43,7 @@ func (sqlb *SQLBuilderUpdate) SetUpdateData(fileds []string, values ...interface
 	var buf strings.Builder
 	for k, field := range fileds {
 		buf.WriteString(WrapField(field))
-		buf.WriteString(" = ?")
+		buf.WriteString(" = ? ")
 		if k != fieldLen-1 {
 			buf.WriteString(",")
 		}
@@ -63,13 +72,9 @@ func (sqlb *SQLBuilderUpdate) Where(operator string, field string, condition str
 		buf.WriteString(" ")
 	}
 
-	buf.WriteString(field)
-
-	buf.WriteString(" ")
-	buf.WriteString(condition) //=、!=、in
-	buf.WriteString(" ")
-	buf.WriteString("?")
-
+	buf.WriteString(WrapField(field))
+	//=、!=、in
+	buf.WriteString(" " + condition + " ? ")
 	sqlb.where = buf.String()
 
 	sqlb.whereParams = append(sqlb.whereParams, value)

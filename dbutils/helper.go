@@ -43,3 +43,14 @@ func WrapField(field string) string  {
 func WrapTable(field string) string  {
 	return "`" + strings.Trim(field, "`") + "`"
 }
+
+func WenHaoPlaceholders(n int) string {
+	var buf strings.Builder
+	for i := 0; i < n-1; i++ {
+		buf.WriteString("?,")
+	}
+	if n > 0 {
+		buf.WriteString("?")
+	}
+	return buf.String()
+}
