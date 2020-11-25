@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func GetHashOrd(str string) int64 {
@@ -35,3 +36,10 @@ func GetHashOrd127(str string) int64 {
 	return ret%128
 }
 
+func WrapField(field string) string  {
+	return "`" + strings.Trim(field, "`") + "`"
+}
+
+func WrapTable(field string) string  {
+	return "`" + strings.Trim(field, "`") + "`"
+}
