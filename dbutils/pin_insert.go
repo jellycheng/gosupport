@@ -28,7 +28,7 @@ func (sqlb *SQLBuilderInsert) SetInsertData(fileds []string, values ...interface
 	buf.WriteString("(")
 	for k, field := range fileds {
 		wenHao = append(wenHao, "?")
-		buf.WriteString(WrapField(field))
+		buf.WriteString(field)
 		if k != fieldLen-1 {
 			buf.WriteString(",")
 		}
@@ -64,7 +64,7 @@ func (sqlb *SQLBuilderInsert)GetSql() (string, error)  {
 
 	var buf strings.Builder
 	buf.WriteString("INSERT INTO ")
-	buf.WriteString(WrapTable(sqlb.table))
+	buf.WriteString(sqlb.table)
 	buf.WriteString(" ")
 	buf.WriteString(sqlb.insert)
 

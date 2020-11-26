@@ -7,7 +7,6 @@ import "strings"
 type SQLBuilderUpdate struct {
 	//表名
 	table string
-
 	set string
 	where string
 	orderBy string
@@ -30,7 +29,7 @@ func (sqlb *SQLBuilderUpdate) SetLimit(rowCount string) *SQLBuilderUpdate {
 	return sqlb
 }
 
-func (sqlb *SQLBuilderUpdate) SetOrderBy(order string) *SQLBuilderUpdate {
+func (sqlb *SQLBuilderUpdate) OrderBy(order string) *SQLBuilderUpdate {
 	sqlb.orderBy = order
 	return sqlb
 }
@@ -42,7 +41,7 @@ func (sqlb *SQLBuilderUpdate) SetUpdateData(fileds []string, values ...interface
 	}
 	var buf strings.Builder
 	for k, field := range fileds {
-		buf.WriteString(WrapField(field))
+		buf.WriteString(field)
 		buf.WriteString(" = ? ")
 		if k != fieldLen-1 {
 			buf.WriteString(",")
@@ -62,18 +61,14 @@ func (sqlb *SQLBuilderUpdate) SetUpdateData(fileds []string, values ...interface
 	return sqlb
 }
 
-//考虑重复调用
-func (sqlb *SQLBuilderUpdate) Where(operator string, field string, condition string, value interface{}) *SQLBuilderUpdate {
+//考虑重复调用,operator=AND、OR,condition=<、<=、=、!=、>
+func (sqlb *SQLBuilderUpdate) ConditionWhere(operator string, field string, condition string, value interface{}) *SQLBuilderUpdate {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
-		buf.WriteString(" ")
-		buf.WriteString(operator) //AND、OR
-		buf.WriteString(" ")
+		buf.WriteString(" " + operator + " ")
 	}
-
-	buf.WriteString(WrapField(field))
-	//=、!=、in
+	buf.WriteString(field)
 	buf.WriteString(" " + condition + " ? ")
 	sqlb.where = buf.String()
 
@@ -83,12 +78,74 @@ func (sqlb *SQLBuilderUpdate) Where(operator string, field string, condition str
 	return sqlb
 }
 
-func (sqlb *SQLBuilderUpdate) AndWhere(field string, condition string, value interface{}) *SQLBuilderUpdate {
-	return sqlb.Where("AND", field, condition, value)
+func (sqlb *SQLBuilderUpdate) Where(field string, condition string, value interface{}) *SQLBuilderUpdate {
+	return sqlb.ConditionWhere("AND", field, condition, value)
 }
 
 func (sqlb *SQLBuilderUpdate) OrWhere(field string, condition string, value interface{}) *SQLBuilderUpdate {
-	return sqlb.Where("OR", field, condition, value)
+	return sqlb.ConditionWhere("OR", field, condition, value)
+}
+
+func (sqlb *SQLBuilderUpdate) WhereIn(field string, values ...interface{}) *SQLBuilderUpdate {
+	return sqlb.conditionIn("AND", field, "IN", values)
+}
+
+func (sqlb *SQLBuilderUpdate) WhereNotIn(field string, values ...interface{}) *SQLBuilderUpdate {
+	return sqlb.conditionIn("AND", field, "NOT IN", values)
+}
+
+func (sqlb *SQLBuilderUpdate) OrWhereIn(field string, values ...interface{}) *SQLBuilderUpdate {
+	return sqlb.conditionIn("OR",  field,"IN", values)
+}
+
+func (sqlb *SQLBuilderUpdate) OrWhereNotIn(field string, values ...interface{}) *SQLBuilderUpdate {
+	return sqlb.conditionIn("OR",  field,"NOT IN", values)
+}
+
+func (sqlb *SQLBuilderUpdate) conditionIn(operator string, field string,condition string, values []interface{}) *SQLBuilderUpdate {
+	var buf strings.Builder
+	buf.WriteString(sqlb.where)
+	if buf.Len() != 0 {
+		buf.WriteString(" " + operator + " ")
+	}
+	s,_ := PinConditionIn(field, condition, values)
+	buf.WriteString(s)
+
+	sqlb.where = buf.String()
+
+	for _, value := range values {
+		sqlb.whereParams = append(sqlb.whereParams, value)
+	}
+
+	return sqlb
+}
+
+//WhereRaw("`title` = ?", "hello")
+func (sqlb *SQLBuilderUpdate) WhereRaw(raw string, values ...interface{}) *SQLBuilderUpdate {
+	return sqlb.Raw("AND", raw, values)
+}
+
+//OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
+func (sqlb *SQLBuilderUpdate) OrWhereRaw(raw string, values ...interface{}) *SQLBuilderUpdate {
+	return sqlb.Raw("OR", raw, values)
+}
+
+func (sqlb *SQLBuilderUpdate) Raw(operator string, raw string, values []interface{}) *SQLBuilderUpdate {
+	var buf strings.Builder
+	buf.WriteString(sqlb.where)
+	if buf.Len() != 0 {
+		buf.WriteString(" " + operator + " ")
+	}
+
+	buf.WriteString(raw)
+	sqlb.where = buf.String()
+
+	for _, value := range values {
+		sqlb.whereParams = append(sqlb.whereParams, value)
+		sqlb.allParams = append(sqlb.allParams, value)
+	}
+
+	return sqlb
 }
 
 func (sqlb *SQLBuilderUpdate)GetParamValues() []interface{} {
@@ -116,7 +173,7 @@ func (sqlb *SQLBuilderUpdate) GetSQL() (string, error) {
 	var buf strings.Builder
 
 	buf.WriteString("UPDATE ")
-	buf.WriteString(WrapTable(sqlb.table))
+	buf.WriteString(sqlb.table)
 	buf.WriteString(" SET ")
 	buf.WriteString(sqlb.set)
 	if sqlb.where != "" {

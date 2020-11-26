@@ -26,21 +26,19 @@ func (sqlb *SQLBuilderDelete) SetLimit(rowCount string) *SQLBuilderDelete {
 	return sqlb
 }
 
-func (sqlb *SQLBuilderDelete) SetOrderBy(order string) *SQLBuilderDelete {
+func (sqlb *SQLBuilderDelete) OrderBy(order string) *SQLBuilderDelete {
 	sqlb.orderBy = order
 	return sqlb
 }
 
-//考虑重复调用
-func (sqlb *SQLBuilderDelete) Where(operator string, field string, condition string, value interface{}) *SQLBuilderDelete {
+//考虑重复调用,operator=AND、OR, condition="=,!="
+func (sqlb *SQLBuilderDelete) ConditionWhere(operator string, field string, condition string, value interface{}) *SQLBuilderDelete {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
 		buf.WriteString(" " + operator + " ")  //AND、OR
 	}
-
-	buf.WriteString(WrapField(field))
-	buf.WriteString(" " + condition + " ? ")
+	buf.WriteString(field + " " + condition + " ? ")
 	sqlb.where = buf.String()
 	sqlb.whereParams = append(sqlb.whereParams, value)
 
@@ -48,12 +46,73 @@ func (sqlb *SQLBuilderDelete) Where(operator string, field string, condition str
 }
 
 
-func (sqlb *SQLBuilderDelete) AndWhere(field string, condition string, value interface{}) *SQLBuilderDelete {
-	return sqlb.Where("AND", field, condition, value)
+func (sqlb *SQLBuilderDelete) Where(field string, condition string, value interface{}) *SQLBuilderDelete {
+	return sqlb.ConditionWhere("AND", field, condition, value)
 }
 
 func (sqlb *SQLBuilderDelete) OrWhere(field string, condition string, value interface{}) *SQLBuilderDelete {
-	return sqlb.Where("OR", field, condition, value)
+	return sqlb.ConditionWhere("OR", field, condition, value)
+}
+
+func (sqlb *SQLBuilderDelete) WhereIn(field string, values ...interface{}) *SQLBuilderDelete {
+	return sqlb.conditionIn("AND", field, "IN", values)
+}
+
+func (sqlb *SQLBuilderDelete) WhereNotIn(field string, values ...interface{}) *SQLBuilderDelete {
+	return sqlb.conditionIn("AND", field, "NOT IN", values)
+}
+
+func (sqlb *SQLBuilderDelete) OrWhereIn(field string, values ...interface{}) *SQLBuilderDelete {
+	return sqlb.conditionIn("OR",  field,"IN", values)
+}
+
+func (sqlb *SQLBuilderDelete) OrWhereNotIn(field string, values ...interface{}) *SQLBuilderDelete {
+	return sqlb.conditionIn("OR",  field,"NOT IN", values)
+}
+
+func (sqlb *SQLBuilderDelete) conditionIn(operator string, field string,condition string, values []interface{}) *SQLBuilderDelete {
+	var buf strings.Builder
+	buf.WriteString(sqlb.where)
+	if buf.Len() != 0 {
+		buf.WriteString(" " + operator + " ")
+	}
+	s,_ := PinConditionIn(field, condition, values)
+	buf.WriteString(s)
+
+	sqlb.where = buf.String()
+
+	for _, value := range values {
+		sqlb.whereParams = append(sqlb.whereParams, value)
+	}
+
+	return sqlb
+}
+
+//WhereRaw("`title` = ?", "hello")
+func (sqlb *SQLBuilderDelete) WhereRaw(raw string, values ...interface{}) *SQLBuilderDelete {
+	return sqlb.Raw("AND", raw, values)
+}
+
+//OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
+func (sqlb *SQLBuilderDelete) OrWhereRaw(raw string, values ...interface{}) *SQLBuilderDelete {
+	return sqlb.Raw("OR", raw, values)
+}
+
+func (sqlb *SQLBuilderDelete) Raw(operator string, raw string, values []interface{}) *SQLBuilderDelete {
+	var buf strings.Builder
+	buf.WriteString(sqlb.where)
+	if buf.Len() != 0 {
+		buf.WriteString(" " + operator + " ")
+	}
+
+	buf.WriteString(raw)
+	sqlb.where = buf.String()
+
+	for _, value := range values {
+		sqlb.whereParams = append(sqlb.whereParams, value)
+	}
+
+	return sqlb
 }
 
 func (sqlb *SQLBuilderDelete)GetWhereParamValues() []interface{} {
@@ -66,8 +125,7 @@ func (sqlb *SQLBuilderDelete) GetSQL() (string, error) {
 	}
 
 	var buf strings.Builder
-	buf.WriteString("DELETE FROM ")
-	buf.WriteString(WrapTable(sqlb.table))
+	buf.WriteString("DELETE FROM " + sqlb.table)
 	if sqlb.where != "" {
 		buf.WriteString(" WHERE " + sqlb.where)
 	}
