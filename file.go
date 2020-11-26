@@ -4,6 +4,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 )
 
 // 读取文件内容
@@ -82,3 +83,10 @@ func FileMTime(file string) (int64, error) {
 }
 
 
+func IsDirWriteable(dir string) error {
+	f := filepath.Join(dir, ".touch")
+	if err := ioutil.WriteFile(f, []byte(""), PrivateFileMode); err != nil {
+		return err
+	}
+	return os.Remove(f)
+}

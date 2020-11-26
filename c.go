@@ -25,7 +25,7 @@ const (
 	SignTypeMD5        = "MD5"
 	SignTypeHmacSHA256 = "HMAC-SHA256"
 
-
+	PrivateFileMode = 0600
 )
 
 type Scheme string
