@@ -3,6 +3,7 @@ package curl
 import (
 	"encoding/base64"
 	"net/url"
+	"strings"
 )
 
 func UrlEncode(str string) string {
@@ -22,3 +23,17 @@ func Base64Decode(str string) (string, error) {
 	return string(s), err
 }
 
+func TrimPath(path string, pos int) string {
+	ret := ""
+	switch pos {
+	case 0:
+		ret = strings.Trim(path, "/")
+	case 1:
+		ret = strings.TrimLeft(path, "/")
+	case 2:
+		ret = strings.TrimRight(path, "/")
+	default:
+		ret = path
+	}
+	return ret
+}

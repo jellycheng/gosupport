@@ -281,6 +281,13 @@ func GetCallFuncName() string {
 	return ""
 }
 
+//获取网关env配置名，即配置key
+func GetGwHostEnvName(gwName string) string  {
+	gwName = strings.ToUpper(strings.TrimSpace(gwName))
+	domainEnvName := fmt.Sprintf("DOMAIN_%s_GW_SERVICE_HOST", gwName)
+	return domainEnvName
+}
+
 //===============类型转换方法
 
 //float64类型转int64，丢弃小数部分
