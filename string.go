@@ -12,6 +12,9 @@ import (
  * gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
  */
 func UrlDeal(reqUrl string, otherGetParam string) string {
+	if otherGetParam == "" {
+		return reqUrl
+	}
 	ret := ""
 	suffix := ""
 	if index := strings.Index(reqUrl, "#");index>=0 {
