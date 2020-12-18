@@ -1,8 +1,10 @@
 package gosupport
 
 import (
+	"math/rand"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
 	"unicode/utf8"
 )
@@ -118,3 +120,18 @@ func Lcfirst(str string) string {
 	return ""
 }
 
+
+//获取指定charset字符集下指定长度length的随机字符串
+func GetRandStringWithCharset(length int, charset string) string {
+	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[seededRand.Intn(len(charset))]
+	}
+	return string(b)
+}
+
+//获取指定长度的随机字符串
+func GetRandString(length int) string {
+	return GetRandStringWithCharset(length, CharsetStr1)
+}

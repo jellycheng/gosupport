@@ -38,10 +38,7 @@ func (this *Apisign01) Md5Sign() (string)  {
 	sign := ""
 	var keys []string
 	for k, v := range this.params {
-		if k == "sign" {
-			continue
-		}
-		if v == "" {
+		if k == "sign" || v == "" {
 			continue
 		}
 		keys = append(keys, k)

@@ -34,3 +34,8 @@ const (
 	HTTPS Scheme = "https"
 	FTP   Scheme = "ftp"
 )
+
+const (
+	CharsetStr1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	CharsetStr2 = "0123456789"
+)
