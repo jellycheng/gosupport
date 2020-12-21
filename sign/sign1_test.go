@@ -59,3 +59,10 @@ func TestWxPaySign(t *testing.T) {
 	}
 
 }
+
+//go test -run="TestNewUrlGetSign"
+func TestNewUrlGetSign(t *testing.T) {
+	s := NewUrlGetSign().SetSecret("cjsJellySecret123456").AutoSpellUrlParam()
+	fmt.Println(s)
+}
+
