@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -262,6 +263,33 @@ func IsZeroCode(code interface{}) bool {
 		}
 	default:
 		ret =false
+	}
+
+	return ret
+}
+
+func IsEmpty(val interface{}) bool  {
+	var ret bool
+	switch v:=val.(type) {
+	case int,int8,int16,int32,int64,uint,uint8,uint16,uint32,uint64:
+		//byte是uint8，rune是int32
+		if fmt.Sprintf("%v", v) == "0" {
+			ret = true
+		}
+	case float64, float32:
+		//go中0与0.0,0.00,0.0000均相等
+		if v==0 {
+			ret = true
+		}
+	case string:
+		if v == "0" || v=="" {
+			ret = true
+		}
+	case bool:
+		ret = v == false
+	default:
+		ref := reflect.ValueOf(v)
+		ret = ref.IsZero()
 	}
 
 	return ret
