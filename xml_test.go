@@ -16,6 +16,13 @@ func TestMap2XML(t *testing.T) {
 	} else {
 		fmt.Println(err.Error())
 	}
+
+	p := map[string]string{
+		"return_code":"SUCCESS",
+		"return_msg":"ok",
+	}
+	fmt.Println(Map2XMLV2(p))
+
 }
 
 // go test -run="TestXML2Map"

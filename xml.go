@@ -57,6 +57,30 @@ func Map2XML(kvs map[string]string) (text []byte, err error) {
 	return
 }
 
+func Map2XMLV2(params map[string]string, rootName ...string) string {
+	var xmlRootName = ""
+	if len(rootName)>0 {
+		xmlRootName = rootName[0]
+	}
+	if(xmlRootName == "") {
+		xmlRootName = "xml"
+	}
+	var buf bytes.Buffer
+	buf.WriteString(`<`+xmlRootName+`>`)
+	for k, v := range params {
+		buf.WriteString(`<`)
+		buf.WriteString(k)
+		buf.WriteString(`><![CDATA[`)
+		buf.WriteString(v)
+		buf.WriteString(`]]></`)
+		buf.WriteString(k)
+		buf.WriteString(`>`)
+	}
+	buf.WriteString(`</`+xmlRootName+`>`)
+
+	return buf.String()
+}
+
 func XML2Map(text []byte) (result map[string]string, err error) {
 	err = xml.Unmarshal(text, (*xmlStringMap)(&result))
 	if err != nil {
