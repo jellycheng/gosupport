@@ -12,5 +12,7 @@
 *.out
 cjs_test.go
 cjs.ini
+cjs.json
+cjs.yml
 go.sum
 .DS_Store

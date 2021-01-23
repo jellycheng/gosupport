@@ -1,6 +1,7 @@
 package gosupport
 
 import (
+	"encoding/json"
 	"io"
 	"io/ioutil"
 	"os"
@@ -89,4 +90,25 @@ func IsDirWriteable(dir string) error {
 		return err
 	}
 	return os.Remove(f)
+}
+
+/**
+	data := make(map[string]interface{})
+	if err :=LoadJson("./cjs.json", &data);err!=nil{
+		fmt.Println("解析失败", err.Error())
+	} else {
+		fmt.Println(data)
+	}
+ */
+func LoadJson(jsonFile string, t interface{}) error {
+	data, err := ioutil.ReadFile(jsonFile)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(data, &t)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
