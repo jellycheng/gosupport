@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-/**
+/*
 	分转元
 	price := 1909
 	s1 := gosupport.Fen2yuan(int64(price), true)
@@ -35,7 +35,7 @@ func Fen2yuan(price int64, isTrimZero bool) string {
 	return formatPrice
 }
 
-// gosupport.RemoveDian00("18.00") 返回 18
+// 调用示例：gosupport.RemoveDian00("18.00") 返回 18
 func RemoveDian00(priceStr string) string  {
 	return strings.TrimRight(priceStr, ".00")
 }

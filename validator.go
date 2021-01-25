@@ -82,3 +82,15 @@ func IsFloatNumber(str string) bool {
 		return false
 	}
 }
+
+//去除html标签
+func StripTags(s string, tags ...string) string {
+	if len(tags) == 0 {
+		tags = append(tags, "")
+	}
+	for _, tag := range tags {
+		stripTagsRe := regexp.MustCompile(`(?i)<\/?` + tag + `[^<>]*>`)
+		s = stripTagsRe.ReplaceAllString(s, "")
+	}
+	return s
+}

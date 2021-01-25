@@ -20,7 +20,7 @@ func (this *Apisign01) SetSecret(s string) (*Apisign01)  {
 }
 
 func (this *Apisign01) SetParams(p map[string]interface{}) (*Apisign01)  {
-	/**
+	/*
 	if(this.params == nil) {
 		this.params = make(map[string]interface{})
 	}

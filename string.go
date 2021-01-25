@@ -3,15 +3,16 @@ package gosupport
 import (
 	"math/rand"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 	"unicode"
 	"unicode/utf8"
 )
 
-/**
- * url中追加参数
- * gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
+/*
+  url中追加参数
+  调用示例：gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
  */
 func UrlDeal(reqUrl string, otherGetParam string) string {
 	if otherGetParam == "" {
@@ -34,12 +35,12 @@ func UrlDeal(reqUrl string, otherGetParam string) string {
 }
 
 
-/**
- * 对特殊字符使用中划线替换
- * CreateAnchor("abc？你好?中=国123abc") 返回 abc-你好-中-国123abc
- * CreateAnchor("你好中国123abc")返回 你好中国123abc
- * CreateAnchor("你好中国 123 abc") 返回 你好中国-123-abc
- * CreateAnchor("how 你好 中国123a!bc#de") 返回 how-你好-中国123a-bc-de
+/*
+  对特殊字符使用中划线替换
+  CreateAnchor("abc？你好?中=国123abc") 返回 abc-你好-中-国123abc
+  CreateAnchor("你好中国123abc")返回 你好中国123abc
+  CreateAnchor("你好中国 123 abc") 返回 你好中国-123-abc
+  CreateAnchor("how 你好 中国123a!bc#de") 返回 how-你好-中国123a-bc-de
  */
 func CreateAnchor(str string) string {
 	var anchorName []rune
@@ -134,4 +135,18 @@ func GetRandStringWithCharset(length int, charset string) string {
 //获取指定长度的随机字符串
 func GetRandString(length int) string {
 	return GetRandStringWithCharset(length, CharsetStr1)
+}
+
+
+func ToBool(s string) bool {
+	s = strings.ToLower(s)
+	return s == "true" || s == "yes" || s == "on" || s == "1"
+}
+
+func ToBoolOr(s string, defaultValue bool) bool {
+	b, err := strconv.ParseBool(s)
+	if err != nil {
+		return defaultValue
+	}
+	return b
 }

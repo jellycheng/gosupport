@@ -16,6 +16,7 @@ func Md5V1(str string) string {
 	return md5str
 }
 
+//使用md5加密方式2
 func Md5V2(str string) string  {
 	h := md5.New()
 	h.Write([]byte(str))

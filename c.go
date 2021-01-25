@@ -38,4 +38,6 @@ const (
 const (
 	CharsetStr1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	CharsetStr2 = "0123456789"
+	//去掉了i、j、l、o、u、v、z、I、J、L、O、U、V、Z、0、1、2字符
+	CharsetStr3 = "abcdefghkmnpqrstwxyABCDEFGHKMNPQRSTWXY3456789"
 )

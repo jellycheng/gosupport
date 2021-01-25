@@ -92,7 +92,8 @@ func IsDirWriteable(dir string) error {
 	return os.Remove(f)
 }
 
-/**
+/*
+	调用示例：
 	data := make(map[string]interface{})
 	if err :=LoadJson("./cjs.json", &data);err!=nil{
 		fmt.Println("解析失败", err.Error())

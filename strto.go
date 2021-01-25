@@ -6,7 +6,6 @@ import (
 )
 
 //使用示例： gosupport.StrTo("123456789").MustUint64()
-
 type StrTo string
 
 func (f StrTo) String() string {

@@ -47,7 +47,8 @@ func (f PIDFile) GetPid() (int, error) {
 
 }
 
-/**
+/*
+	调用示例：
 	pidFile := "/data/www/go-community-service/go-community-service.pid"
 	pidFileObj := gosupport.NewPIDFile(pidFile)
 	err := pidFileObj.CreatePidFile(os.Getpid())

@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-/**
- * 发起get请求
+/*
+  发起get请求
  */
 func HttpGet(url string) (string, error) {
 	var content string
@@ -23,9 +23,9 @@ func HttpGet(url string) (string, error) {
 	return content, nil
 }
 
-/**
- * 发起表单post请求
- * param := "name=李四&age=19"
+/*
+  发起表单post请求
+  param := "name=李四&age=19"
  */
 func HttpPost(url string, param string) (string, error)  {
 	resp, err := http.Post(url, "application/x-www-form-urlencoded", strings.NewReader(param))
@@ -51,8 +51,8 @@ func HttpPostJson(url string, param string) (string, error)  {
 	return content, nil
 }
 
-/**
- * param := url.Values{"参数名1": {"值1"}, "参数名2": {"值1","值N"}}
+/*
+  param := url.Values{"参数名1": {"值1"}, "参数名2": {"值1","值N"}}
  */
 func HttpPostForm(url string, param neturl.Values) (string, error)  {
 	resp, err := http.PostForm(url, param)

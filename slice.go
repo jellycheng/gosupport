@@ -127,7 +127,7 @@ func SliceErrorf(format string, args ...interface{}) error {
 	return &SliceError{msg}
 }
 
-/**
+/*
 	使用示例
 	abc,_ := RemoveRepeatContent([]float64{9.9, 18.9, 22, 9.9, 22, 33})
 	if v,ok := abc.([]float64);ok{

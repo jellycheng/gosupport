@@ -5,13 +5,13 @@ import (
 	"strconv"
 )
 
-/**
-pageObj := utils.NewPage()
-pageObj.MustSetPage(1).MustSetPageSize(15)
-fmt.Println(pageObj.GetLimit())
+/*
+	页码处理
+	调用示例：
+	pageObj := utils.NewPage()
+	pageObj.MustSetPage(1).MustSetPageSize(15)
+	fmt.Println(pageObj.GetLimit())
  */
-
-//页码处理
 type Page struct {
 	page int64   //页码，起始页码从1开始，计算limit或offset时，如果值小于1则强制修改为1
 	pageSize int64  //每页记录数，默认15,计算limit或offset时，如果值小于1则强制修改为15

@@ -22,9 +22,7 @@ func Die(status int) {
 	os.Exit(status)
 }
 
-/*
- * 获取环境变量值
- */
+//获取环境变量值
 func GetEnv(env, defaultValue string) string {
 	v := os.Getenv(env)
 	if v == "" {
@@ -55,7 +53,7 @@ func ToJson(v interface{}) string {
 	}
 	return string(b)
 }
-//返回红色，用于在终端打印红色字，如：fmt.Println(gosupport.ToRed("hello world"))
+//返回红色，用于在终端打印红色字，调用示例：fmt.Println(gosupport.ToRed("hello world"))
 func ToRed(str string) string {
 	return fmt.Sprintf("\033[31m%s\033[0m", str)
 }
@@ -95,9 +93,9 @@ func Str2Int(str string) int {
 }
 
 
-/**
-n获取随机字符个数
-way选择参与随机字符串的方式
+/*
+n 获取随机字符个数
+way 选择参与随机字符串的方式
 */
 func RandStr4Byte(n int, way int) string {
 	ret := ""
@@ -227,7 +225,7 @@ func GetGoVersion() string  {
 	return strings.Trim(runtime.Version(), "go")
 }
 
-//gosupport.GenerateUserAgent("user-service", "1.0.0")
+//调用示例：gosupport.GenerateUserAgent("user-service", "1.0.0")
 func GenerateUserAgent(appname string, ext ...string) string  {
 	appversion := ""
 	extString := ""
@@ -267,7 +265,7 @@ func IsZeroCode(code interface{}) bool {
 
 	return ret
 }
-
+//判断是否为空或零
 func IsEmpty(val interface{}) bool  {
 	var ret bool
 	switch v:=val.(type) {
@@ -295,6 +293,7 @@ func IsEmpty(val interface{}) bool  {
 	return ret
 }
 
+//换行符转html换行标签
 func Nl2br(str string) string {
 	return strings.Replace(str, "\n", "<br/>", -1)
 }

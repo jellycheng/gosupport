@@ -9,7 +9,6 @@ import (
 )
 
 //敏感词过滤 - 简易写法
-
 type FilterSensitiveWord struct {
 	sensitiveWordDict string //敏感词，多个用|分隔
 	replaceSymbol     string //替换符，默认*

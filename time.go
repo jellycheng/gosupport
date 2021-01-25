@@ -69,9 +69,9 @@ func TimeNowPtr() *time.Time {
 	return &t
 }
 
-/**
- * 调用示例：gosupport.TimeFormat2Date(time.Date(2019, 07, 01, 0, 0, 0, 0, time.UTC))
- * 返回格式为 年/月/日，如：2019/07/01 、 2019/11/28
+/*
+  调用示例：gosupport.TimeFormat2Date(time.Date(2019, 07, 01, 0, 0, 0, 0, time.UTC))
+  返回格式为 年/月/日，如：2019/07/01 、 2019/11/28
  */
 func TimeFormat2Date(t time.Time) string {
 	year, month, day := t.Date()
@@ -270,13 +270,13 @@ func DateT(format string, t time.Time) string {
 
 
 
-/**
-1分钟以内显示为：刚刚
-1小时以内显示为：N分钟前
-当天以内显示为：今天 N点N分（如：今天 22:33）
-昨天时间显示为：昨天 N点N分（如：昨天 10:15）
-在今年显示为：N月N日 N点N分（如：02月03日 09:33）
-今年以前显示为：N年N月N日 N点N分（如：2020年09月18日 15:59）
+/*
+  1分钟以内显示为：刚刚
+  1小时以内显示为：N分钟前
+  当天以内显示为：今天 N点N分（如：今天 22:33）
+  昨天时间显示为：昨天 N点N分（如：昨天 10:15）
+  在今年显示为：N月N日 N点N分（如：02月03日 09:33）
+  今年以前显示为：N年N月N日 N点N分（如：2020年09月18日 15:59）
 */
 func SubTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	var ret string
@@ -311,8 +311,8 @@ func SubTimeStr(t2 time.Time, timezone ...*time.Location) string {
 }
 
 
-/**
- * 已运行时长: d天h小时m分钟s秒
+/*
+  已运行时长: d天h小时m分钟s秒
  */
 func AlreadyTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	var ret string

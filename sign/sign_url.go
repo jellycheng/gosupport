@@ -93,7 +93,7 @@ func Checks2sSign(timestamp, nonce, sign, secret string) bool {
 }
 
 
-/**
+/*
 php算法：
 function checks2sSign($s_sign, $s_timestamp, $s_nonce, $secret) {
     $tmpArr = array($secret, $s_timestamp, $s_nonce);
