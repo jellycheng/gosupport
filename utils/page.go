@@ -100,3 +100,13 @@ func (p *Page) GormDbGetLimit() int64 {
 	}
 	return pageSize
 }
+
+// 获取总页数，count=总记录数，pageSize=每页记录数
+func TotalPage(count int, pageSize int) int {
+	result := count / pageSize
+	yu := count % pageSize
+	if yu > 0 {
+		result = result + 1
+	}
+	return result
+}

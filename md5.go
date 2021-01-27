@@ -8,6 +8,11 @@ import (
 )
 
 //md5加密
+func Md5(str string) string {
+	return Md5V2(str)
+}
+
+//md5加密
 func Md5V1(str string) string {
 	h := md5.New()  //返回hash.Hash接口对象
 	h.Write([]byte(str))  //字符串转byte数组,并写入内容
@@ -33,4 +38,11 @@ func Md5V3(str string) string {
 func Md5V4(s string) string {
 	m := md5.Sum([]byte(s))
 	return hex.EncodeToString(m[:])
+}
+
+//调用示例： gosupport.Md5V5([]byte{'h','e', 'l','l','o',' ', 'w','o','r','l','d'})
+func Md5V5(bt []byte) string {
+	h := md5.New()
+	h.Write(bt)
+	return hex.EncodeToString(h.Sum(nil))
 }
