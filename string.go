@@ -137,6 +137,15 @@ func GetRandString(length int) string {
 	return GetRandStringWithCharset(length, CharsetStr1)
 }
 
+// 去掉空格后，截取指定长度的字数，并打上...点字符
+func GetSummary(s string, length int) string {
+	summary := strings.TrimSpace(s)
+	if utf8.RuneCountInString(summary) > length {
+		summary = Substr(summary, 0, length)
+		summary += "..."
+	}
+	return summary
+}
 
 func ToBool(s string) bool {
 	s = strings.ToLower(s)
@@ -149,4 +158,9 @@ func ToBoolOr(s string, defaultValue bool) bool {
 		return defaultValue
 	}
 	return b
+}
+
+//忽略大小写比较字符串
+func EqualsIgnoreCase(a, b string) bool {
+	return a == b || strings.ToUpper(a) == strings.ToUpper(b)
 }
