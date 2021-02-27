@@ -77,9 +77,9 @@ func FiledType2GoType(fieldTypeStr string)  string{
 	case "bigint":
 		return "int64"
 	case "decimal":
-		return "float32"
+		return "float64"
 	case "double":
-		return "float32"
+		return "float64"
 	case "float":
 		return "float32"
 	case "real":
