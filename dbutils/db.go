@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-//dsn := GetDsn(map[string]interface{}{"user_name":"root","password":"88888888"})
+// dsn := GetDsn(map[string]interface{}{"username":"root","password":"88888888"})
 func GetDsn(dbConfig map[string]interface{}) string {
 	user_name, ok := dbConfig["username"]
 	if !ok {
@@ -44,7 +44,7 @@ func GetDsn(dbConfig map[string]interface{}) string {
 }
 
 
-//获取表字段信息
+// 获取表字段信息
 func GetTableFields(connect *sql.DB, tbl string) ([]map[string]string, error) {
 	//结果
 	ret := []map[string]string{}
@@ -112,7 +112,7 @@ func UpdateSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, 
 	return
 }
 
-//删除记录sql
+// 删除记录sql
 func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, err error)  {
 	num = 0
 	res, err := connect.Exec(insSql, args...)
@@ -124,7 +124,7 @@ func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, 
 }
 
 
-//查询单条记录
+// 查询单条记录
 func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]string, error)  {
 	//结果
 	ret := make(map[string]string)
@@ -159,7 +159,7 @@ func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]
 
 }
 
-//查询多条记录
+// 查询多条记录
 func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) ([]map[string]string, error)  {
 	//结果
 	ret := []map[string]string{}
@@ -197,6 +197,7 @@ func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) ([]map[stri
 	return ret, nil
 }
 
+// 连接db
 func DbConnect(dsn string) (*sql.DB, error) {
 	db, err := sql.Open("mysql", dsn) //返回*sql.DB结构体指针类型对象
 	if err != nil {
@@ -221,7 +222,7 @@ func GetDbConnect(dbnameCode, dsn string) (*sql.DB, error)  {
 }
 
 
-//获取所有表名
+// 获取所有表名
 func ShowTables(connect *sql.DB) ([]string) {
 	ret := []string{}
 	fieldName := ""
@@ -248,7 +249,7 @@ func ShowTables(connect *sql.DB) ([]string) {
 	return ret
 }
 
-//获取创建表sql语句
+// 获取创建表sql语句
 func ShowCreateTable(connect *sql.DB, tblName string) (string, error) {
 	ret := ""
 	sqlStr := fmt.Sprintf("show create table `%s`;", tblName)

@@ -2,7 +2,6 @@ package dbutils
 
 import (
 	"fmt"
-	"github.com/jellycheng/gosupport"
 )
 
 type MysqlDsn struct {
@@ -27,7 +26,7 @@ func (m *MysqlDsn) ToDsn() string {
 func (m *MysqlDsn) Key() string {
 	str := fmt.Sprintf("%s:%s:%s:%s", m.host, m.port, m.dbname, m.username)
 	if len(str)>32 {
-		str = gosupport.Md5V1(str)
+		str = Md5V1(str)
 	}
 	return str
 }
