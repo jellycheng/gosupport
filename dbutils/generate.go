@@ -48,7 +48,7 @@ func GetSimpleTableInfo(connect *sql.DB, dbName string, tableNames []string) []m
 	return ret
 }
 
-// table=["Name":"表名", "Comment":"表注解"], cfg=["packageName":"包名", "ignoreField":"id,is_delete,create_time,update_time,delete_time","appendStructCode":"GormCommonField","trimTblPrefix":"t_","structNameSuffix":"Model"]
+// table=["Name":"表名", "Comment":"表注解"], cfg=["packageName":"包名", "ignoreField":"id,is_delete,create_time,update_time,delete_time,modify_time","appendStructCode":"GormCommonField","trimTblPrefix":"t_","structNameSuffix":"Model"]
 func GormModelFormat(table map[string]string, fields []map[string]string, cfg map[string]string) string {
 	content := ""
 	if packageName, ok := cfg["packageName"];ok && packageName != "" {
