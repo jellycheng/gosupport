@@ -61,7 +61,7 @@ func FiledType2GoType(fieldTypeStr string)  string{
 	typeArr := strings.Split(fieldTypeStr,"(")
 	switch typeArr[0] {
 	case "int":
-		return "int"
+		return "int64"
 	case "integer":
 		return "int"
 	case "mediumint":

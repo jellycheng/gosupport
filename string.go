@@ -89,13 +89,13 @@ func ToSnakeCase(str string) string {
 }
 
 
-//下划线写法转为驼峰写法，如：img_key 转 ImgKey
+// 下划线写法转为驼峰写法，如：img_key 转 ImgKey
 func Case2Camel(name string) string {
 	name = strings.Replace(name, "_", " ", -1)
 	name = strings.Title(name)
 	return strings.Replace(name, " ", "", -1)
 }
-//驼峰转下化线
+// 驼峰转下划线，如：ImgKeyXyz 转 Img_Key_Xyz
 func Camel2Case(name string) string {
 	var wordBarrierRegex = regexp.MustCompile(`(\w)([A-Z])`)
 	sb := wordBarrierRegex.ReplaceAll(

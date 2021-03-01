@@ -48,7 +48,7 @@ func GetSimpleTableInfo(connect *sql.DB, dbName string, tableNames []string) []m
 	return ret
 }
 
-// table=["Name":"表名", "Comment":"表注解"], cfg=["packageName":"包名", "ignoreField":"id,is_delete,create_time,update_time,delete_time","appendStructCode":"GormCommonField"]
+// table=["Name":"表名", "Comment":"表注解"], cfg=["packageName":"包名", "ignoreField":"id,is_delete,create_time,update_time,delete_time","appendStructCode":"GormCommonField","trimTblPrefix":"t_","structNameSuffix":"Model"]
 func GormModelFormat(table map[string]string, fields []map[string]string, cfg map[string]string) string {
 	content := ""
 	if packageName, ok := cfg["packageName"];ok && packageName != "" {
@@ -65,7 +65,16 @@ func GormModelFormat(table map[string]string, fields []map[string]string, cfg ma
 		ignoreField = strings.Split(tmpIgnoreField, ",")
 	}
 	tblName := table["Name"]
-	structName := CamelCase(tblName)
+	structName := ""
+	if trimTblPrefix, ok := cfg["trimTblPrefix"];ok && trimTblPrefix !="" {
+		structName = CamelCase(strings.TrimPrefix(tblName, trimTblPrefix))
+	} else {
+		structName = CamelCase(tblName)
+	}
+	if structNameSuffix,ok := cfg["structNameSuffix"]; ok && structNameSuffix != "" {
+		structName = structName + structNameSuffix
+	}
+
 	content += "type " + structName + " struct {\n"
 	if tmpAppendCode,ok := cfg["appendStructCode"];ok && tmpAppendCode != "" {//追加到结构体中的代码
 		content += "	" + tmpAppendCode + "\n"
