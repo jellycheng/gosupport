@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"path"
 	"path/filepath"
 	"regexp"
 	"runtime"
@@ -306,6 +307,18 @@ func GetCallFuncName() string {
 		return f.Name()
 	}
 	return ""
+}
+
+func GetCallInfo() map[string]string {
+	ret := make(map[string]string )
+	if pc, fullName, line, ok := runtime.Caller(1);ok {
+		f := runtime.FuncForPC(pc)
+		ret["func"] = f.Name()
+		ret["fullName"] = fullName
+		ret["filename"] =  path.Base(fullName)
+		ret["line"] = fmt.Sprint(line)
+	}
+	return ret
 }
 
 //获取网关env配置名，即配置key
