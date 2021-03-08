@@ -8,8 +8,6 @@ import (
 
 //该文件函数大部分以Time开头
 
-const  TIME_FORMAT = "2006-01-02 15:04:05"
-
 //获取上海时区
 func GetShanghaiTimezone() *time.Location {
 	loc, _:= time.LoadLocation("Asia/Shanghai")
