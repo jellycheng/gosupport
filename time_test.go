@@ -54,12 +54,12 @@ func TestSubDays(t *testing.T) {
 
 func TestTodayStartEndTime(t *testing.T) {
 	s, e := TodayStartEndTime(GetShanghaiTimezone())
-	fmt.Println(s.Format(TIME_FORMAT), e.Format(TIME_FORMAT))
+	fmt.Println(s.Format(TimeFormat), e.Format(TimeFormat))
 	fmt.Println(s.Unix(), e.Unix())
 
 	dayTime, _ := time.ParseInLocation("2006-01-02", "2019-11-09", GetShanghaiTimezone())
 	s2,e2 := DayStartEndTime(dayTime)
-	fmt.Println(s2.Format(TIME_FORMAT), e2.Format(TIME_FORMAT))
+	fmt.Println(s2.Format(TimeFormat), e2.Format(TimeFormat))
 	fmt.Println(s2.Unix(), e2.Unix())
 
 }

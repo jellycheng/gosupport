@@ -44,6 +44,7 @@ const (
 
 const (
 	TIME_FORMAT = "2006-01-02 15:04:05"
-	DateFormat  = "2006-01-02"
-	TFormat     = "15:04:05"
+	TimeFormat = "2006-01-02 15:04:05"
+	DateFormat = "2006-01-02"
+	TFormat    = "15:04:05"
 )

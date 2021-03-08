@@ -35,7 +35,7 @@ func TimeNow2Format(format string, timezone ...*time.Location) string {
 	return time.Now().In(loc).Format(format)
 }
 
-//unixTime,_ := gosupport.Strtotime(gosupport.TIME_FORMAT,"2021-01-02 02:36:43")
+//unixTime,_ := gosupport.Strtotime(gosupport.TimeFormat,"2021-01-02 02:36:43")
 func Strtotime(format, strtime string,timezone ...*time.Location) (int64, error) {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -50,7 +50,7 @@ func Strtotime(format, strtime string,timezone ...*time.Location) (int64, error)
 	return t.Unix(), nil
 }
 
-//gosupport.Date(gosupport.TIME_FORMAT, unixTime时间戳)
+//gosupport.Date(gosupport.TimeFormat, unixTime时间戳)
 func Date(format string, timestamp int64, timezone ...*time.Location) string {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -119,11 +119,11 @@ func TimePtr2Str(t *time.Time) string {
 	if t == nil {
 		return ""
 	}
-	return t.Format(TIME_FORMAT)
+	return t.Format(TimeFormat)
 }
 
 func TimePtr2Str2(t time.Time) string {
-	return t.Format(TIME_FORMAT)
+	return t.Format(TimeFormat)
 }
 
 //当前时间转年月日格式，返回示例：20191128
