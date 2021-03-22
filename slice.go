@@ -2,6 +2,7 @@ package gosupport
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -219,3 +220,36 @@ func SliceJointoString(data interface{}, sep string, isRemove bool) (string, err
 	}
 	return strings.Join(tmpStringSlice, sep), nil
 }
+
+// s := gosupport.InterfacetoString([]interface{}{10, 200}, ",")
+func InterfacetoString(data interface{}, sep string) string  {
+	var tmpStringSlice []string
+	for _, v := range data.([]interface{}) {
+		tmpStringSlice = append(tmpStringSlice, fmt.Sprint(v))
+	}
+	str := strings.Join(tmpStringSlice, sep)
+	return str
+}
+
+// 将[]string转为[]int, s,_ := gosupport.StringSliceToIntSlice([]string{"123", "78919"})
+func StringSliceToIntSlice(arr []string) ([]int, bool) {
+	result := make([]int, 0)
+	for _, i := range arr {
+		res, err := strconv.Atoi(i)
+		if err != nil {
+			return result,false
+		}
+		result = append(result, res)
+	}
+	return result,true
+}
+
+// 将[]int转为[]string, s,_ := gosupport.IntSliceToStringSlice([]int{123, 78919})
+func IntSliceToStringSlice(arr []int) ([]string, bool) {
+	result := make([]string, 0)
+	for _, i := range arr {
+		result = append(result, strconv.Itoa(i))
+	}
+	return result,true
+}
+
