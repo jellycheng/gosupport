@@ -94,3 +94,14 @@ func StripTags(s string, tags ...string) string {
 	}
 	return s
 }
+
+// 从str中提取tag内的内容
+func ExtractContent4Tag(str, tag string) []string {
+	ret := make([]string, 0)
+	tagRe := regexp.MustCompile(`(?ims)<` + tag + `.*?[^<>]*>(.*?)</\s*` + tag + `\s*>`)
+	resTmp := tagRe.FindAllStringSubmatch(str, -1)
+	for _,v := range resTmp {
+		ret = append(ret, v[1])
+	}
+	return ret
+}
