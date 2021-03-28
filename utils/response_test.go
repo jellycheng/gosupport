@@ -75,3 +75,14 @@ func TestOk(t *testing.T) {
 
 
 }
+
+// go test -run="TestResponseData"
+func TestResponseData(t *testing.T)  {
+	respData := NewResponseData()
+	respData.Put("hello", "world").Put("userid", 123456)
+	respData.Put("username", "admin").Put("pwd", "123")
+	respData.Put("username", "superadmin")
+	respData.Del("pwd").Del("abc")
+	fmt.Println(respData.Build())
+	fmt.Println(respData.ToJson())
+}
