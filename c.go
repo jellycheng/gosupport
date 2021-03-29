@@ -2,7 +2,7 @@ package gosupport
 
 //通用常量定义
 
-//版本常量
+// 版本常量
 const (
 	_ byte = iota
 	V1
@@ -28,6 +28,7 @@ const (
 	PrivateFileMode = 0600
 )
 
+// 协议相关常量
 type Scheme string
 const (
 	HTTP  Scheme = "http"
@@ -35,6 +36,7 @@ const (
 	FTP   Scheme = "ftp"
 )
 
+// 字符及字符串相关常量
 const (
 	CharsetStr1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	CharsetStr2 = "0123456789"
@@ -42,9 +44,11 @@ const (
 	CharsetStr3 = "abcdefghkmnpqrstwxyABCDEFGHKMNPQRSTWXY3456789"
 )
 
+// 日期时间相关常量
 const (
 	TIME_FORMAT = "2006-01-02 15:04:05"
 	TimeFormat = "2006-01-02 15:04:05"
 	DateFormat = "2006-01-02"
 	TFormat    = "15:04:05"
+	DTNoSecondsFormat = "2006-01-02 15:04"
 )
