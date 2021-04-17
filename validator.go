@@ -53,6 +53,10 @@ func checkRegexp(val string, reg string) bool {
 	}
 }
 
+// 正则表达式验证字符串
+func RegexpVerify(val string, reg string) bool  {
+	return checkRegexp(val, reg)
+}
 
 //字符串是否为正整数数字字符串
 func IsNumber(str string) bool {
