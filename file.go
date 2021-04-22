@@ -113,3 +113,28 @@ func LoadJson(jsonFile string, t interface{}) error {
 
 	return nil
 }
+
+// 获取文件扩展名
+func FileExt(f string) string {
+	ext := filepath.Ext(f)
+	if ext == "" {
+		return ext
+	}
+	return ext[1:]
+}
+
+// 创建上级目录,存在或者创建成功返回true、创建失败返回false
+func CreateSuperiorDir(path string) bool  {
+	if path == "" || StrInSlice(path, []string{".", "..", "./", "../", "/"}) {
+		return false
+	}
+	spath := filepath.Dir(path)
+	if spath == "" {
+		return false
+	}
+	if err := os.MkdirAll(spath, 0755);err == nil {
+		return true
+	} else {
+		return false
+	}
+}
