@@ -40,6 +40,10 @@ func (p *Page)GetPage() int64 {
 	return p.page
 }
 
+func (p *Page)GetPage2int() int {
+	return int(p.page)
+}
+
 func (p *Page)SetPageSize(pageSizeVal interface{}) (*Page, error)  {
 	if v, err := strconv.ParseInt(fmt.Sprintf("%v", pageSizeVal), 10, 64);err==nil {
 		p.pageSize = v
@@ -56,6 +60,10 @@ func (p *Page)MustSetPageSize(pageSizeVal interface{}) (*Page)  {
 
 func (p *Page)GetPageSize() int64 {
 	return p.pageSize
+}
+
+func (p *Page)GetPageSize2int() int {
+	return int(p.pageSize)
 }
 
 //返回mysql limit部分的内容，格式："0,15"
@@ -83,14 +91,26 @@ func (p *Page) GetStartLimit() int64  {
 	return limit[0]
 }
 
+func (p *Page) GetStartLimit2int() int {
+	return int(p.GetStartLimit())
+}
+
 func (p *Page) GetEndLimit() int64  {
 	limit := p.GetLimit()
 	return limit[1]
 }
 
+func (p *Page) GetEndLimit2int() int {
+	return int(p.GetEndLimit())
+}
+
 //获取mysql offset 部分的值： SELECT * FROM 表名 OFFSET 偏移量 LIMIT 每页记录数
 func (p *Page) GetOffset() int64  {
 	return p.GetStartLimit()
+}
+
+func (p *Page) GetOffset2int() int {
+	return int(p.GetStartLimit())
 }
 
 func (p *Page) GormDbGetLimit() int64 {
@@ -99,6 +119,10 @@ func (p *Page) GormDbGetLimit() int64 {
 		pageSize = 15
 	}
 	return pageSize
+}
+
+func (p *Page) GormDbGetLimit2int() int {
+	return int(p.GormDbGetLimit())
 }
 
 // 获取总页数，count=总记录数，pageSize=每页记录数
