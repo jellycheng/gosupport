@@ -58,8 +58,14 @@ func WenHaoPlaceholders(n int) string {
 
 // db字段类型转go类型, fieldTypeStr=bigint(20)
 func FiledType2GoType(fieldTypeStr string)  string{
+	fieldTypeStr = strings.TrimSpace(fieldTypeStr)
 	typeArr := strings.Split(fieldTypeStr,"(")
-	switch typeArr[0] {
+	realType := typeArr[0]
+	if isMatch,_ := regexp.MatchString(`\s+`, typeArr[0]);isMatch {
+		typeArr2 := strings.Split(typeArr[0]," ")
+		realType = typeArr2[0]
+	}
+	switch realType {
 	case "int":
 		return "int64"
 	case "integer":
