@@ -176,3 +176,19 @@ func StrInSlice(a string, list []string) bool {
 	}
 	return false
 }
+
+func GetLikeStr(str string, pos int) string {
+	ret := ""
+	switch pos {
+	case 0:
+		ret = fmt.Sprintf("%%%s%%", str)
+	case 1:
+		ret = fmt.Sprintf("%%%s", str)
+	case 2:
+		ret = fmt.Sprintf("%s%%", str)
+	default:
+		ret = fmt.Sprintf("%%%s%%", str)
+	}
+
+	return ret
+}
