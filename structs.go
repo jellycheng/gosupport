@@ -46,3 +46,16 @@ func EmptyStruct() struct{} {
 
 	}{}
 }
+
+// 获取结构体某字段的tag值
+func GetStructTagContent(i interface{}, fieldNname string, tagName string) (string, bool) {
+	typeOfI := reflect.TypeOf(i)
+	for typeOfI.Kind() == reflect.Ptr {
+		typeOfI = typeOfI.Elem()
+	}
+	if iType, ok := typeOfI.FieldByName(fieldNname); ok {
+		return iType.Tag.Lookup(tagName)
+	}
+	return "", false
+}
+
