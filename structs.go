@@ -40,9 +40,16 @@ func InitStruct4DefaultTag(bean interface{}) {
 	}
 }
 
-//返回空结构体
+// 返回空结构体
 func EmptyStruct() struct{} {
 	return struct {
+
+	}{}
+}
+
+// 返回空结构体切片，用于json序列化时返回空数组[]
+func EmptyStructSlice() []struct{} {
+	return []struct {
 
 	}{}
 }
