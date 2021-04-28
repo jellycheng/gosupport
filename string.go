@@ -164,3 +164,32 @@ func ToBoolOr(s string, defaultValue bool) bool {
 func EqualsIgnoreCase(a, b string) bool {
 	return a == b || strings.ToUpper(a) == strings.ToUpper(b)
 }
+
+// 隐藏手机号中间4位
+func ReplaceStar4Phone(phone string) string {
+	return ReplaceStar4String(phone, 3, 4)
+}
+
+// 从开始位置替换为*号 start开始位置-从0开始计算，maxLen最多打星个数
+func ReplaceStar4String(str string, start int, maxLen int) string {
+	b := []rune(str)
+	l := len(b)
+	if l == 0 || maxLen == 0 {
+		return str
+	}
+	if start == 0 {
+		if maxLen >= l {
+			return strings.Repeat("*", l)
+		} else {
+			return strings.Repeat("*", maxLen) + string(b[maxLen:])
+		}
+	}
+	if start >= l { // 开始位置超出长度
+		return str
+	}
+	var realMax = maxLen
+	if l - start < maxLen {
+		realMax = l - start
+	}
+	return string(b[:start]) + strings.Repeat("*", realMax) + string(b[realMax+start:])
+}
