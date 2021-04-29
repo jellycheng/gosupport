@@ -193,3 +193,23 @@ func ReplaceStar4String(str string, start int, maxLen int) string {
 	}
 	return string(b[:start]) + strings.Repeat("*", realMax) + string(b[realMax+start:])
 }
+
+// column列从1开始
+func GetExcelLetter(column int) string {
+	result := ""
+	if column<1 {
+		return result
+	}
+	var Letters = []string{"A","B","C","D","E","F","G","H","I","J","K",
+		"L","M","N","O","P","Q","R","S","T","U",
+		"V","W","X","Y","Z"}
+	column = column - 1
+	result = Letters[column%26]
+	column = column / 26
+	for column > 0 {
+		column = column - 1
+		result = Letters[column%26] + result
+		column = column / 26
+	}
+	return result
+}
