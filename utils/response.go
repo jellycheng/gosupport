@@ -65,3 +65,24 @@ func (res *Response) SetTraceid(trace_id string) *Response {
 func (res *Response) GetTraceid() string  {
 	return res.Trace_id
 }
+
+
+// 公共分页列表数据结构
+type CommonListRespDto struct {
+	Page        int `json:"page"`        //第几页
+	PageSize    int `json:"page_size"`   //每页显示几条
+	Total       int64 `json:"total"`       //总记录数
+	List        interface{} `json:"list"`
+
+}
+
+func NewCommonListRespDto() CommonListRespDto {
+	dto := CommonListRespDto{}
+	return dto
+}
+
+func NewCommonListRespDtoObj() *CommonListRespDto  {
+	dto := &CommonListRespDto{}
+	return dto
+}
+
