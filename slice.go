@@ -253,3 +253,51 @@ func IntSliceToStringSlice(arr []int) ([]string, bool) {
 	return result,true
 }
 
+
+type MySliceInt64 struct {
+	data []int64
+}
+
+// obj := NewMySliceInt64()  obj.Push(9)
+func NewMySliceInt64() *MySliceInt64 {
+	obj := MySliceInt64{}
+	return &obj
+}
+//向栈中添加数据
+func (m *MySliceInt64)Push(value int64) {
+	m.data = append(m.data, value)
+}
+
+//从栈中获取数据
+func (m *MySliceInt64)Pop() (int64, bool) {
+	ok := false
+	var val int64 = 0
+	if len(m.data) > 0 {
+		val = m.data[len(m.data)-1]
+		m.data = m.data[:len(m.data)-1]
+		ok = true
+		return val, ok
+	} else {
+		return val, ok
+	}
+}
+
+func (m *MySliceInt64)GetData() []int64 {
+	return m.data
+}
+
+func (m *MySliceInt64)SetData(d []int64) {
+	m.data = d
+}
+
+func (m *MySliceInt64)RemoveRepeatData() []int64 {
+	ret := make([]int64, 0, len(m.data))
+	temp := map[int64]struct{}{}
+	for _, item := range m.data {
+		if _, ok := temp[item]; !ok {
+			temp[item] = struct{}{}
+			ret = append(ret, item)
+		}
+	}
+	return ret
+}
