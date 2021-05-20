@@ -45,6 +45,17 @@ func KeysOfMap(m map[string]string) []string {
 	return keys
 }
 
+func KeysOfMapV2(m map[string]interface{}) []string {
+	keys := make(sort.StringSlice, len(m))
+	i := 0
+	for key := range m {
+		keys[i] = key
+		i++
+	}
+	keys.Sort()
+	return keys
+}
+
 type MyMapStringInt struct {
 	Key   string
 	Value int
@@ -70,3 +81,22 @@ func MapSortByValue(m map[string]int, so string) MyMapStringIntList {
 	}
 	return p
 }
+
+//	myInt64 := []int64{9, 8,10,7}
+//	sort.Sort(gosupport.Int64Slice(myInt64)) // 升序，或者 gosupport.Int64s(myInt64) 或者 gosupport.Int64Slice(myInt64).Sort()
+//	fmt.Println(myInt64) //[7 8 9 10]
+type Int64Slice []int64
+func (x Int64Slice) Len() int           { return len(x) }
+func (x Int64Slice) Less(i, j int) bool { return x[i] < x[j] }
+func (x Int64Slice) Swap(i, j int)      { x[i], x[j] = x[j], x[i] }
+func (x Int64Slice) Sort() { sort.Sort(x) }
+// 升序
+func Int64s(a []int64)  {
+	sort.Sort(Int64Slice(a))
+}
+// 倒序
+func ReverseInt64s(a []int64) {
+	sort.Sort(sort.Reverse(Int64Slice(a)))
+}
+
+
