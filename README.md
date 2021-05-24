@@ -25,19 +25,30 @@ GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/jellychen
 
 ## Usage调用示例
 ```
-vi main.go
 package main
 
 import (
 	"fmt"
 	"github.com/jellycheng/gosupport"
+    "github.com/jellycheng/gosupport/utils"
 )
 
 func main() {
+    // 求和
 	total := gosupport.IntSum(10, 30, 51)
 	fmt.Println(total) //91
-	
+    
+    sCode := utils.NewMintCompress().Compress(1680) // 数值生成对应的压缩码
+	fmt.Println(sCode) //Yt
+	// md5加密
 	fmt.Println(gosupport.Md5V1("hello world")) //5eb63bbbe01eeed093cb22bb8f5acdc3
+
+    // 时间戳转日期格式: 2021-05-24 16:59:04
+    stime := gosupport.Time()
+    fmt.Println(gosupport.Timestamp2DateTime(int(stime), 1))
+    // 2021年05月24日 17时03分05秒
+    fmt.Println(gosupport.DateT("Y年m月d日 H时i分s秒", *gosupport.TimeNowPtr()))
+
 }
 
 ```
