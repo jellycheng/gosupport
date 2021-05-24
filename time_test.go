@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// go test -run="TestTimeFormat2Date"
 func TestTimeFormat2Date(t *testing.T) {
 	fmt.Println(TimeFormat2Date(time.Now()))
 	fmt.Println(TimeFormat2DateWay(time.Now(),2))
@@ -31,7 +32,7 @@ func TestTimeFormat2Date(t *testing.T) {
 	//当前时间戳 1574907260
 	fmt.Println(time.Now().Unix())
 
-	fmt.Println("timestamp2DateTime:", timestamp2DateTime(1569152644, 7))
+	fmt.Println("Timestamp2DateTime:", Timestamp2DateTime(1569152644, 1))
 	fmt.Println("TimeNow2Format:",TimeNow2Format("2006.01.02 15:04:05"))
 }
 

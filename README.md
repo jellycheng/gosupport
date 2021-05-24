@@ -6,14 +6,24 @@ go support, go functions
 
 ```
 
-## 下载依赖
+## Requirements
+```
+gosupport library requires Go version >=1.14
+
+```
+
+## Install下载依赖
 ```
 go get -u github.com/jellycheng/gosupport
 或者
 GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/jellycheng/gosupport
+
 ```
 
-## 调用示例
+## Documentation
+[https://pkg.go.dev/github.com/jellycheng/gosupport](https://pkg.go.dev/github.com/jellycheng/gosupport)
+
+## Usage调用示例
 ```
 vi main.go
 package main

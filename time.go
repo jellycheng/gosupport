@@ -190,8 +190,8 @@ func TimeNow2YMD(timezone ...*time.Location) (int, int, int)  {
 	return year, int(month), day
 }
 
-//时间戳转日期时间格式,调用示例： gosupport.timestamp2DateTime(1569152644, 7)
-func timestamp2DateTime(timestamp int, way int,timezone ...*time.Location) string  {
+//时间戳转日期时间格式,调用示例： gosupport.Timestamp2DateTime(1569152644, 7)
+func Timestamp2DateTime(timestamp int, way int,timezone ...*time.Location) string  {
 	var ret string
 	var loc *time.Location
 	if len(timezone) == 0 {
