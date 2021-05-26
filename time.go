@@ -6,9 +6,8 @@ import (
 	"time"
 )
 
-//该文件函数大部分以Time开头
 
-//获取上海时区
+// 获取上海时区
 func GetShanghaiTimezone() *time.Location {
 	loc, _:= time.LoadLocation("Asia/Shanghai")
 	return loc
@@ -24,7 +23,7 @@ func Time(timezone ...*time.Location) int64 {
 	return time.Now().In(loc).Unix()
 }
 
-//format="20060102"  gosupport.TimeNow2Format("20060102") fmt.Println(gosupport.TimeNow2Format("2006.01.02 15:04:05"))
+// 当前时间转指定日期格式，s:= gosupport.TimeNow2Format("20060102") fmt.Println(gosupport.TimeNow2Format("2006.01.02 15:04:05"))
 func TimeNow2Format(format string, timezone ...*time.Location) string {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -35,7 +34,7 @@ func TimeNow2Format(format string, timezone ...*time.Location) string {
 	return time.Now().In(loc).Format(format)
 }
 
-//unixTime,_ := gosupport.Strtotime(gosupport.TimeFormat,"2021-01-02 02:36:43")
+// 按日期格式+时间转时间戳 unixTime,_ := gosupport.Strtotime(gosupport.TimeFormat,"2021-01-02 02:36:43")
 func Strtotime(format, strtime string,timezone ...*time.Location) (int64, error) {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -50,7 +49,7 @@ func Strtotime(format, strtime string,timezone ...*time.Location) (int64, error)
 	return t.Unix(), nil
 }
 
-//gosupport.Date(gosupport.TimeFormat, unixTime时间戳)
+// 时间戳转指定的时间格式：gosupport.Date(gosupport.TimeFormat, unixTime时间戳)
 func Date(format string, timestamp int64, timezone ...*time.Location) string {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -61,16 +60,15 @@ func Date(format string, timestamp int64, timezone ...*time.Location) string {
 	return time.Unix(timestamp, 0).In(loc).Format(format)
 }
 
-//返回当前时间结构体指针类型
+// 返回当前时间结构体指针类型
 func TimeNowPtr() *time.Time {
 	t := time.Now()
 	return &t
 }
 
-/*
-  调用示例：gosupport.TimeFormat2Date(time.Date(2019, 07, 01, 0, 0, 0, 0, time.UTC))
-  返回格式为 年/月/日，如：2019/07/01 、 2019/11/28
- */
+
+// 调用示例：gosupport.TimeFormat2Date(time.Date(2019, 07, 01, 0, 0, 0, 0, time.UTC))
+// 返回格式为 年/月/日，如：2019/07/01 、 2019/11/28
 func TimeFormat2Date(t time.Time) string {
 	year, month, day := t.Date()
 	return fmt.Sprintf("%d/%02d/%02d", year, month, day)
@@ -94,14 +92,15 @@ func TimeFormat2DateWay(t time.Time, way int) string {
 	return ret
 }
 
-//入参指针类型，返回示例：2019-11-28T01:13:36Z
+// 入参指针类型，返回示例：2019-11-28T01:13:36Z
 func Time2TimeStr(t *time.Time) string {
 	if t == nil {
 		return ""
 	}
 	return t.UTC().Format("2006-01-02T15:04:05Z")
 }
-//入参非指针类型，返回示例：2019-11-28T01:13:36Z
+
+// 入参非指针类型，返回示例：2019-11-28T01:13:36Z
 func Time2TimeStr2(t time.Time) string {
 	return t.UTC().Format("2006-01-02T15:04:05Z")
 }
@@ -114,7 +113,7 @@ func TimeStr2Time(t string) time.Time {
 	return temp
 }
 
-//入参指针类型，返回格式示例：2019-11-28 09:22:30
+// 入参指针类型，返回格式示例：2019-11-28 09:22:30
 func TimePtr2Str(t *time.Time) string {
 	if t == nil {
 		return ""
@@ -126,7 +125,7 @@ func TimePtr2Str2(t time.Time) string {
 	return t.Format(TimeFormat)
 }
 
-//当前时间转年月日格式，返回示例：20191128
+// 当前时间转年月日格式，返回示例：20191128
 func TimeNow2String(timezone ...*time.Location) string {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -139,7 +138,7 @@ func TimeNow2String(timezone ...*time.Location) string {
 	return timeNow
 }
 
-//当前时间转日格式，返回示例：28
+// 当前时间转日格式，返回示例：28
 func TimeNow2Day(timezone ...*time.Location) int {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -152,7 +151,7 @@ func TimeNow2Day(timezone ...*time.Location) int {
 	return Str2Int(timeNow)
 }
 
-//当前时间转月格式，返回示例：11
+// 当前时间转月格式，返回示例：11
 func TimeNow2Month(timezone ...*time.Location) int {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -165,7 +164,7 @@ func TimeNow2Month(timezone ...*time.Location) int {
 	return Str2Int(timeNow)
 }
 
-//当前时间转年月格式，返回示例：201911
+// 当前时间转年月格式，返回示例：201911
 func TimeNow2YearMonth(timezone ...*time.Location) int {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -178,7 +177,7 @@ func TimeNow2YearMonth(timezone ...*time.Location) int {
 	return Str2Int(timeNow)
 }
 
-//当前时间返回年月日
+// 当前时间返回年月日
 func TimeNow2YMD(timezone ...*time.Location) (int, int, int)  {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -190,8 +189,13 @@ func TimeNow2YMD(timezone ...*time.Location) (int, int, int)  {
 	return year, int(month), day
 }
 
-//时间戳转日期时间格式,调用示例： gosupport.Timestamp2DateTime(1569152644, 7)
+// 时间戳转日期时间格式,调用示例： gosupport.Timestamp2DateTime(1569152644, 7)
 func Timestamp2DateTime(timestamp int, way int,timezone ...*time.Location) string  {
+	return Timestamp2DateTime4int64(int64(timestamp), way, timezone...)
+}
+
+// 时间戳转日期时间格式,调用示例： gosupport.Timestamp2DateTime4int64(1622039023, 1)
+func Timestamp2DateTime4int64(timestamp int64, way int,timezone ...*time.Location) string  {
 	var ret string
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -200,7 +204,7 @@ func Timestamp2DateTime(timestamp int, way int,timezone ...*time.Location) strin
 		loc = timezone[0]
 	}
 
-	timeObj := time.Unix(int64(timestamp), 0).In(loc) //将时间戳转为时间格式
+	timeObj := time.Unix(timestamp, 0).In(loc) //将时间戳转为时间格式
 	year := timeObj.Year()     //年
 	month := timeObj.Month()   //月
 	day := timeObj.Day()       //日
@@ -309,9 +313,7 @@ func SubTimeStr(t2 time.Time, timezone ...*time.Location) string {
 }
 
 
-/*
-  已运行时长: d天h小时m分钟s秒
- */
+// 已运行时长: d天h小时m分钟s秒
 func AlreadyTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	var ret string
 	var loc *time.Location
