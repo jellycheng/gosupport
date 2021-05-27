@@ -126,6 +126,47 @@ func PinInStr(strs []string) string {
 	return inStr
 }
 
+
+func JoinInt642Str(data []int64, sep string) string {
+	switch len(data) {
+	case 0:
+		return ""
+	case 1:
+		return strconv.FormatInt(data[0], 10)
+	}
+	var buf strings.Builder
+	for k, v := range data {
+		s := strconv.FormatInt(v, 10)
+		if k == 0 {
+			buf.WriteString(s)
+		} else {
+			buf.WriteString(sep + s)
+		}
+	}
+	inStr := buf.String()
+	return inStr
+}
+
+func JoinInt2Str(data []int, sep string) string {
+	switch len(data) {
+	case 0:
+		return ""
+	case 1:
+		return strconv.Itoa(data[0])
+	}
+	var buf strings.Builder
+	for k, v := range data {
+		s := strconv.Itoa(v)
+		if k == 0 {
+			buf.WriteString(s)
+		} else {
+			buf.WriteString(sep + s)
+		}
+	}
+	inStr := buf.String()
+	return inStr
+}
+
 func isASCIILower(c byte) bool {
 	return 'a' <= c && c <= 'z'
 }

@@ -86,3 +86,12 @@ func TestSelectSql(t *testing.T) {
 	}
 
 }
+
+// go test -run="TestJoinInt2Str"
+func TestJoinInt2Str(t *testing.T) {
+	s := JoinInt2Str([]int{123456789, 8,0,1}, ",")
+	fmt.Println(s)
+	s2 := JoinInt642Str([]int64{66, -1,0,1}, ",")
+	fmt.Println(s2)
+}
+
