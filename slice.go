@@ -301,3 +301,62 @@ func (m *MySliceInt64)RemoveRepeatData() []int64 {
 	}
 	return ret
 }
+
+// 过滤字符串切片内容
+// 示例：
+//  s1 := []string{"hello", "", "yes", "0","yes"}
+//	s2 := gosupport.StringFilter(s1, func(s string) bool {
+//		if s == "" || s == "0" {
+//			return false
+//		}
+//		return true
+//	})
+func StringFilter(data []string, callBack func(s string) bool) []string  {
+	ret := make([]string, 0, len(data))
+	for _, item := range data {
+		if callBack(item) {
+			ret = append(ret, item)
+		}
+	}
+	return ret
+}
+
+func IntFilter(data []int, callBack func(i int) bool) []int  {
+	ret := make([]int, 0, len(data))
+	for _, item := range data {
+		if callBack(item) {
+			ret = append(ret, item)
+		}
+	}
+	return ret
+}
+
+func Int64Filter(data []int64, callBack func(i int64) bool) []int64  {
+	ret := make([]int64, 0, len(data))
+	for _, item := range data {
+		if callBack(item) {
+			ret = append(ret, item)
+		}
+	}
+	return ret
+}
+
+func StringNumber2IntSlice(data []string) []int  {
+	ret := make([]int, 0, len(data))
+	for _, item := range data {
+		if i, err := strconv.Atoi(item); err == nil {
+			ret = append(ret, i)
+		}
+	}
+	return ret
+}
+
+func StringNumber2Int64Slice(data []string) []int64 {
+	ret := make([]int64, 0, len(data))
+	for _, item := range data {
+		if i, err := strconv.ParseInt(item, 10, 64); err == nil {
+			ret = append(ret, i)
+		}
+	}
+	return ret
+}
