@@ -386,3 +386,10 @@ func DayStartEndTime(t time.Time, timezone ...*time.Location) (time.Time, time.T
 	return start, end
 }
 
+func Sleep(t int64) {
+	time.Sleep(time.Duration(t) * time.Second)
+}
+
+func Usleep(t int64) {
+	time.Sleep(time.Duration(t) * time.Microsecond)
+}

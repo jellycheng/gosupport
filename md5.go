@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"io/ioutil"
 )
 
 //md5加密
@@ -46,3 +47,16 @@ func Md5V5(bt []byte) string {
 	h.Write(bt)
 	return hex.EncodeToString(h.Sum(nil))
 }
+
+
+// 获取文件的md5值
+func Md5File(path string) (string, error) {
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	hash := md5.New()
+	hash.Write([]byte(data))
+	return hex.EncodeToString(hash.Sum(nil)), nil
+}
+

@@ -15,6 +15,11 @@ import (
 	"time"
 )
 
+// 输出，类似php的echo()函数
+func Echo(args ...interface{}) {
+	_, _ = fmt.Print(args...)
+}
+
 func Exit(status int) {
 	os.Exit(status)
 }

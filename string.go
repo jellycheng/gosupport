@@ -213,3 +213,22 @@ func GetExcelLetter(column int) string {
 	}
 	return result
 }
+
+// 反转字符串
+func Strrev(str string) string {
+	runes := []rune(str)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
+
+// 获取字符串长度，类似php的strlen()函数
+func Strlen(str string) int {
+	return len(str)
+}
+
+// 获取字符串长度，类似php的mb_strlen()函数
+func MbStrlen(str string) int {
+	return utf8.RuneCountInString(str)
+}
