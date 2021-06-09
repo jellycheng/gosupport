@@ -7,9 +7,9 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"runtime"
-	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -18,6 +18,10 @@ import (
 // 输出，类似php的echo()函数
 func Echo(args ...interface{}) {
 	_, _ = fmt.Print(args...)
+}
+
+func EchoF(args interface{}) {
+	_, _ = fmt.Printf("%#v" + GO_EOL, args)
 }
 
 func Exit(status int) {
