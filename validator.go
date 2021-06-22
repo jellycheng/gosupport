@@ -2,8 +2,18 @@ package gosupport
 
 import "regexp"
 
-//验证
-
+// 判断是否普通账号名，必须以字母开头，可由字母、数字、下划线组成
+func IsAccountName(str string) bool {
+	isMatch,err := regexp.MatchString("^[a-zA-Z][a-zA-Z0-9_]*$", str)
+	if err!=nil {
+		return false
+	}
+	if isMatch {
+		return true
+	} else {
+		return false
+	}
+}
 
 //是否邮箱
 func IsMail(mail string) bool {
