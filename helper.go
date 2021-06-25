@@ -359,3 +359,12 @@ func Float64Toint(fNum float64) (int, error)  {
 	}
 }
 
+func MergeStringMap(list ...map[string]string) map[string]string {
+	newObj := map[string]string{}
+	for _, m := range list {
+		for k, v := range m {
+			newObj[k] = v
+		}
+	}
+	return newObj
+}
