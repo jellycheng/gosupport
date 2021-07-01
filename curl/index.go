@@ -28,7 +28,7 @@ func HttpGet(url string) (string, error) {
   param := "name=李四&age=19"
  */
 func HttpPost(url string, param string) (string, error)  {
-	resp, err := http.Post(url, "application/x-www-form-urlencoded", strings.NewReader(param))
+	resp, err := http.Post(url, CONTENT_TYPE_FORM, strings.NewReader(param))
 	if err!=nil {
 		return "", err
 	}
@@ -40,7 +40,7 @@ func HttpPost(url string, param string) (string, error)  {
 }
 
 func HttpPostJson(url string, param string) (string, error)  {
-	resp, err := http.Post(url, "application/json", strings.NewReader(param))
+	resp, err := http.Post(url, CONTENT_TYPE_JSON, strings.NewReader(param))
 	if err!=nil {
 		return "", err
 	}

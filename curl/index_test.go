@@ -25,6 +25,7 @@ func TestHttpPost(t *testing.T) {
 	}
 }
 
+// go test -run="TestHttpPostJson"
 func TestHttpPostJson(t *testing.T) {
 	paramData := `{"name":"张三","age":28}`
 	con,err := HttpPostJson("http://devapi.nfangbian.com/test.php?a=2&b=hi", paramData)
