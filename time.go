@@ -393,3 +393,10 @@ func Sleep(t int64) {
 func Usleep(t int64) {
 	time.Sleep(time.Duration(t) * time.Microsecond)
 }
+
+func TimeToSlice(t time.Time) []int {
+	hour, min, sec := t.Clock()
+	year, month, day := t.Date()
+	// 年 月 日 时 分 秒 纳秒
+	return []int{year, int(month), day, hour, min, sec, t.Nanosecond()}
+}

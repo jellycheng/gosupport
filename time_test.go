@@ -32,6 +32,8 @@ func TestTimeFormat2Date(t *testing.T) {
 	//当前时间戳 1574907260
 	fmt.Println(time.Now().Unix())
 
+	fmt.Println(TimeToSlice(time.Now()))
+
 	fmt.Println("Timestamp2DateTime:", Timestamp2DateTime(1569152644, 1))
 	fmt.Println("TimeNow2Format:",TimeNow2Format("2006.01.02 15:04:05"))
 }
