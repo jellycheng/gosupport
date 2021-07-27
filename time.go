@@ -1,6 +1,7 @@
 package gosupport
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -399,4 +400,40 @@ func TimeToSlice(t time.Time) []int {
 	year, month, day := t.Date()
 	// 年 月 日 时 分 秒 纳秒
 	return []int{year, int(month), day, hour, min, sec, t.Nanosecond()}
+}
+
+
+type AssertTime struct {
+	// 支持的日期格式
+	TimeFormats []string
+}
+
+func NewAssertTime() *AssertTime {
+	tmp := AssertTime{
+		TimeFormats: []string{
+			"2006", "2006-1", "2006-1-2", "2006-1-2 15", "2006-1-2 15:4", "2006-1-2 15:4:5",
+			"2006年1月2日",
+			"1-2",
+			"15:4:5", "15:4", "15",
+			"15:4:5 Jan 2, 2006 MST", "2006-01-02 15:04:05.999999999 -0700 MST", "2006-01-02T15:04:05-07:00",
+			"2006.1","2006.1.2", "2006.1.2 15:04:05", "2006.01.02", "2006.01.02 15:04:05", "2006.01.02 15:04:05.999999999",
+			"1/2/2006", "1/2/2006 15:4:5", "2006/01/02", "2006/01/02 15:04:05",
+			time.ANSIC, time.UnixDate, time.RubyDate, time.RFC822, time.RFC822Z, time.RFC850,
+			time.RFC1123, time.RFC1123Z, time.RFC3339, time.RFC3339Nano,
+			time.Kitchen, time.Stamp, time.StampMilli, time.StampMicro, time.StampNano,
+		},
+	}
+	return &tmp
+}
+
+// 分析并断言的日期时间则返回，否则返回错误
+func (m *AssertTime) ParseAssertFormat(str string, location *time.Location) (t time.Time, err error) {
+	for _, format := range m.TimeFormats {
+		t, err = time.ParseInLocation(format, str, location)
+		if err == nil {
+			return
+		}
+	}
+	err = errors.New("不符合的日期时间格式,传入的日期时间是: " + str)
+	return
 }

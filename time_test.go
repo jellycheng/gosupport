@@ -66,3 +66,16 @@ func TestTodayStartEndTime(t *testing.T) {
 	fmt.Println(s2.Unix(), e2.Unix())
 
 }
+
+// go test -run="TestNewAssertTime"
+func TestNewAssertTime(t *testing.T) {
+	tmp := NewAssertTime()
+	tmp.TimeFormats = append(tmp.TimeFormats, "06年1月2日","2006年1月2日 15时4分5秒")
+	tObj,err := tmp.ParseAssertFormat("2021年7月27日 19时22分09秒", GetShanghaiTimezone())
+	if err == nil{
+		fmt.Println(tObj.Format(TimeFormat))
+	} else {
+		fmt.Println(err)
+	}
+
+}
