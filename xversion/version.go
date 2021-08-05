@@ -11,6 +11,8 @@ var (
 	GoVersion = ""
 	// git提交commmit id
 	GitCommit = ""
+	// 仓库分支名
+	BranchName = ""
 	// 项目构建时间
 	BuildTime = ""
 )
@@ -20,8 +22,9 @@ func GetInfo() string {
 Version: %s
 Go Version: %s
 Git Commit: %s
+Branch Name: %s
 Build Time: %s
-`, ServiceName,Version,GoVersion,GitCommit,BuildTime)
+`, ServiceName,Version,GoVersion,GitCommit,BranchName, BuildTime)
 	return ret
 }
 
