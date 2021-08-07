@@ -368,3 +368,25 @@ func MergeStringMap(list ...map[string]string) map[string]string {
 	}
 	return newObj
 }
+
+// 返回随机打乱后的切片,洗牌算法,切片引用传递
+func ShuffleStr(s []string) {
+	rand.Seed(time.Now().UnixNano())
+	for i := len(s) - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
+		s[i], s[j] = s[j], s[i]
+	}
+}
+
+func ShuffleStr4Copy(s []string) []string {
+	l := len(s)
+	var dst = make([]string, l)
+	copy(dst, s)
+	rand.Seed(time.Now().UnixNano())
+	for i := l - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
+		dst[i], dst[j] = dst[j], dst[i]
+	}
+	return dst
+}
+
