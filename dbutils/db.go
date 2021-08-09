@@ -226,8 +226,8 @@ func GetDbConnect(dbnameCode, dsn string) (*sql.DB, error)  {
 func ShowTables(connect *sql.DB) ([]string) {
 	ret := []string{}
 	fieldName := ""
-	sql := "show tables;"
-	tables, err := SelectRows(connect, sql)
+	sqlStr := "show tables;"
+	tables, err := SelectRows(connect, sqlStr)
 	if err == nil {
 		for _,v := range tables {
 			for field, _ := range v {
