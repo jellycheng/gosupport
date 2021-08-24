@@ -303,6 +303,15 @@ func IsEmpty(val interface{}) bool  {
 	return ret
 }
 
+// 是否是空字符串
+func IsEmptyV2(str string) bool {
+	return len(str) == 0
+}
+// 是否不是空字符串
+func IsNotEmptyV2(str string) bool {
+	return !IsEmpty(str)
+}
+
 //换行符转html换行标签
 func Nl2br(str string) string {
 	return strings.Replace(str, "\n", "<br/>", -1)

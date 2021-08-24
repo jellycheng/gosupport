@@ -232,3 +232,21 @@ func Strlen(str string) int {
 func MbStrlen(str string) int {
 	return utf8.RuneCountInString(str)
 }
+
+// 是否空串 或者 全是 空格
+func IsBlank(str string) bool {
+	strLen := len(str)
+	if str == "" || strLen == 0 {
+		return true
+	}
+	for i := 0; i < strLen; i++ {
+		if unicode.IsSpace(rune(str[i])) == false {
+			return false
+		}
+	}
+	return true
+}
+
+func IsNotBlank(str string) bool {
+	return !IsBlank(str)
+}
