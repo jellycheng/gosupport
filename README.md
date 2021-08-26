@@ -8,8 +8,8 @@ go support, go functions
 
 ```
 [![Language](https://img.shields.io/badge/Language-Go-blue.svg)](https://golang.org/)
-![https://goproxy.cn/stats/github.com/jellycheng/gosupport/badges/download-count.svg](https://goproxy.cn/stats/github.com/jellycheng/gosupport/badges/download-count.svg)
 [![Go Reference](https://pkg.go.dev/badge/github.com/jellycheng/gosupport.svg)](https://pkg.go.dev/github.com/jellycheng/gosupport)
+[![Goproxy.cn](https://goproxy.cn/stats/github.com/jellycheng/gosupport/badges/download-count.svg)](https://goproxy.cn/stats/github.com/jellycheng/gosupport/badges/download-count.svg)
 
 ## Requirements
 ```
