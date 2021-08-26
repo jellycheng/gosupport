@@ -7,6 +7,9 @@ go support, go functions
 常用算法、工具是日积月累的，持续打磨，完善，坚持、加油！！！
 
 ```
+[![Language](https://img.shields.io/badge/Language-Go-blue.svg)](https://golang.org/)
+![https://goproxy.cn/stats/github.com/jellycheng/gosupport/badges/download-count.svg](https://goproxy.cn/stats/github.com/jellycheng/gosupport/badges/download-count.svg)
+[![GoDoc](https://pkg.go.dev/badge/github.com/jellycheng/gosupport)](https://pkg.go.dev/github.com/jellycheng/gosupport)
 
 ## Requirements
 ```
