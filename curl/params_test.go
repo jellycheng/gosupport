@@ -1,6 +1,9 @@
 package curl
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestNewParams(t *testing.T) {
 
@@ -19,4 +22,9 @@ func TestNewParams(t *testing.T) {
 		println(k, ParamValueToString(v))
 	}
 
+}
+
+// go test -run="TestAppendParamToUrl"
+func TestAppendParamToUrl(t *testing.T) {
+	fmt.Println(AppendParamToUrl("http://nfangbian.com:80/fangan/index?xyz=88#hello", "a=你好&b=goods"))
 }

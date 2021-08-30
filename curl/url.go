@@ -2,8 +2,10 @@ package curl
 
 import (
 	"encoding/base64"
+	"fmt"
 	"net/url"
 	"strings"
+	"unicode"
 )
 
 func UrlEncode(str string) string {
@@ -36,4 +38,56 @@ func TrimPath(path string, pos int) string {
 		ret = path
 	}
 	return ret
+}
+
+// 向url中追加参数
+func AppendParamToUrl(url, param string) string {
+	if IsBlank(param) {
+		return url
+	}
+	tmpParam := []rune(param)
+
+	questionMarkIndex := strings.Index(url, "?")
+	alarmMarkIndex := strings.Index(url, "#")
+	if questionMarkIndex == -1 && alarmMarkIndex == -1 {// 不存在#、?
+		if tmpParam[0] == '#' || tmpParam[0] == '?' {
+			return fmt.Sprintf("%s%s",url, param)
+		}
+		return fmt.Sprintf("%s?%s",url, param)
+	}
+	if questionMarkIndex >=0 && alarmMarkIndex == -1 { // 仅存在?
+		if tmpParam[0] == '#' {
+			return fmt.Sprintf("%s%s",url, param)
+		} else if tmpParam[0] == '?' {
+			return fmt.Sprintf("%s&%s",url, strings.TrimLeft(param, "?"))
+		}
+		return fmt.Sprintf("%s&%s",url, param)
+	}
+	if questionMarkIndex == -1 && alarmMarkIndex >= 0 { // 仅存在#
+		tmpUrl := strings.SplitN(url, "#", 2)
+		return fmt.Sprintf("%s?%s#%s", tmpUrl[0], strings.TrimLeft(param, "?#"), tmpUrl[1])
+	}
+	// 存在?#
+	if questionMarkIndex < alarmMarkIndex {//?在#号之前
+		tmpUrl := strings.SplitN(url, "#", 2)
+		return fmt.Sprintf("%s&%s#%s", tmpUrl[0], strings.TrimLeft(param, "?#"), tmpUrl[1])
+	}
+	if questionMarkIndex > alarmMarkIndex {//?在#号之后,如：https://h5.xxx.com/#/packages/pages/index?code=2&_from=xxx&_goto_time=162
+		return fmt.Sprintf("%s&%s", url, strings.TrimLeft(param, "?#"))
+	}
+	return fmt.Sprintf("%s?%s", url, strings.TrimLeft(param, "?#"))
+}
+
+// 是否空串 或者 全是 空格
+func IsBlank(str string) bool {
+	strLen := len(str)
+	if str == "" || strLen == 0 {
+		return true
+	}
+	for i := 0; i < strLen; i++ {
+		if unicode.IsSpace(rune(str[i])) == false {
+			return false
+		}
+	}
+	return true
 }
