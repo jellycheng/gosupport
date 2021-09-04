@@ -24,7 +24,7 @@ func ExecCmdBytes(cmdName string, args ...string) ([]byte, []byte, error) {
 	return ExecCmdDirBytes("", cmdName, args...)
 }
 
-//
+
 func ExecCmdDir(dir, cmdName string, args ...string) (string, string, error) {
 	bufOut, bufErr, err := ExecCmdDirBytes(dir, cmdName, args...)
 	return string(bufOut), string(bufErr), err
@@ -35,3 +35,20 @@ func ExecCmd(cmdName string, args ...string) (string, string, error) {
 	return ExecCmdDir("", cmdName, args...)
 }
 
+// 切换到指定目录拉取最新代码
+func GitPull(codeRootDir string) (string, error) {
+	if okCon,failCon,err := ExecCmdDir(codeRootDir, "git", "pull");err == nil {
+		return okCon, nil
+	} else {
+		return failCon, err
+	}
+}
+
+// 切换到指定目录checkout
+func GitCheckout(codeRootDir string) (string, error) {
+	if okCon,failCon,err := ExecCmdDir(codeRootDir, "git", "checkout", "--", ".");err == nil {
+		return okCon, nil
+	} else {
+		return failCon, err
+	}
+}
