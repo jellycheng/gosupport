@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-func TestRpc(t *testing.T) {
+// go test -run="TestRpc01"
+func TestRpc01(t *testing.T) {
+	// 拼接jsonrpc2.0格式
 	abc := Method{}
 	abc.JoinMethodOneToStr(`User\Account`, "getUserInfo")
 	rpcObj := RPCRequest{
@@ -17,16 +19,22 @@ func TestRpc(t *testing.T) {
 			Params:"hello world",
 
 	}
-	//结构体对象转json字符串
+	// 结构体对象转json字符串
 	jsonRpcStr01 := rpcObj.ToJson()
 	fmt.Println(jsonRpcStr01) //{"jsonrpc":"2.0","method":"User\\Account.getUserInfo","params":"hello world","id":"1233456"}
-
-	//json字符串转结构体对象
+	// json字符串转结构体对象
 	var reqRpcObj RPCRequest = JsonToRPCRequestStruct(jsonRpcStr01)
 	fmt.Println(reqRpcObj.Method) //User\Account.getUserInfo
 
+	// 拼接jsonrpc2.0格式
+	rpcObj11 := NewRPCRequest()
+	methodTmp := Method{}
+	rpcObj11.Method = methodTmp.JoinMethodOneToStr(`vod\video`, "info").GetMethod()
+	rpcObj11.Id = "abc123id"
+	fmt.Println(rpcObj11.ToJson())
 
-	//拼装批量协议
+
+	// 拼装批量协议
 	abc2 := Method{}
 	abc2.JoinMethodOneToStr(`User\Address`, "getAddressList")
 	rpcObj2 := RPCRequest{

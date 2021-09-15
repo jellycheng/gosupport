@@ -26,6 +26,10 @@ func (req RPCRequest)ToJson() string {
 	return ToJson(req)
 }
 
+func NewRPCRequest() *RPCRequest {
+	return &RPCRequest{Jsonrpc: JsonrpcVersion}
+}
+
 //响应对象
 type RPCResponse struct {
 	Jsonrpc string      `json:"jsonrpc"`
