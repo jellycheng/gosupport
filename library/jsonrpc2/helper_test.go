@@ -1,6 +1,7 @@
 package jsonrpc2
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -83,3 +84,24 @@ func TestRpc02(t *testing.T)  {
 	 fmt.Println(jsonMap)
 }
 
+// go test -run="TestRpc03"
+func TestRpc03(t *testing.T)  {
+	data := `{"jsonrpc": "2.0", "id": 12345, "result": null}`
+	// data = `{"jsonrpc": "2.0", "id": 12345, "result": "hello"sw}ss`
+	// data = `{"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": "1"}`
+	data = `{"jsonrpc": "2.0", "result": 19, "id": 1}`
+	reader := bytes.NewReader([]byte(data))
+	var result interface{}
+
+	err := DecodeJsonrpcResponse(reader, &result)
+
+	if err == ErrNullResult {
+		fmt.Println("ErrNullResult:", err)
+	}
+	if err != nil {
+		fmt.Println(err)
+	}
+	if result != nil {
+		fmt.Println("result:", result)
+	}
+}

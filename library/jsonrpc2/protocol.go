@@ -1,5 +1,8 @@
 package jsonrpc2
 
+import (
+	"encoding/json"
+)
 
 //https://www.jsonrpc.org/specification
 
@@ -42,6 +45,13 @@ func (rep RPCResponse)ToJson() string {
 	return ToJson(rep)
 }
 
+type JsonrpcResponse struct {
+	Jsonrpc string      `json:"jsonrpc"`
+	Result  *json.RawMessage `json:"result,omitempty"`
+	Error   *json.RawMessage   `json:"error,omitempty"`
+	Id      interface{}      `json:"id"`
+}
+
 //错误对象
 type RPCError struct {
 	Code    int         `json:"code"`    //整数
@@ -49,8 +59,10 @@ type RPCError struct {
 	Data    interface{} `json:"data,omitempty"`
 }
 
-func (ree RPCError)ToJson() string {
-	return ToJson(ree)
+func (e RPCError)ToJson() string {
+	return ToJson(e)
 }
 
-
+func (e *RPCError) Error() string {
+	return e.Message
+}

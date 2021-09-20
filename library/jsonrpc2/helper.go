@@ -2,8 +2,12 @@ package jsonrpc2
 
 import (
 	"encoding/json"
+	"errors"
+	"io"
 	"strings"
 )
+
+var ErrNullResult = errors.New("result is null")
 
 type Method struct {
 	methodStr string
@@ -81,3 +85,23 @@ func JsonToRPCErrorStruct(str string) RPCError {
 	return reeRpcObj
 }
 
+func DecodeJsonrpcResponse(r io.Reader, reply interface{}) error {
+	var c JsonrpcResponse
+	if err := json.NewDecoder(r).Decode(&c); err != nil {// 内容解析错误
+		return err
+	}
+	if c.Error != nil { // jsonrpc错误
+		jsonErr := &RPCError{}
+		if err := json.Unmarshal(*c.Error, jsonErr); err != nil {
+			return &RPCError{
+				Code:     -32000,
+				Message: string(*c.Error),
+			}
+		}
+		return jsonErr
+	}
+	if c.Result == nil {
+		return ErrNullResult
+	}
+	return json.Unmarshal(*c.Result, reply)
+}
