@@ -91,9 +91,9 @@ func DecodeJsonrpcResponse(r io.Reader, reply interface{}) error {
 		return err
 	}
 	if c.Error != nil { // jsonrpc错误
-		jsonErr := &RPCError{}
-		if err := json.Unmarshal(*c.Error, jsonErr); err != nil {
-			return &RPCError{
+		jsonErr := RPCError{}
+		if err := json.Unmarshal(*c.Error, &jsonErr); err != nil {
+			return RPCError{
 				Code:     -32000,
 				Message: string(*c.Error),
 			}

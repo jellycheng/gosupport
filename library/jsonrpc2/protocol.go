@@ -63,6 +63,6 @@ func (e RPCError)ToJson() string {
 	return ToJson(e)
 }
 
-func (e *RPCError) Error() string {
+func (e RPCError) Error() string {
 	return e.Message
 }
