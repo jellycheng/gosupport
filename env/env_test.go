@@ -36,7 +36,7 @@ func TestLoadEnv(t *testing.T) {
 }
 
 
-
+// go test -run="TestLoadEnv2DataManage"
 func TestLoadEnv2DataManage(t *testing.T) {
 	var envPath string = "/Users/jelly/test/mygoenv/"
 
@@ -49,7 +49,7 @@ func TestLoadEnv2DataManage(t *testing.T) {
 	for k,v := range data {
 		fmt.Println("key:", k, " val:", v)
 	}
-
+	data["USER_1_DB_READ_HOST"] = "hello"
 	fmt.Println("=================================")
 	fmt.Println(globalenv.Data["USER_1_DB_READ_HOST"])
 

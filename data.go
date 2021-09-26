@@ -6,10 +6,8 @@ import (
 )
 
 type DataManage struct {
-	
 	DataMutex *sync.RWMutex
 	Data map[string]interface{}
-	
 }
 
 func (dm *DataManage) Set(key string, value interface{}) {
@@ -38,12 +36,15 @@ func (dm *DataManage) Get(key string) (value interface{}, exists bool) {
 	return
 }
 
-func (dm *DataManage) GetData() (map[string]interface{}) {
+func (dm *DataManage) GetData() map[string]interface{} {
 	if dm.DataMutex == nil {
 		dm.DataMutex = &sync.RWMutex{}
 	}
-
-	return dm.Data
+	res := make(map[string]interface{}, len(dm.Data))
+	for k, v := range dm.Data {
+		res[k] = v
+	}
+	return res
 }
 
 func (dm *DataManage) MustGet(key string) interface{} {
