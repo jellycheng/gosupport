@@ -20,6 +20,10 @@ func NewMyError() MyError {
 	return MyError{}
 }
 
+func NewMyError4Param(code int, msg string) MyError {
+	return MyError{ErrCode: code, ErrMsg: msg, ExtData: ""}
+}
+
 func (m MyError) Error() string {
 	return m.ErrMsg
 }
