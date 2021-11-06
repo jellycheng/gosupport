@@ -46,3 +46,12 @@ func TestHttpPostForm(t *testing.T) {
 	}
 }
 
+// go test -run="TestParseUrlAndAppendParam"
+func TestParseUrlAndAppendParam(t *testing.T) {
+	s,_ := ParseUrlAndAppendParam("http://www.nfangbian.com?a=yes&x=333&username=admin#wechat", map[string][]string{
+		"a":[]string{"hello", "good"},
+		"a3":[]string{"xxxx"},
+	})
+	// http://www.nfangbian.com?a=yes&a=hello&a=good&a3=xxxx&username=admin&x=333#wechat
+	fmt.Println(s)
+}

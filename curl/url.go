@@ -91,3 +91,20 @@ func IsBlank(str string) bool {
 	}
 	return true
 }
+
+// 分析url并追加参数
+func ParseUrlAndAppendParam(reqUrl string, queryParams map[string][]string) (string,error)  {
+	varURL, err := url.Parse(reqUrl)
+	if err != nil {
+		return "", err
+	}
+	query := varURL.Query()
+	for k, values := range queryParams {
+		for _, v := range values {
+			query.Add(k, v)
+		}
+	}
+
+	varURL.RawQuery = query.Encode()
+	return varURL.String(), nil
+}
