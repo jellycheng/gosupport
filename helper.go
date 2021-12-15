@@ -50,12 +50,12 @@ func IntSum(nums ...int) int {
 	return total
 }
 
-//空函数，什么也不做
+// 空函数，什么也不做
 func Void()  {
 	
 }
 
-//转成json字符串
+// 转成json字符串
 func ToJson(v interface{}) string {
 	b, err := json.Marshal(v)
 	if err != nil {
@@ -63,6 +63,11 @@ func ToJson(v interface{}) string {
 	}
 	return string(b)
 }
+
+func JsonUnmarshal(str string, obj interface{}) error  {
+	return json.Unmarshal([]byte(str), obj)
+}
+
 //返回红色，用于在终端打印红色字，调用示例：fmt.Println(gosupport.ToRed("hello world"))
 func ToRed(str string) string {
 	return fmt.Sprintf("\033[31m%s\033[0m", str)
