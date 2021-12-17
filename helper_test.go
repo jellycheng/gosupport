@@ -54,3 +54,20 @@ func TestInitStruct4DefaultTag(t *testing.T) {
 	fmt.Println(fmt.Sprintf("%+v", config))
 }
 
+// go test -run="TestNewSequence"
+func TestNewSequence(t *testing.T) {
+	ret := NewSequence().SetPrefix("SO").SetStepSize(108).SetUid(10010).GetSeq()
+	fmt.Println(ret)
+
+	ret2 := NewSequence().SetPrefix("SO").SetStepSize(-1).SetUid(10010).GetSeq()
+	fmt.Println(ret2)
+
+	uidMod1 := SeqString(ret2).GetUidMod4Seq()
+	ret3 := NewSequence().SetPrefix("SOL").SetStepSize(108).GetSeq(uidMod1)
+	fmt.Println(ret3)
+
+	var uidMod int64 = 789
+	ret4 := NewSequence().SetPrefix("OPL").SetStepSize(108).GetSeq(uidMod)
+	fmt.Println(ret4)
+
+}
