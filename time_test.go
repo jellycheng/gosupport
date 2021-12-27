@@ -36,6 +36,9 @@ func TestTimeFormat2Date(t *testing.T) {
 
 	fmt.Println("Timestamp2DateTime:", Timestamp2DateTime(1569152644, 1))
 	fmt.Println("TimeNow2Format:",TimeNow2Format("2006.01.02 15:04:05"))
+
+	t1,_ := Strtotime(time.RFC3339, "2021-12-21T18:16:23+08:00")
+	fmt.Println(t1) //1640081783
 }
 
 func TestDateT(t *testing.T) {
@@ -78,4 +81,10 @@ func TestNewAssertTime(t *testing.T) {
 		fmt.Println(err)
 	}
 
+}
+
+// go test -run="TestTimestamp2Time"
+func TestTimestamp2Time(t *testing.T) {
+	t2 := Timestamp2Time(1640081783)
+	fmt.Println(t2.Format("2006-01-02 15:04:05"))
 }

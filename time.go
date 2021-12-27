@@ -7,6 +7,23 @@ import (
 	"time"
 )
 
+var defaultTimezone, _ = time.LoadLocation("Asia/Shanghai")
+
+// 获取默认时区
+func GetDefaultTimezone() *time.Location {
+	return defaultTimezone
+}
+
+// 时间戳转time.Time对象
+func Timestamp2Time(timestamp int64, timezone ...*time.Location) time.Time {
+	var loc *time.Location
+	if len(timezone) == 0 {
+		loc = GetDefaultTimezone()
+	} else {
+		loc = timezone[0]
+	}
+	return time.Unix(timestamp, 0).In(loc)
+}
 
 // 获取上海时区
 func GetShanghaiTimezone() *time.Location {
