@@ -1,6 +1,7 @@
 package gosupport
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 	"time"
@@ -70,4 +71,13 @@ func TestNewSequence(t *testing.T) {
 	ret4 := NewSequence().SetPrefix("OPL").SetStepSize(108).GetSeq(uidMod)
 	fmt.Println(ret4)
 
+}
+
+// go test -run="TestNewWrapError"
+func TestNewWrapError(t *testing.T) {
+	we := NewWrapError()
+	we.AddError(errors.New("错误信息1"))
+	we.AddError(errors.New("错误信息2"))
+	we.AddError(errors.New("错误信息3"))
+	fmt.Println(we.Error.Error()) //错误信息1; 错误信息2; 错误信息3
 }
