@@ -24,6 +24,7 @@ const (
 	// 签名方式
 	SignTypeMD5        = "MD5"
 	SignTypeHmacSHA256 = "HMAC-SHA256"
+	SignTypeRSA = "RSA"
 
 	PrivateFileMode = 0600
 )
@@ -56,4 +57,28 @@ const (
 const (
 	PHP_EOL = "\n"
 	GO_EOL = "\n"
+)
+
+// 前景色即文字颜色
+const (
+	FgBlack uint8 = iota + 30 // 黑色
+	FgRed  // 红色
+	FgGreen //绿色
+	FgYellow //黄色
+	FgBlue  //蓝色
+	FgFuchsia // 紫红色
+	FgCyan    // 青蓝色
+	FgWhite   // 白色
+)
+
+// 背景色
+const (
+	BgBlack uint8 = iota + 40
+	BgRed
+	BgGreen
+	BgYellow
+	BgBlue
+	BgFuchsia
+	BgCyan
+	BgWhite
 )
