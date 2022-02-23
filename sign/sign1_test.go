@@ -13,6 +13,7 @@ func TestNewApiSign01(t *testing.T) {
 	apisign := NewApiSign01()
 	apisign.SetSecret("abc123$%^cjs789xyz").AppendParam("userid", 123).AppendParam("sign", "123").AppendParam("hello", "")
 	apisign.AppendParam("username", "admin").AppendParam("nickname", "你好，我是xxx")
+	apisign.AppendParam("a1", nil)
 	fmt.Println(apisign.Md5Sign())
 	fmt.Println(apisign.GetSignString())
 

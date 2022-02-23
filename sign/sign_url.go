@@ -77,7 +77,7 @@ func (u *UrlGetSign)GetSign() string {
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-//sign.NewUrlGetSign().SetSecret("cjsJellySecret123456").AutoSpellUrlParam
+// s:= sign.NewUrlGetSign().SetSecret("cjsJellySecret123456").AutoSpellUrlParam()
 func NewUrlGetSign() *UrlGetSign  {
 	return &UrlGetSign{}
 }
