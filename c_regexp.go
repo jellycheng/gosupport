@@ -16,4 +16,7 @@ const (
 	// 以 #;开头的字符就算是注释行
 	CommentLineRegexStr = "^\\s*[#;]+"
 
+	WwVerify = "^WW_verify_([0-9a-zA-Z]{16}).txt$"
+	MpVerify = "^MP_verify_([0-9a-zA-Z]{16}).txt$"
+
 )

@@ -119,3 +119,25 @@ func ExtractContent4Tag(str, tag string) []string {
 	}
 	return ret
 }
+
+// GetWwVerifyVal 提取内容，例如 WW_verify_P3fNz9uLSkgAlsnI.txt 提取出P3fNz9uLSkgAlsnI
+func GetWwVerifyVal(str string) string {
+	ret := ""
+	rObj := regexp.MustCompile(WwVerify)
+	tmp := rObj.FindStringSubmatch(str)
+	if len(tmp) == 2 {
+		ret = tmp[1]
+	}
+	return ret
+}
+
+// GetMpVerifyVal 提取内容，例如 MP_verify_d4RP2dwJOG3lDBub.txt 提取出 d4RP2dwJOG3lDBub
+func GetMpVerifyVal(str string) string {
+	ret := ""
+	rObj := regexp.MustCompile(MpVerify)
+	tmp := rObj.FindStringSubmatch(str)
+	if len(tmp) == 2 {
+		ret = tmp[1]
+	}
+	return ret
+}
