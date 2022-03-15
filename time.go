@@ -41,6 +41,22 @@ func Time(timezone ...*time.Location) int64 {
 	return time.Now().In(loc).Unix()
 }
 
+// TimeNow 获取时间戳
+func TimeNow(timezone ...*time.Location) int64 {
+	return Time(timezone...)
+}
+
+// TimeNowMillisecond 获取毫秒
+func TimeNowMillisecond(timezone ...*time.Location) int64 {
+	var loc *time.Location
+	if len(timezone) == 0 {
+		loc = GetShanghaiTimezone()
+	} else {
+		loc = timezone[0]
+	}
+	return time.Now().In(loc).UnixNano() /1e6
+}
+
 // 当前时间转指定日期格式，s:= gosupport.TimeNow2Format("20060102") fmt.Println(gosupport.TimeNow2Format("2006.01.02 15:04:05"))
 func TimeNow2Format(format string, timezone ...*time.Location) string {
 	var loc *time.Location
