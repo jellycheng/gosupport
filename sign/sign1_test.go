@@ -67,3 +67,13 @@ func TestNewUrlGetSign(t *testing.T) {
 	fmt.Println(s)
 }
 
+//go test -run="TestDingtalkSign"
+func TestDingtalkSign(t *testing.T) {
+	secret := "改成机器人密钥"
+	timestamp := gosupport.TimeNowMillisecond()
+	webhook := "这是机器人webhook地址" //https://oapi.dingtalk.com/robot/send?access_token=访问令牌
+	sign := DingtalkSign(timestamp, secret)
+	url := fmt.Sprintf("%s&timestamp=%d&sign=%s", webhook, timestamp, sign)
+	fmt.Println(url)
+
+}
