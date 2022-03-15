@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+// 分转元
+func Fen2yuan4int(price int, isTrimZero bool) string {
+	return Fen2yuan(int64(price), isTrimZero)
+}
+
 /*
 	分转元
 	price := 1909
