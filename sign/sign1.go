@@ -50,7 +50,7 @@ func (m *Apisign01) Md5Sign() string {
 			//builder.WriteString("=")
 			//builder.WriteString(fmt.Sprint(m.params[v]))
 			//builder.WriteString("&")
-			builder.WriteString(fmt.Sprintf("%s=%s&", v, fmt.Sprint(m.params[v])))
+			builder.WriteString(fmt.Sprintf("%s=%s&", v, gosupport.ToStr(m.params[v])))
 
 		}
 		builder.WriteString("key=" + m.secret)
