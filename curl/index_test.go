@@ -55,3 +55,11 @@ func TestParseUrlAndAppendParam(t *testing.T) {
 	// http://www.nfangbian.com?a=yes&a=hello&a=good&a3=xxxx&username=admin&x=333#wechat
 	fmt.Println(s)
 }
+
+// go test -run=TestBase64Decode
+func TestBase64Decode(t *testing.T) {
+	s := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+	s2,_ := Base64DecodeV2([]byte(s))
+	fmt.Println(string(s2)) // {"alg":"HS256","typ":"JWT"}
+
+}

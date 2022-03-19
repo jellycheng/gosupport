@@ -25,6 +25,18 @@ func Base64Decode(str string) (string, error) {
 	return string(s), err
 }
 
+func Base64EncodeV2(b []byte) []byte {
+	buf := make([]byte, base64.RawURLEncoding.EncodedLen(len(b)))
+	base64.RawURLEncoding.Encode(buf, b)
+	return buf
+}
+
+func Base64DecodeV2(b []byte) ([]byte, error) {
+	buf := make([]byte, base64.RawURLEncoding.DecodedLen(len(b)))
+	n, err := base64.RawURLEncoding.Decode(buf, b)
+	return buf[:n], err
+}
+
 func TrimPath(path string, pos int) string {
 	ret := ""
 	switch pos {
