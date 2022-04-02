@@ -23,6 +23,9 @@ go get -u github.com/jellycheng/gosupport
 或者
 GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/jellycheng/gosupport
 
+直接获取master分支代码：
+    go get -u github.com/jellycheng/gosupport@master
+    
 ```
 
 ## Documentation

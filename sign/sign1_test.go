@@ -77,3 +77,23 @@ func TestDingtalkSign(t *testing.T) {
 	fmt.Println(url)
 
 }
+
+//go test -run="TestWxCheckSign_Check"
+func TestWxCheckSign_Check(t *testing.T) {
+	obj := WxCheckSign {
+			Token: "helloWorld123!",
+			Nonce:"abc123",
+			Timestamp:"1648881407",
+
+	}
+	sign := WxSignV2(obj.Token,obj.Timestamp, obj.Nonce)
+	obj.Signature = sign
+	fmt.Println(sign)
+	if obj.Check() {
+		fmt.Println("ok")
+	} else {
+		fmt.Println("fail")
+	}
+
+}
+
