@@ -16,3 +16,6 @@ func (w *WaitGroupWrapper) Wrap(callback func()) {
 	}()
 }
 
+func NewWaitGroup() WaitGroupWrapper {
+	return WaitGroupWrapper{}
+}
