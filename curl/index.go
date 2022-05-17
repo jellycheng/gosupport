@@ -70,6 +70,17 @@ func HttpPostForm(urlStr string, param url.Values) (string, error)  {
 	return content, nil
 }
 
+func HttpPostXml(urlStr string, xmlStr string) (string, error)  {
+	payload := strings.NewReader(xmlStr)
+	req, _ := http.NewRequest("POST", urlStr, payload)
+	req.Header.Add("content-type", CONTENT_TYPE_XML)
+
+	res, _ := http.DefaultClient.Do(req)
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+	return string(body), nil
+}
+
 func ReadBodyContent(httpResp *http.Response) (string, error) {
 	var body, err = ReadBodyContent2Byte(httpResp)
 	return string(body), err
