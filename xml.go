@@ -5,6 +5,11 @@ import (
 	"encoding/xml"
 	"io"
 )
+
+func XmlUnmarshal(str string, obj interface{}) error  {
+	return xml.Unmarshal([]byte(str), obj)
+}
+
 type xmlStringMap map[string]string
 
 type xmlMapEntry struct {
@@ -23,7 +28,7 @@ func (m xmlStringMap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 
 	for k, v := range m {
-		e.Encode(xmlMapEntry{XMLName: xml.Name{Local: k}, Value: v})
+		_ = e.Encode(xmlMapEntry{XMLName: xml.Name{Local: k}, Value: v})
 	}
 
 	return e.EncodeToken(start.End())
@@ -90,7 +95,6 @@ func XML2Map(text []byte) (result map[string]string, err error) {
 }
 
 type CDATA string
-
 func (c CDATA) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(struct {
 		string `xml:",cdata"`
