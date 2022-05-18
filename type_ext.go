@@ -1,6 +1,7 @@
 package gosupport
 
 import (
+	"encoding/json"
 	"encoding/xml"
 )
 
@@ -27,3 +28,16 @@ func (h H) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
+
+func (h H)ToJson() string {
+	b, err := json.Marshal(h)
+	if err != nil {
+		return ""
+	}
+	return string(b)
+}
+
+func (h H)ToJsonByte() ([]byte,error) {
+	return json.Marshal(h)
+}
+
