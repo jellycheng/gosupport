@@ -3,6 +3,7 @@ package gosupport
 import (
 	"encoding/json"
 	"encoding/xml"
+	"net/http"
 )
 
 type H map[string]interface{}
@@ -41,3 +42,27 @@ func (h H)ToJsonByte() ([]byte,error) {
 	return json.Marshal(h)
 }
 
+func (h H)WriteXml(w http.ResponseWriter) H {
+	h.WriteContentType(w, []string{"application/xml; charset=utf-8"})
+	return h
+}
+
+func (h H)WriteJson(w http.ResponseWriter) H {
+	h.WriteContentType(w, []string{"application/json; charset=utf-8"})
+	return h
+}
+
+func (h H)WriteContentType(w http.ResponseWriter, value []string) H {
+	if len(value) == 0 {
+		value = []string{"application/json; charset=utf-8"}
+	}
+	WriteContentType(w, value)
+	return h
+}
+
+func WriteContentType(w http.ResponseWriter, value []string) {
+	header := w.Header()
+	if val := header["Content-Type"]; len(val) == 0 {
+		header["Content-Type"] = value
+	}
+}
