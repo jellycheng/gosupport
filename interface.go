@@ -17,3 +17,8 @@ type StrMaper interface {
 	// 克隆
 	Clone() StrMaper
 }
+
+func IsStrMaper(handler interface{}) bool {
+	_, ok := handler.(StrMaper)
+	return ok
+}

@@ -76,8 +76,20 @@ func TestNewSequence(t *testing.T) {
 // go test -run="TestNewWrapError"
 func TestNewWrapError(t *testing.T) {
 	we := NewWrapError()
-	we.AddError(errors.New("错误信息1"))
-	we.AddError(errors.New("错误信息2"))
-	we.AddError(errors.New("错误信息3"))
+	_ = we.AddError(errors.New("错误信息1"))
+	_ = we.AddError(errors.New("错误信息2"))
+	_ = we.AddError(errors.New("错误信息3"))
 	fmt.Println(we.Error.Error()) //错误信息1; 错误信息2; 错误信息3
 }
+
+// go test -run=TestIsStrMaper
+func TestIsStrMaper(t *testing.T) {
+	m1 := Metadata{"hello": "world", "username":"tom"}
+	m1.Set("city", "shanghai")
+	fmt.Println(m1) // map[city:shanghai hello:world username:tom]
+
+	fmt.Println(IsStrMaper(m1)) // true
+	fmt.Println(IsStrMaper("he")) // false
+
+}
+
