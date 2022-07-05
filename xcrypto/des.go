@@ -1,26 +1,13 @@
 package xcrypto
 
 import (
-	"bytes"
 	"crypto/des"
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 )
 
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext)%blockSize
-	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(ciphertext, padtext...)
-}
-
-func PKCS5UnPadding(origData []byte) []byte {
-	length := len(origData)
-	unpadding := int(origData[length-1])
-	return origData[:(length - unpadding)]
-}
-
-//des ECB base64加密：xcrypto.EncryptDESECB2Base64("密码", "basesoft")
+// des ECB base64加密：xcrypto.EncryptDESECB2Base64("密码", "basesoft")
 func EncryptDESECB2Base64(src, key string) string {
 	data := []byte(src)
 	keyByte := []byte(key)
