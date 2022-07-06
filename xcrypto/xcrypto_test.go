@@ -36,3 +36,33 @@ func TestRsaEncrypt(t *testing.T) {
 
 }
 
+// go test -run=TestAesCbcDecrypt
+func TestAesCbcDecrypt(t *testing.T) {
+	encrypted := []byte(Base64StdDecode("+Lh80bwokENX/RQWZdZtaSyQBC15k5P7eszF60HEe0q4wy4Ct1wlJJBpFG25VnCexql9nqMJSbr2PdWXJKBC/O4wAE6/jlOztbWGJ+sMu8hqub/DxX3Cv2Lv9IOAbuyIQnpKF6ZFKuGS3vJFmFhEttMX8fszO2lsksr/bLKJFwc="))
+	key := []byte("85k8HJF3wqy1YSaG")
+	res := AesCbcDecrypt(encrypted, key)
+	fmt.Println(string(res))
+
+}
+
+// go test -run=TestAesCbcEncrypt
+func TestAesCbcEncrypt(t *testing.T) {
+	str:=`
+{
+	"appId":"abc123",
+	"userId":"xxxtest"
+}
+`
+	k := "85k8HJF3wqy1YSaGNk1a7J9pctE2gONR"
+	// 加密
+	bs := AesCbcEncrypt([]byte(str), []byte(k))
+	bsStr := Base64StdEncode(string(bs))
+	fmt.Println(bsStr)
+
+	// 解密
+	bs2 := AesCbcDecrypt([]byte(Base64StdDecode(bsStr)), []byte(k))
+	fmt.Println(string(bs2))
+	//
+	bs3 := AesCbcDecrypt(bs, []byte(k))
+	fmt.Println(string(bs3))
+}
