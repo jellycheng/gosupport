@@ -97,3 +97,21 @@ func TestWxCheckSign_Check(t *testing.T) {
 
 }
 
+// go test -run=TestTencentSign
+func TestTencentSign(t *testing.T) {
+	secretId := "AKIDMYVquftUlnkQuXq3tRmeA0Wq0siNmCGN"
+	secretKey := "A7rJEtJqlWsmRs50fArJZZHkmY2xcIsK"
+	signObj := NewTencentSign(secretId, secretKey)
+	fmt.Println("X-TC-Timestamp:", signObj.HeaderTimestamp)
+	signObj.HTTPRequestMethod = "POST"
+	signObj.ServiceName = "cms" //服务名,cvm、cms
+	signObj.SignedHeaders = "content-type;host" // 参与签名的请求头，小写
+	signObj.Host = "cms.tencentcloudapi.com"
+	signObj.CanonicalHeaders = signObj.PingCanonicalHeaders("application/json", signObj.Host)
+	signObj.HashedRequestPayload = "" //请求body内容
+	fmt.Println("Authorization: ", signObj.GetAuthorization())
+	sign := signObj.GetSign()
+	fmt.Println("sign: ", sign)
+
+}
+
