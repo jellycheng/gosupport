@@ -99,8 +99,8 @@ func TestWxCheckSign_Check(t *testing.T) {
 
 // go test -run=TestTencentSign
 func TestTencentSign(t *testing.T) {
-	secretId := "AKIDMYVquftUlnkQuXq3tRmeA0Wq0siNmCGN"
-	secretKey := "A7rJEtJqlWsmRs50fArJZZHkmY2xcIsK"
+	secretId := "AKIDxxxx"
+	secretKey := "A7rJEtyyyy"
 	signObj := NewTencentSign(secretId, secretKey)
 	fmt.Println("X-TC-Timestamp:", signObj.HeaderTimestamp)
 	signObj.HTTPRequestMethod = "POST"
