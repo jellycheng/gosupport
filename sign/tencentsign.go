@@ -15,7 +15,7 @@ type TencentSign struct {
 	Algorithm string // TC3-HMAC-SHA256
 	Signature string // 签名值,签名结果
 	HeaderTimestamp int64 // 设置请求头时间戳，utc时间
-	ServiceName string // service服务名，如 cvm
+	ServiceName string // service服务名 即产品名，如 cvm
 	HTTPRequestMethod string // HTTP 请求方法（GET、POST ）
 	CanonicalURI string // URI 参数，API 3.0 固定为正斜杠（/）
 	CanonicalQueryString string // 发起 HTTP 请求 URL 中的查询字符串，对于 POST 请求，固定为空字符串""，对于 GET 请求，则为 URL 中问号（?）后面的字符串内容，例如：Limit=10&Offset=0
@@ -51,7 +51,7 @@ func (m TencentSign)GetCredentialScope() string {
 }
 
 func (m TencentSign)PingCanonicalHeaders(contentType, host string) string {
-	ret := fmt.Sprintf("content-type:%s\nhost:%s\n", contentType, contentType)
+	ret := fmt.Sprintf("content-type:%s\nhost:%s\n", contentType, host)
 	return ret
 }
 
@@ -68,12 +68,17 @@ func (m TencentSign)GetCanonicalRequest() string {
 
 func (m *TencentSign)GetSign() string {
 	sign := ""
+	canonicalRequest := m.GetCanonicalRequest()
 	signSrc := fmt.Sprintf("%s\n%d\n%s\n%s",
-		m.Algorithm,
-		m.HeaderTimestamp,
-		m.GetCredentialScope(),
-		m.Sha256hex(m.GetCanonicalRequest()))
-	sign = m.Sha256hex(m.HmacSha256(signSrc, m.SecretKey))
+							m.Algorithm,
+							m.HeaderTimestamp,
+							m.GetCredentialScope(),
+							m.Sha256hex(canonicalRequest))
+	date := m.Timestamp2Date(m.HeaderTimestamp, "2006-01-02")
+	secretDate := m.HmacSha256(date, "TC3" + m.SecretKey)
+	secretService := m.HmacSha256(m.ServiceName, secretDate)
+	secretDesKey := m.HmacSha256("tc3_request", secretService)
+	sign = hex.EncodeToString([]byte(m.HmacSha256(signSrc, secretDesKey)))
 	m.Signature = sign
 	return sign
 }

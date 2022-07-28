@@ -3,6 +3,10 @@ package sign
 import (
 	"fmt"
 	"github.com/jellycheng/gosupport"
+	"io/ioutil"
+	"net/http"
+	"strconv"
+	"strings"
 	"testing"
 )
 
@@ -99,19 +103,44 @@ func TestWxCheckSign_Check(t *testing.T) {
 
 // go test -run=TestTencentSign
 func TestTencentSign(t *testing.T) {
-	secretId := "AKIDxxxx"
-	secretKey := "A7rJEtyyyy"
+	// 示例： https://cloud.tencent.com/document/api/865/36457
+	secretId := "AKIDxxx"
+	secretKey := "sexxx"
+	contentType := "application/json"
 	signObj := NewTencentSign(secretId, secretKey)
 	fmt.Println("X-TC-Timestamp:", signObj.HeaderTimestamp)
 	signObj.HTTPRequestMethod = "POST"
-	signObj.ServiceName = "cms" //服务名,cvm、cms
+	signObj.ServiceName = "tiia" //服务名,cvm、cms、tiia
 	signObj.SignedHeaders = "content-type;host" // 参与签名的请求头，小写
-	signObj.Host = "cms.tencentcloudapi.com"
-	signObj.CanonicalHeaders = signObj.PingCanonicalHeaders("application/json", signObj.Host)
-	signObj.HashedRequestPayload = "" //请求body内容
-	fmt.Println("Authorization: ", signObj.GetAuthorization())
-	sign := signObj.GetSign()
-	fmt.Println("sign: ", sign)
+	signObj.Host = "tiia.tencentcloudapi.com"
+	signObj.CanonicalHeaders = signObj.PingCanonicalHeaders(contentType, signObj.Host)
+	signObj.HashedRequestPayload = `
+{
+    "ImageUrl": "http://a.vpimg2.com/upload/merchandise/41498/CABBEEN-3030701301-1.jpg"
+}
+`
+	authorization := signObj.GetAuthorization()
+	fmt.Println("Authorization: ", authorization)
+	url := "https://tiia.tencentcloudapi.com/"
+	payload := strings.NewReader(signObj.HashedRequestPayload)
+	client := &http.Client {}
+	req, err := http.NewRequest(signObj.HTTPRequestMethod, url, payload)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Add("Content-Type", contentType)
+	req.Header.Add("X-TC-Action", "DetectProduct")
+	req.Header.Add("X-TC-Language", "zh-CN")
+	req.Header.Add("X-TC-Region", "ap-guangzhou")
+	req.Header.Add("X-TC-Timestamp", strconv.FormatInt(signObj.HeaderTimestamp, 10))
+	req.Header.Add("X-TC-Version", "2019-05-29")
+	req.Header.Add("Authorization", authorization)
+	res, err := client.Do(req)
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+
+	fmt.Println(string(body))
 
 }
 
