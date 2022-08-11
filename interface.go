@@ -1,6 +1,6 @@
 package gosupport
 
-//接口定义文件
+type Handler interface{}
 
 //标识性接口
 type IdentifyInterface interface {
@@ -18,7 +18,7 @@ type StrMaper interface {
 	Clone() StrMaper
 }
 
-func IsStrMaper(handler interface{}) bool {
-	_, ok := handler.(StrMaper)
+func IsStrMaper(h interface{}) bool {
+	_, ok := h.(StrMaper)
 	return ok
 }
