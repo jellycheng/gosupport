@@ -23,6 +23,8 @@ func GetDsn(dbConfig map[string]interface{}) string {
 	port, ok := dbConfig["port"]
 	if !ok {
 		port = "3306"
+	} else if _, ok = port.(string);!ok {
+		port = fmt.Sprintf("%v", port)
 	}
 	dbname, ok := dbConfig["dbname"]
 	if !ok {
@@ -123,10 +125,8 @@ func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, 
 	return
 }
 
-
 // 查询单条记录
 func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]string, error)  {
-	//结果
 	ret := make(map[string]string)
 	rows,err := connect.Query(sqlStr, args...)
 	if err !=nil {
@@ -257,9 +257,15 @@ func ShowCreateTable(connect *sql.DB, tblName string) (string, error) {
 	if err != nil {
 		return ret, err
 	}
-	tblSql,ok := res["Create Table"]
-	if ok {
+	if tblSql,ok := res["Create Table"];ok {
 		return tblSql, nil
 	}
 	return ret, errors.New("获取表结构失败")
+}
+
+func GetMysqlVersion(connect *sql.DB) string {
+	sqlStr := "SELECT VERSION()"
+	ret := ""
+	connect.QueryRow(sqlStr).Scan(&ret)
+	return ret
 }
