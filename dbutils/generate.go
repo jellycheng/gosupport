@@ -115,3 +115,33 @@ func GetFieldComment(field map[string]string) string{
 	return ""
 }
 
+
+// 生成dto结构体
+func GenerateDto(connect *sql.DB, tableName string, cfg map[string]string) string {
+	ret := "package dto\n\n"
+	structName := "Dto"
+	if tmp,ok := cfg["structName"];ok && tmp != "" {
+		structName = tmp
+	}
+	ret += "type " + structName + " struct {\n"
+	fieldsInfo,_ := GetTableFields(connect, tableName)
+	ignoreField := []string{}
+	if tmpIgnoreField,ok := cfg["ignoreField"];ok {
+		ignoreField = strings.Split(tmpIgnoreField, ",")
+	}
+
+	//生成字段
+	for _, field := range fieldsInfo {
+		fieldName := field["Field"] //字段名
+		if StrInSlice(fieldName, ignoreField) {//忽略的字段
+			continue
+		}
+		fieldComment := GetFieldComment(field) //字段注解
+		fieldJson := fmt.Sprintf(jsonTagFormat, fieldName)
+		fieldGoType := FiledType2GoType(field["Type"])
+		ret += "	" + CamelCase(fieldName) + " " + fieldGoType + " `" + fieldJson + "` " + fieldComment + "\n"
+	}
+	ret += "}"
+
+	return ret
+}
