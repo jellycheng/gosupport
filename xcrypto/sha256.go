@@ -8,6 +8,12 @@ import (
 	"io"
 )
 
+func SHA256(s string) string {
+	h := sha256.New()
+	h.Write([]byte(s))
+	return hex.EncodeToString(h.Sum(nil))
+}
+
 func Sha256V1(str string) string  {
 	h := sha256.New()
 	_, _ = io.WriteString(h, str)

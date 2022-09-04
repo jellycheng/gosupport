@@ -66,3 +66,13 @@ func TestAesCbcEncrypt(t *testing.T) {
 	bs3 := AesCbcDecrypt(bs, []byte(k))
 	fmt.Println(string(bs3))
 }
+
+func TestMD5(t *testing.T) {
+	s := MD5("hello")
+	fmt.Println(s)
+}
+
+func TestSHA256(t *testing.T)  {
+	s := SHA256("hello")
+	fmt.Println(s)
+}
