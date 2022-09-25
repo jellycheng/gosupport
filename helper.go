@@ -1,7 +1,6 @@
 package gosupport
 
 import (
-	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
@@ -53,19 +52,6 @@ func IntSum(nums ...int) int {
 // 空函数，什么也不做
 func Void()  {
 	
-}
-
-// 转成json字符串
-func ToJson(v interface{}) string {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return ""
-	}
-	return string(b)
-}
-
-func JsonUnmarshal(str string, obj interface{}) error  {
-	return json.Unmarshal([]byte(str), obj)
 }
 
 func MyAssert(guard bool, str string) {
