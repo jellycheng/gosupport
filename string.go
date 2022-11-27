@@ -250,3 +250,31 @@ func IsBlank(str string) bool {
 func IsNotBlank(str string) bool {
 	return !IsBlank(str)
 }
+
+func GetBigLetter() []string {
+	ret := make([]string, 0)
+	for i := 0; i < 26; i++ {
+		ret = append(ret, string(rune(65+i)))
+	}
+	return ret
+}
+
+func GetSmallLetter() []string {
+	ret := make([]string, 0)
+	for i := 0; i < 26; i++ {
+		ret = append(ret, string(rune(97+i)))
+	}
+	return ret
+}
+
+// GetExcelNo 下标从0开始，A-Z，AA-AZ，AAA-AAZ
+func GetExcelNo(column int) string {
+	ret := ""
+	start := 65
+	i := column % 26
+	column = column / 26
+	if column >= 1 {
+		ret += GetExcelNo(column - 1)
+	}
+	return ret + string(rune(start+i))
+}
