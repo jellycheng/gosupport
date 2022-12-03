@@ -7,7 +7,7 @@ import (
 
 type DataManage struct {
 	DataMutex *sync.RWMutex
-	Data map[string]interface{}
+	Data      map[string]interface{}
 }
 
 func (dm *DataManage) Set(key string, value interface{}) {
@@ -23,7 +23,6 @@ func (dm *DataManage) Set(key string, value interface{}) {
 	dm.Data[key] = value
 	dm.DataMutex.Unlock()
 }
-
 
 func (dm *DataManage) Get(key string) (value interface{}, exists bool) {
 	if dm.DataMutex == nil {
@@ -75,9 +74,23 @@ func (dm *DataManage) GetInt(key string) (i int) {
 	return
 }
 
+func (dm *DataManage) GetInt32(key string) (i int32) {
+	if val, ok := dm.Get(key); ok && val != nil {
+		i, _ = val.(int32)
+	}
+	return
+}
+
 func (dm *DataManage) GetInt64(key string) (i64 int64) {
 	if val, ok := dm.Get(key); ok && val != nil {
 		i64, _ = val.(int64)
+	}
+	return
+}
+
+func (dm *DataManage) GetFloat32(key string) (f32 float32) {
+	if val, ok := dm.Get(key); ok && val != nil {
+		f32, _ = val.(float32)
 	}
 	return
 }
@@ -94,8 +107,9 @@ func (dm *DataManage) GetFloat64(key string) (f64 float64) {
 var muGlobalcfgDM_1 sync.Mutex
 var globalcfgDM_1 *DataManage
 var globalcfgInit_1 uint32
+
 func NewGlobalCfgSingleton() *DataManage {
-	if atomic.LoadUint32(&globalcfgInit_1) == 1 {//确保原子性
+	if atomic.LoadUint32(&globalcfgInit_1) == 1 { //确保原子性
 		return globalcfgDM_1
 	}
 	muGlobalcfgDM_1.Lock()
@@ -110,8 +124,9 @@ func NewGlobalCfgSingleton() *DataManage {
 var muGlobalEnvDM_1 sync.Mutex
 var globalEnvDM_1 *DataManage
 var globalEnvInit_1 uint32
+
 func NewGlobalEnvSingleton() *DataManage {
-	if atomic.LoadUint32(&globalEnvInit_1) == 1 {//确保原子性
+	if atomic.LoadUint32(&globalEnvInit_1) == 1 { //确保原子性
 		return globalEnvDM_1
 	}
 	muGlobalEnvDM_1.Lock()
@@ -121,4 +136,12 @@ func NewGlobalEnvSingleton() *DataManage {
 		atomic.StoreUint32(&globalEnvInit_1, 1)
 	}
 	return globalEnvDM_1
+}
+
+func NewDataManage() DataManage {
+	ret := DataManage{
+		DataMutex: &sync.RWMutex{},
+		Data:      make(map[string]interface{}),
+	}
+	return ret
 }
