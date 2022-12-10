@@ -8,10 +8,10 @@ import "strings"
 
 type SQLBuilderDelete struct {
 	//表名
-	table string
-	where string
+	table   string
+	where   string
 	orderBy string
-	limit string
+	limit   string
 	//条件参数值
 	whereParams []interface{}
 }
@@ -36,7 +36,7 @@ func (sqlb *SQLBuilderDelete) ConditionWhere(operator string, field string, cond
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
-		buf.WriteString(" " + operator + " ")  //AND、OR
+		buf.WriteString(" " + operator + " ") //AND、OR
 	}
 	buf.WriteString(field + " " + condition + " ? ")
 	sqlb.where = buf.String()
@@ -44,7 +44,6 @@ func (sqlb *SQLBuilderDelete) ConditionWhere(operator string, field string, cond
 
 	return sqlb
 }
-
 
 func (sqlb *SQLBuilderDelete) Where(field string, condition string, value interface{}) *SQLBuilderDelete {
 	return sqlb.ConditionWhere("AND", field, condition, value)
@@ -63,20 +62,20 @@ func (sqlb *SQLBuilderDelete) WhereNotIn(field string, values ...interface{}) *S
 }
 
 func (sqlb *SQLBuilderDelete) OrWhereIn(field string, values ...interface{}) *SQLBuilderDelete {
-	return sqlb.conditionIn("OR",  field,"IN", values)
+	return sqlb.conditionIn("OR", field, "IN", values)
 }
 
 func (sqlb *SQLBuilderDelete) OrWhereNotIn(field string, values ...interface{}) *SQLBuilderDelete {
-	return sqlb.conditionIn("OR",  field,"NOT IN", values)
+	return sqlb.conditionIn("OR", field, "NOT IN", values)
 }
 
-func (sqlb *SQLBuilderDelete) conditionIn(operator string, field string,condition string, values []interface{}) *SQLBuilderDelete {
+func (sqlb *SQLBuilderDelete) conditionIn(operator string, field string, condition string, values []interface{}) *SQLBuilderDelete {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
 		buf.WriteString(" " + operator + " ")
 	}
-	s,_ := PinConditionIn(field, condition, values)
+	s, _ := PinConditionIn(field, condition, values)
 	buf.WriteString(s)
 
 	sqlb.where = buf.String()
@@ -115,7 +114,7 @@ func (sqlb *SQLBuilderDelete) Raw(operator string, raw string, values []interfac
 	return sqlb
 }
 
-func (sqlb *SQLBuilderDelete)GetWhereParamValues() []interface{} {
+func (sqlb *SQLBuilderDelete) GetWhereParamValues() []interface{} {
 	return sqlb.whereParams
 }
 
@@ -142,4 +141,3 @@ func (sqlb *SQLBuilderDelete) GetSQL() (string, error) {
 func NewSQLBuilderDelete() *SQLBuilderDelete {
 	return &SQLBuilderDelete{}
 }
-

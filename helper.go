@@ -20,7 +20,7 @@ func Echo(args ...interface{}) {
 }
 
 func EchoF(args interface{}) {
-	_, _ = fmt.Printf("%#v" + GO_EOL, args)
+	_, _ = fmt.Printf("%#v"+GO_EOL, args)
 }
 
 func Exit(status int) {
@@ -50,8 +50,8 @@ func IntSum(nums ...int) int {
 }
 
 // 空函数，什么也不做
-func Void()  {
-	
+func Void() {
+
 }
 
 func MyAssert(guard bool, str string) {
@@ -80,14 +80,13 @@ func Str2Int(str string) int {
 	}
 }
 
-
 /*
 n 获取随机字符个数
 way 选择参与随机字符串的方式
 */
 func RandStr4Byte(n int, way int) string {
 	ret := ""
-	if(n<=0) {
+	if n <= 0 {
 		return ret
 	}
 	var letterStr []byte
@@ -164,6 +163,7 @@ func StrInSlice(a string, list []string) bool {
 	}
 	return false
 }
+
 //示例：fmt.Println(gosupport.Int64InSlice(9, []int64{5, 6, 9}))
 func Int64InSlice(a int64, list []int64) bool {
 	for _, b := range list {
@@ -187,7 +187,7 @@ func IntInSlice(a int, list []int) bool {
 func FromatUUIDString(s string) string {
 	pattern01 := `^(.{8})(.{0,4})(.{0,4})(.{0,4})(.{1,})$`
 	re, err := regexp.Compile(pattern01)
-	if err!=nil {
+	if err != nil {
 		return s
 	} else {
 		newStr := re.ReplaceAllString(s, "${1}-${2}-${3}-${4}-${5}")
@@ -195,8 +195,8 @@ func FromatUUIDString(s string) string {
 	}
 }
 
-func Uniq(salt string, isFormat bool) string  {
-	ret := fmt.Sprintf("%s:%s:%v", salt, RandStr4Byte(6,1), time.Now().UnixNano())
+func Uniq(salt string, isFormat bool) string {
+	ret := fmt.Sprintf("%s:%s:%v", salt, RandStr4Byte(6, 1), time.Now().UnixNano())
 	ret = Md5V1(ret)
 	if isFormat {
 		return FromatUUIDString(ret)
@@ -206,21 +206,19 @@ func Uniq(salt string, isFormat bool) string  {
 
 }
 
-
-
 //获取当前go版本
-func GetGoVersion() string  {
+func GetGoVersion() string {
 	return strings.Trim(runtime.Version(), "go")
 }
 
 //调用示例：gosupport.GenerateUserAgent("user-service", "1.0.0")
-func GenerateUserAgent(appname string, ext ...string) string  {
+func GenerateUserAgent(appname string, ext ...string) string {
 	appversion := ""
 	extString := ""
-	if len(ext)>1 {
+	if len(ext) > 1 {
 		appversion = "/" + ext[0]
 		newExtData := ext[1:]
-		for _,v := range newExtData {
+		for _, v := range newExtData {
 			extString += " " + v
 		}
 
@@ -229,15 +227,15 @@ func GenerateUserAgent(appname string, ext ...string) string  {
 	}
 
 	userAgent := fmt.Sprintf(
-		"cjs Golang/%s (%s; %s) %s%s%s", GetGoVersion(), runtime.GOOS, runtime.GOARCH, appname, appversion,extString)
+		"cjs Golang/%s (%s; %s) %s%s%s", GetGoVersion(), runtime.GOOS, runtime.GOARCH, appname, appversion, extString)
 	return userAgent
 }
 
 //判断code值是否为0，c := '0'认为是int32类型对应ascii值为48
 func IsZeroCode(code interface{}) bool {
 	var ret bool = false
-	switch v:=code.(type) {
-	case float64, float32, int,int8,int16,int32,int64,uint,uint8,uint16,uint32,uint64:
+	switch v := code.(type) {
+	case float64, float32, int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
 		//byte是uint8，rune是int32
 		if fmt.Sprintf("%v", v) == "0" {
 			ret = true
@@ -248,27 +246,28 @@ func IsZeroCode(code interface{}) bool {
 			ret = true
 		}
 	default:
-		ret =false
+		ret = false
 	}
 
 	return ret
 }
+
 //判断是否为空或零
-func IsEmpty(val interface{}) bool  {
+func IsEmpty(val interface{}) bool {
 	var ret bool
-	switch v:=val.(type) {
-	case int,int8,int16,int32,int64,uint,uint8,uint16,uint32,uint64:
+	switch v := val.(type) {
+	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
 		//byte是uint8，rune是int32
 		if fmt.Sprintf("%v", v) == "0" {
 			ret = true
 		}
 	case float64, float32:
 		//go中0与0.0,0.00,0.0000均相等
-		if v==0 {
+		if v == 0 {
 			ret = true
 		}
 	case string:
-		if v == "0" || v=="" {
+		if v == "0" || v == "" {
 			ret = true
 		}
 	case bool:
@@ -285,6 +284,7 @@ func IsEmpty(val interface{}) bool  {
 func IsEmptyV2(str string) bool {
 	return len(str) == 0
 }
+
 // 是否不是空字符串
 func IsNotEmptyV2(str string) bool {
 	return !IsEmpty(str)
@@ -298,7 +298,7 @@ func Nl2br(str string) string {
 //获取调用我的函数名，即获取当前方法名，返回 包名.方法名、包名.结构体名.方法名
 func GetCallFuncName() string {
 	//func Caller(skip int) (pc uintptr, file string, line int, ok bool)
-	if pc, _, _, ok := runtime.Caller(1);ok {
+	if pc, _, _, ok := runtime.Caller(1); ok {
 		f := runtime.FuncForPC(pc)
 		return f.Name()
 	}
@@ -306,19 +306,19 @@ func GetCallFuncName() string {
 }
 
 func GetCallInfo() map[string]string {
-	ret := make(map[string]string )
-	if pc, fullName, line, ok := runtime.Caller(1);ok {
+	ret := make(map[string]string)
+	if pc, fullName, line, ok := runtime.Caller(1); ok {
 		f := runtime.FuncForPC(pc)
 		ret["func"] = f.Name()
 		ret["fullName"] = fullName
-		ret["filename"] =  path.Base(fullName)
+		ret["filename"] = path.Base(fullName)
 		ret["line"] = fmt.Sprint(line)
 	}
 	return ret
 }
 
 //获取网关env配置名，即配置key
-func GetGwHostEnvName(gwName string) string  {
+func GetGwHostEnvName(gwName string) string {
 	gwName = strings.ToUpper(strings.TrimSpace(gwName))
 	domainEnvName := fmt.Sprintf("DOMAIN_%s_GW_SERVICE_HOST", gwName)
 	return domainEnvName
@@ -327,20 +327,19 @@ func GetGwHostEnvName(gwName string) string  {
 //===============类型转换方法
 
 //float64类型转int64，丢弃小数部分
-func Float64Toint64(fNum float64) (int64, error)  {
+func Float64Toint64(fNum float64) (int64, error) {
 	s := fmt.Sprintf("%1.3f", fNum)
 	sSlice := strings.SplitN(s, ".", 2)
 	ret, err := strconv.ParseInt(sSlice[0], 10, 64)
 	return ret, err
 }
 
-
 //float64类型转int，丢弃小数部分
-func Float64Toint(fNum float64) (int, error)  {
+func Float64Toint(fNum float64) (int, error) {
 	s := fmt.Sprintf("%1.3f", fNum)
 	sSlice := strings.SplitN(s, ".", 2)
-	if ret ,err := strconv.Atoi(sSlice[0]);err == nil {
-		return ret,nil
+	if ret, err := strconv.Atoi(sSlice[0]); err == nil {
+		return ret, nil
 	} else {
 		return 0, err
 	}
@@ -376,4 +375,3 @@ func ShuffleStr4Copy(s []string) []string {
 	}
 	return dst
 }
-

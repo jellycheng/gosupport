@@ -24,7 +24,6 @@ Go Version: %s
 Git Commit: %s
 Branch Name: %s
 Build Time: %s
-`, ServiceName,Version,GoVersion,GitCommit,BranchName, BuildTime)
+`, ServiceName, Version, GoVersion, GitCommit, BranchName, BuildTime)
 	return ret
 }
-

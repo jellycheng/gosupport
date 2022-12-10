@@ -8,7 +8,7 @@ func (l LangSet) Add(key, value string) {
 }
 
 func (l LangSet) Get(key string) string {
-	if ret, ok := l[key];ok {
+	if ret, ok := l[key]; ok {
 		return ret
 	}
 	return ""
@@ -22,5 +22,3 @@ func (l LangSet) Combine(set LangSet) LangSet {
 }
 
 type LangMap map[string]LangSet
-
-

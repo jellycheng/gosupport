@@ -10,7 +10,6 @@ import (
 	"strings"
 )
 
-
 const (
 	//特殊字符
 	doubleQuoteSpecialChars = "\\\n\r\"!$`"
@@ -21,19 +20,19 @@ const (
 
 var (
 	//export OPTION_A=2
-	exportRegex = regexp.MustCompile(`^\s*(?:export\s+)?(.*?)\s*$`)
+	exportRegex        = regexp.MustCompile(`^\s*(?:export\s+)?(.*?)\s*$`)
 	singleQuotesRegex  = regexp.MustCompile(`\A'(.*)'\z`)
 	doubleQuotesRegex  = regexp.MustCompile(`\A"(.*)"\z`)
 	escapeRegex        = regexp.MustCompile(`\\.`)
 	unescapeCharsRegex = regexp.MustCompile(`\\([^$])`)
-	expandVarRegex = regexp.MustCompile(`(\\)?(\$)(\()?\{?([A-Z0-9_]+)?\}?`)
+	expandVarRegex     = regexp.MustCompile(`(\\)?(\$)(\()?\{?([A-Z0-9_]+)?\}?`)
 
 	currentEnv = map[string]bool{}
-	currentDM = map[string]bool{}
+	currentDM  = map[string]bool{}
 )
 
 //加载.env文件，支持多个env文件，但不覆盖已经在的key值
-func LoadEnv(filenames ...string) (err error)  {
+func LoadEnv(filenames ...string) (err error) {
 	return load(false, StoreTypeEnv, filenames...)
 }
 
@@ -42,17 +41,17 @@ func Overload(filenames ...string) (err error) {
 	return load(true, StoreTypeEnv, filenames...)
 }
 
-func LoadEnv2DataManage(filenames ...string) (err error)  {
+func LoadEnv2DataManage(filenames ...string) (err error) {
 	return load(false, StoreTypeDataManage, filenames...)
 }
 
-func OverloadEnv2DataManage(filenames ...string) (err error)  {
+func OverloadEnv2DataManage(filenames ...string) (err error) {
 	return load(true, StoreTypeDataManage, filenames...)
 }
 
 func load(isOverload bool, storeType int, filenames ...string) (err error) {
 	filenames = filenamesOrDefault(filenames)
-	for _, filename := range filenames {//遍历文件
+	for _, filename := range filenames { //遍历文件
 		err = loadFile(filename, isOverload, storeType)
 		if err != nil {
 			return
@@ -69,7 +68,7 @@ func filenamesOrDefault(filenames []string) []string {
 }
 
 //加载文件
-func loadFile(filename string, overload bool,storeType int) error {
+func loadFile(filename string, overload bool, storeType int) error {
 	envMap, err := readFile(filename) //读文件并分析内容
 	if err != nil {
 		return err
@@ -100,6 +99,7 @@ func loadFile(filename string, overload bool,storeType int) error {
 
 	return nil
 }
+
 //读文件内容
 func readFile(filename string) (envMap map[string]string, err error) {
 	isFile := gosupport.IsFile(filename)
@@ -196,7 +196,6 @@ func parseLine(line string, envMap map[string]string) (key string, value string,
 	return
 }
 
-
 func parseValue(value string, envMap map[string]string) string {
 
 	//去掉空格
@@ -232,7 +231,6 @@ func parseValue(value string, envMap map[string]string) string {
 	return value
 }
 
-
 func expandVariables(v string, m map[string]string) string {
 	return expandVarRegex.ReplaceAllStringFunc(v, func(s string) string {
 		submatch := expandVarRegex.FindStringSubmatch(s)
@@ -249,14 +247,13 @@ func expandVariables(v string, m map[string]string) string {
 	})
 }
 
-
 //判断是否空字符串或以#开头的字符串
 func isIgnoredLine(line string) bool {
 	trimmedLine := strings.TrimSpace(line)
 	return len(trimmedLine) == 0 || strings.HasPrefix(trimmedLine, "#")
 }
 
-func Get(k string, defaultVal string) (string) {
+func Get(k string, defaultVal string) string {
 	ret := os.Getenv(k)
 	if ret == "" {
 		return defaultVal
@@ -264,7 +261,6 @@ func Get(k string, defaultVal string) (string) {
 	return ret
 }
 
-func Set(k,v string) error {
+func Set(k, v string) error {
 	return os.Setenv(k, v)
 }
-

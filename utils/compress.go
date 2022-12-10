@@ -18,7 +18,7 @@ func NewMintCompress() MyintCompress {
 	return compObj
 }
 
-func (m MyintCompress)Compress(number int64) string {
+func (m MyintCompress) Compress(number int64) string {
 	if number == 0 {
 		return string(m.CharStr[0])
 	}
@@ -37,7 +37,7 @@ func (m MyintCompress)Compress(number int64) string {
 	return string(chars)
 }
 
-func (m MyintCompress)UnCompress(str string) int64 {
+func (m MyintCompress) UnCompress(str string) int64 {
 	var number int64 = 0
 	idx := 0.0
 	chars := []byte(m.CharStr)
@@ -51,4 +51,3 @@ func (m MyintCompress)UnCompress(str string) int64 {
 	}
 	return number
 }
-

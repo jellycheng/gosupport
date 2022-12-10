@@ -18,5 +18,3 @@ func GetLocalIPV1() []string {
 	}
 	return ret
 }
-
-

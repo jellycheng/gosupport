@@ -9,8 +9,8 @@ func TestNewIniConfig(t *testing.T) {
 	file := "./cjs.ini"
 	obj := NewIniConfig(file)
 	fmt.Println(obj.GetIniFile())
-	if err := obj.ParseIniFile();err == nil {
-		if val,err := obj.GetValue("redis", "hosts");err == nil {
+	if err := obj.ParseIniFile(); err == nil {
+		if val, err := obj.GetValue("redis", "hosts"); err == nil {
 			fmt.Println(val)
 		} else {
 			fmt.Println(err.Error())
@@ -22,12 +22,10 @@ func TestNewIniConfig(t *testing.T) {
 
 	}
 
-
-
 }
 
 func TestCleanComment(t *testing.T) {
-	if v, ok := GetComment([]byte("hello#2;world"));ok {
+	if v, ok := GetComment([]byte("hello#2;world")); ok {
 		fmt.Println(string(v))
 	} else {
 		fmt.Println("没有注释")

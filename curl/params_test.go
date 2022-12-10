@@ -18,7 +18,7 @@ func TestNewParams(t *testing.T) {
 
 	println(pObj.ToQueryString())
 
-	for k,v := range pObj {
+	for k, v := range pObj {
 		println(k, ParamValueToString(v))
 	}
 

@@ -17,7 +17,6 @@ var (
 
 	//abc = gopkg.in/%(NAME)s.%(VERSION)s
 	VarPattern = regexp.MustCompile(`%\(([^)]+)\)s`)
-
 )
 
 func init() {
@@ -38,7 +37,7 @@ func GetComment(in []byte) ([]byte, bool) {
 }
 
 //去除注释内容
-func GetCleanComment(in []byte) ([]byte) {
+func GetCleanComment(in []byte) []byte {
 	i := bytes.IndexAny(in, "#;")
 	if i == -1 {
 		return in

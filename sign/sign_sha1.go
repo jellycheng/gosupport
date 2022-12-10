@@ -15,4 +15,3 @@ func Sha1Sign(params ...string) string {
 	}
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
-

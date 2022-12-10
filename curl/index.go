@@ -14,7 +14,7 @@ import (
 func HttpGet(urlStr string) (string, error) {
 	var content string
 	resp, err := http.Get(urlStr)
-	if err!=nil {
+	if err != nil {
 		return "", err
 	}
 	defer func(Body io.ReadCloser) {
@@ -28,9 +28,9 @@ func HttpGet(urlStr string) (string, error) {
 
 // HttpPost 发起表单post请求
 // param := "name=李四&age=19"
-func HttpPost(urlStr string, param string) (string, error)  {
+func HttpPost(urlStr string, param string) (string, error) {
 	resp, err := http.Post(urlStr, CONTENT_TYPE_FORM, strings.NewReader(param))
-	if err!=nil {
+	if err != nil {
 		return "", err
 	}
 	defer func(Body io.ReadCloser) {
@@ -42,9 +42,9 @@ func HttpPost(urlStr string, param string) (string, error)  {
 	return content, nil
 }
 
-func HttpPostJson(urlStr string, param string) (string, error)  {
+func HttpPostJson(urlStr string, param string) (string, error) {
 	resp, err := http.Post(urlStr, CONTENT_TYPE_JSON, strings.NewReader(param))
-	if err!=nil {
+	if err != nil {
 		return "", err
 	}
 	defer func(Body io.ReadCloser) {
@@ -57,9 +57,9 @@ func HttpPostJson(urlStr string, param string) (string, error)  {
 }
 
 // HttpPostForm param := url.Values{"参数名1": {"值1"}, "参数名2": {"值1","值N"}}
-func HttpPostForm(urlStr string, param url.Values) (string, error)  {
+func HttpPostForm(urlStr string, param url.Values) (string, error) {
 	resp, err := http.PostForm(urlStr, param)
-	if err!=nil {
+	if err != nil {
 		return "", err
 	}
 	defer func(Body io.ReadCloser) {
@@ -70,7 +70,7 @@ func HttpPostForm(urlStr string, param url.Values) (string, error)  {
 	return content, nil
 }
 
-func HttpPostXml(urlStr string, xmlStr string) (string, error)  {
+func HttpPostXml(urlStr string, xmlStr string) (string, error) {
 	payload := strings.NewReader(xmlStr)
 	req, _ := http.NewRequest("POST", urlStr, payload)
 	req.Header.Add("content-type", CONTENT_TYPE_XML)

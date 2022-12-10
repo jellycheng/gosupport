@@ -30,7 +30,7 @@ func (h H) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
-func (h H)ToJson() string {
+func (h H) ToJson() string {
 	b, err := json.Marshal(h)
 	if err != nil {
 		return ""
@@ -38,21 +38,21 @@ func (h H)ToJson() string {
 	return string(b)
 }
 
-func (h H)ToJsonByte() ([]byte,error) {
+func (h H) ToJsonByte() ([]byte, error) {
 	return json.Marshal(h)
 }
 
-func (h H)WriteXml(w http.ResponseWriter) H {
+func (h H) WriteXml(w http.ResponseWriter) H {
 	h.WriteContentType(w, []string{"application/xml; charset=utf-8"})
 	return h
 }
 
-func (h H)WriteJson(w http.ResponseWriter) H {
+func (h H) WriteJson(w http.ResponseWriter) H {
 	h.WriteContentType(w, []string{"application/json; charset=utf-8"})
 	return h
 }
 
-func (h H)WriteContentType(w http.ResponseWriter, value []string) H {
+func (h H) WriteContentType(w http.ResponseWriter, value []string) H {
 	if len(value) == 0 {
 		value = []string{"application/json; charset=utf-8"}
 	}

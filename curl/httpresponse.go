@@ -20,7 +20,7 @@ func (this *HttpResponse) SetRaw(r *http.Response) *HttpResponse {
 	return this
 }
 
-func (this *HttpResponse) GetRaw()  *http.Response {
+func (this *HttpResponse) GetRaw() *http.Response {
 	return this.raw
 }
 
@@ -52,7 +52,6 @@ func (this *HttpResponse) parseBody() error {
 }
 
 //响应内容
-func (this HttpResponse) GetBody() string  {
+func (this HttpResponse) GetBody() string {
 	return this.body
 }
-

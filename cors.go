@@ -22,8 +22,8 @@ type CorsConfig struct {
 	AllowCredentials bool
 	//赋值给 Access-Control-Max-Age
 	MaxAge time.Duration
-
 }
+
 //设置允许的请求方式
 func (c *CorsConfig) AddAllowMethods(methods ...string) {
 	c.AllowMethods = append(c.AllowMethods, methods...)
@@ -79,10 +79,10 @@ func (c *CorsConfig) GetAllowOrigins() string {
 func DefaultCorsConfig() CorsConfig {
 	return CorsConfig{
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
-		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type","token","app-type","app-v","*"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "token", "app-type", "app-v", "*"},
 		AllowCredentials: true,
 		MaxAge:           10 * time.Hour,
-		IsOpenCors: true,
+		IsOpenCors:       true,
 	}
 }
 
@@ -112,4 +112,3 @@ func normalize(values []string) []string {
 	}
 	return normalized
 }
-

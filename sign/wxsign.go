@@ -8,15 +8,15 @@ import (
 )
 
 type WxCheckSign struct {
-	Token string     // token，在公众号后台设置的值
+	Token     string // token，在公众号后台设置的值
 	Timestamp string // 时间戳
-	Nonce string   // 随机数
-	Echostr string // 随机字符串
+	Nonce     string // 随机数
+	Echostr   string // 随机字符串
 	Signature string // 签名串
 }
 
-func (m WxCheckSign)Check() bool  {
-	return WxSignV1(m.Nonce,m.Timestamp,m.Token) == m.Signature
+func (m WxCheckSign) Check() bool {
+	return WxSignV1(m.Nonce, m.Timestamp, m.Token) == m.Signature
 }
 
 func WxSignV1(params ...string) string {
@@ -37,7 +37,6 @@ func WxSignV2(token, timestamp, nonce string) string {
 		str += s
 	}
 	h := sha1.New()
-	_,_ = h.Write([]byte(str))
+	_, _ = h.Write([]byte(str))
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
-

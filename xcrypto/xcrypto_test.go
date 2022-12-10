@@ -12,7 +12,7 @@ func TestCreateRsaKey(t *testing.T) {
 
 // go test -run=TestRsaEncrypt
 func TestRsaEncrypt(t *testing.T) {
-	str:=`
+	str := `
 {
 	"appId":"abc123",
 	"userId":"xxxtest"
@@ -20,7 +20,7 @@ func TestRsaEncrypt(t *testing.T) {
 `
 	// 加密
 	err, d := RsaEncrypt([]byte(str), "/data/www/cert/rsa_pub.pem")
-	if err == nil{
+	if err == nil {
 		con := Base64StdEncode(string(d))
 		fmt.Println(con)
 	} else {
@@ -28,7 +28,7 @@ func TestRsaEncrypt(t *testing.T) {
 	}
 
 	// 解密
-	if err, d2 := RsaDecrypt(d, "/data/www/cert/rsa_private.pem");err == nil {
+	if err, d2 := RsaDecrypt(d, "/data/www/cert/rsa_private.pem"); err == nil {
 		fmt.Println(string(d2))
 	} else {
 		fmt.Println(err.Error())
@@ -47,7 +47,7 @@ func TestAesCbcDecrypt(t *testing.T) {
 
 // go test -run=TestAesCbcEncrypt
 func TestAesCbcEncrypt(t *testing.T) {
-	str:=`
+	str := `
 {
 	"appId":"abc123",
 	"userId":"xxxtest"
@@ -72,7 +72,7 @@ func TestMD5(t *testing.T) {
 	fmt.Println(s)
 }
 
-func TestSHA256(t *testing.T)  {
+func TestSHA256(t *testing.T) {
 	s := SHA256("hello")
 	fmt.Println(s)
 }

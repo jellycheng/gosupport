@@ -13,5 +13,3 @@ func KeysOfMap(m map[string]string) []string {
 	keys.Sort()
 	return []string(keys)
 }
-
-

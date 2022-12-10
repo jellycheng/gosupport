@@ -18,5 +18,4 @@ const (
 
 	WwVerify = "^WW_verify_([0-9a-zA-Z]{16}).txt$"
 	MpVerify = "^MP_verify_([0-9a-zA-Z]{16}).txt$"
-
 )

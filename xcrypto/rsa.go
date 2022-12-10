@@ -29,26 +29,26 @@ func RsaEncrypt(data []byte, pubKeyFileName string) (error, []byte) {
 
 	pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
-		return err,ret
+		return err, ret
 	}
 	pubKey := pubInterface.(*rsa.PublicKey)
 	cipherText, err := rsa.EncryptPKCS1v15(rand.Reader, pubKey, data)
 	if err != nil {
-		return err,ret
+		return err, ret
 	}
-	return nil,cipherText
+	return nil, cipherText
 }
 
 // 通过私钥解密
-func RsaDecrypt(data []byte, privateKeyFileName string) (error,[]byte) {
+func RsaDecrypt(data []byte, privateKeyFileName string) (error, []byte) {
 	ret := make([]byte, 0, 0)
 	f, err := os.Open(privateKeyFileName)
 	if err != nil {
-		return err,ret
+		return err, ret
 	}
 	fileInfo, err := f.Stat()
 	if err != nil {
-		return err,ret
+		return err, ret
 	}
 	buf := make([]byte, fileInfo.Size())
 	defer func(f *os.File) {
@@ -58,12 +58,11 @@ func RsaDecrypt(data []byte, privateKeyFileName string) (error,[]byte) {
 	block, _ := pem.Decode(buf)
 	priKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
-		return err,ret
+		return err, ret
 	}
 	plainText, err := rsa.DecryptPKCS1v15(rand.Reader, priKey, data)
 	if err != nil {
-		return err,ret
+		return err, ret
 	}
-	return nil,plainText
+	return nil, plainText
 }
-

@@ -7,8 +7,8 @@ type WrapError struct {
 }
 
 // AddError 追加db错误信息对象
-func (me *WrapError)AddError(e error) error {
-	if me.Error == nil{
+func (me *WrapError) AddError(e error) error {
+	if me.Error == nil {
 		me.Error = e
 	} else {
 		me.Error = fmt.Errorf("%v; %w", me.Error, e)

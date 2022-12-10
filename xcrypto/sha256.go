@@ -14,25 +14,25 @@ func SHA256(s string) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
-func Sha256V1(str string) string  {
+func Sha256V1(str string) string {
 	h := sha256.New()
 	_, _ = io.WriteString(h, str)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func Sha256V2(str string) string  {
+func Sha256V2(str string) string {
 	h := sha256.New()
 	_, _ = io.WriteString(h, str)
 	return hex.EncodeToString(h.Sum(nil))
 }
 
-func Sha256ByByteV1(by []byte) string  {
+func Sha256ByByteV1(by []byte) string {
 	h := sha256.New()
 	h.Write(by)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func Sha2562Byte(str string) []byte  {
+func Sha2562Byte(str string) []byte {
 	h := sha256.New()
 	_, _ = io.WriteString(h, str)
 	return h.Sum(nil)

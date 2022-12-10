@@ -10,7 +10,7 @@ type ResponseData struct {
 
 func NewResponseData() *ResponseData {
 	return &ResponseData{
-			Data: make(map[string]interface{}),
+		Data: make(map[string]interface{}),
 	}
 }
 

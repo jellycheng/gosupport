@@ -11,15 +11,15 @@ import (
 func TestLoadEnv(t *testing.T) {
 	var envPath string = "/Users/jelly/test/mygoenv/"
 
-	err := LoadEnv(envPath + ".env", envPath + ".env.local")
-	if err!=nil {
+	err := LoadEnv(envPath+".env", envPath+".env.local")
+	if err != nil {
 		fmt.Println(err.Error())
 	}
 
 	rawEnv := os.Environ()
 	for _, rawEnvLine := range rawEnv {
 		tmp := strings.Split(rawEnvLine, "=")
-		println("key:", tmp[0], "val:",tmp[1])
+		println("key:", tmp[0], "val:", tmp[1])
 	}
 	fmt.Println("=================================")
 
@@ -28,25 +28,24 @@ func TestLoadEnv(t *testing.T) {
 	rawEnv2 := os.Environ()
 	for _, rawEnvLine := range rawEnv2 {
 		tmp := strings.Split(rawEnvLine, "=")
-		println(tmp[0], " = ",tmp[1])
+		println(tmp[0], " = ", tmp[1])
 	}
 
 	fmt.Println("=================================")
 	println("app_id=", Get("app_id", "no appid "))
 }
 
-
 // go test -run="TestLoadEnv2DataManage"
 func TestLoadEnv2DataManage(t *testing.T) {
 	var envPath string = "/Users/jelly/test/mygoenv/"
 
-	err := LoadEnv2DataManage(envPath + ".env", envPath + ".env.local")
-	if err!=nil {
+	err := LoadEnv2DataManage(envPath+".env", envPath+".env.local")
+	if err != nil {
 		fmt.Println(err.Error())
 	}
 	globalenv := gosupport.NewGlobalEnvSingleton()
 	data := globalenv.GetData()
-	for k,v := range data {
+	for k, v := range data {
 		fmt.Println("key:", k, " val:", v)
 	}
 	data["USER_1_DB_READ_HOST"] = "hello"
@@ -54,4 +53,3 @@ func TestLoadEnv2DataManage(t *testing.T) {
 	fmt.Println(globalenv.Data["USER_1_DB_READ_HOST"])
 
 }
-

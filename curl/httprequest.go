@@ -20,13 +20,13 @@ type HttpRequest struct {
 	url             string
 	dialTimeout     time.Duration
 	responseTimeOut time.Duration
-	timeout         time.Duration  //请求超时
+	timeout         time.Duration //请求超时
 	headers         map[string]string
 	cookies         map[string]string
 	queries         map[string]string
 	postData        map[string]interface{}
-	rawPostData     string  //原始post数据，与postData二选一,rawPostData >postData
-	postType        string    //post请求方式，form,json，text_plain
+	rawPostData     string //原始post数据，与postData二选一,rawPostData >postData
+	postType        string //post请求方式，form,json，text_plain
 
 }
 
@@ -147,6 +147,7 @@ func (this *HttpRequest) Get() (*HttpResponse, error) {
 	this.SetMethod(http.MethodGet)
 	return this.send()
 }
+
 // 发起post请求
 func (this *HttpRequest) Post() (*HttpResponse, error) {
 	this.SetMethod(http.MethodPost)
@@ -158,20 +159,22 @@ func (this *HttpRequest) Put() (*HttpResponse, error) {
 	this.SetMethod(http.MethodPut)
 	return this.send()
 }
+
 // 发起PATCH请求
 func (this *HttpRequest) Patch() (*HttpResponse, error) {
 	this.SetMethod(http.MethodPatch)
 	return this.send()
 }
+
 // 发起Delete请求
 func (this *HttpRequest) Delete() (*HttpResponse, error) {
 	this.SetMethod(http.MethodDelete)
 	return this.send()
 }
 
-func (this *HttpRequest)Request() (*HttpResponse, error)  {
-	r,err := this.send()
-	return r,err
+func (this *HttpRequest) Request() (*HttpResponse, error) {
+	r, err := this.send()
+	return r, err
 }
 
 //发起请求
@@ -190,8 +193,8 @@ func (this *HttpRequest) send() (*HttpResponse, error) {
 
 	// 初始化http.Client对象
 	this.cli = &http.Client{
-					Timeout: this.timeout,
-				}
+		Timeout: this.timeout,
+	}
 
 	//处理参数
 	var body io.Reader
@@ -205,52 +208,52 @@ func (this *HttpRequest) send() (*HttpResponse, error) {
 	} else {
 		body = nil
 	}
-	 */
+	*/
 	switch method {
-		case http.MethodGet, http.MethodDelete:
-			body = nil
-		case http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodOptions:
-			if this.postType == "json" {
-				this.AddHeader("Content-Type", "application/json")
-				if rawBody:=this.GetRawPostData(); rawBody != "" {
-					body = strings.NewReader(rawBody)
-				} else if this.GetPostData() != nil {
-					if jsonData, err := json.Marshal(this.GetPostData()); err != nil {
-						return nil, err
-					} else {
-						body = bytes.NewReader(jsonData)
-					}
+	case http.MethodGet, http.MethodDelete:
+		body = nil
+	case http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodOptions:
+		if this.postType == "json" {
+			this.AddHeader("Content-Type", "application/json")
+			if rawBody := this.GetRawPostData(); rawBody != "" {
+				body = strings.NewReader(rawBody)
+			} else if this.GetPostData() != nil {
+				if jsonData, err := json.Marshal(this.GetPostData()); err != nil {
+					return nil, err
 				} else {
-					body = nil
-				}
-			} else if this.postType == "form" {
-				this.AddHeader("Content-Type", "application/x-www-form-urlencoded")
-				if rawBody:=this.GetRawPostData(); rawBody != "" {
-					body = strings.NewReader(rawBody)
-				} else if this.GetPostData() != nil {
-					tmpPostData := this.GetPostData()
-					tmpValues := neturl.Values{}
-					for k, v := range tmpPostData {
-						if vv, ok := v.(string); ok {
-							tmpValues.Set(k, vv)
-						} else if vv, ok := v.([]string); ok {
-							for _, vvv := range vv {
-								tmpValues.Add(k, vvv)
-							}
-						} else {
-							tmpValues.Set(k, fmt.Sprintf("%v", v))
-						}
-					}
-					body = strings.NewReader(tmpValues.Encode())
-					//body = bytes.NewReader(jsonData)
-				} else {
-					body = nil
+					body = bytes.NewReader(jsonData)
 				}
 			} else {
 				body = nil
 			}
-		default:
-			return nil, errors.New("无效的请求方式")
+		} else if this.postType == "form" {
+			this.AddHeader("Content-Type", "application/x-www-form-urlencoded")
+			if rawBody := this.GetRawPostData(); rawBody != "" {
+				body = strings.NewReader(rawBody)
+			} else if this.GetPostData() != nil {
+				tmpPostData := this.GetPostData()
+				tmpValues := neturl.Values{}
+				for k, v := range tmpPostData {
+					if vv, ok := v.(string); ok {
+						tmpValues.Set(k, vv)
+					} else if vv, ok := v.([]string); ok {
+						for _, vvv := range vv {
+							tmpValues.Add(k, vvv)
+						}
+					} else {
+						tmpValues.Set(k, fmt.Sprintf("%v", v))
+					}
+				}
+				body = strings.NewReader(tmpValues.Encode())
+				//body = bytes.NewReader(jsonData)
+			} else {
+				body = nil
+			}
+		} else {
+			body = nil
+		}
+	default:
+		return nil, errors.New("无效的请求方式")
 	}
 
 	//请求对象
@@ -270,9 +273,9 @@ func (this *HttpRequest) send() (*HttpResponse, error) {
 	//处理cookie
 	for k, v := range this.GetCookies() {
 		this.req.AddCookie(&http.Cookie{
-								Name:  k,
-								Value: v,
-							})
+			Name:  k,
+			Value: v,
+		})
 	}
 
 	//处理header
@@ -295,5 +298,3 @@ func (this *HttpRequest) send() (*HttpResponse, error) {
 
 	return response, nil
 }
-
-

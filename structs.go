@@ -16,7 +16,7 @@ func InitStruct4DefaultTag(bean interface{}) {
 		}
 		setter := reflect.ValueOf(bean).Elem().Field(i)
 		switch field.Type.String() {
-		case "int","int8","int16","int32","int64":
+		case "int", "int8", "int16", "int32", "int64":
 			intValue, _ := strconv.ParseInt(defaultValue, 10, 64)
 			setter.SetInt(intValue)
 		case "time.Duration":
@@ -27,7 +27,7 @@ func InitStruct4DefaultTag(bean interface{}) {
 		case "bool":
 			boolValue, _ := strconv.ParseBool(defaultValue)
 			setter.SetBool(boolValue)
-		case "uint","uint8","uint16","uint32","uint64":
+		case "uint", "uint8", "uint16", "uint32", "uint64":
 			uintValue, _ := strconv.ParseUint(defaultValue, 10, 64)
 			setter.SetUint(uintValue)
 		case "float32":
@@ -43,14 +43,12 @@ func InitStruct4DefaultTag(bean interface{}) {
 // 返回空结构体
 func EmptyStruct() struct{} {
 	return struct {
-
 	}{}
 }
 
 // 返回空结构体切片，用于json序列化时返回空数组[]
 func EmptyStructSlice() []struct{} {
 	return []struct {
-
 	}{}
 }
 
@@ -65,4 +63,3 @@ func GetStructTagContent(i interface{}, fieldNname string, tagName string) (stri
 	}
 	return "", false
 }
-

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 )
+
 var (
 	//表名不能为空
 	ErrTableEmpty = errors.New("The table name cannot be empty")
@@ -18,7 +19,7 @@ var (
 func PinConditionIn(field string, condition string, values []interface{}) (string, []interface{}) {
 	var buf strings.Builder
 	wps := WenHaoPlaceholders(len(values))
-	buf.WriteString(fmt.Sprintf(" %s %s (%s)", field,condition, wps))
+	buf.WriteString(fmt.Sprintf(" %s %s (%s)", field, condition, wps))
 	newWhere := buf.String()
 	return newWhere, values
 }
@@ -31,4 +32,3 @@ func PinWhereNotIn(field string, values []interface{}) (string, []interface{}) {
 	newWhere := buf.String()
 	return newWhere, values
 }
-

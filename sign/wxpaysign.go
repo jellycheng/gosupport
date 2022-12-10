@@ -17,8 +17,8 @@ import (
   https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=4_3
   signType = MD5 | HMAC-SHA256
   PayKey =支付密钥
- */
-func WxPaySign(params map[string]string, signType string, PayKey string) (sign,str string, err error) {
+*/
+func WxPaySign(params map[string]string, signType string, PayKey string) (sign, str string, err error) {
 	var kvs []string
 	for k, v := range params {
 		if len(v) > 0 && strings.ToLower(k) != "sign" {
@@ -43,4 +43,3 @@ func WxPaySign(params map[string]string, signType string, PayKey string) (sign,s
 
 	return
 }
-

@@ -11,9 +11,9 @@ import "fmt"
 //  fmt.Println(myErr.ErrMsg)
 //  fmt.Print(myErr.ToString())
 type MyError struct {
-	ErrCode  int `json:"err_code"`  //错误代号
-	ErrMsg   string `json:"err_msg"`  //错误信息
-	ExtData  interface{}  `json:"ext_data"` // 错误扩展数据
+	ErrCode int         `json:"err_code"` //错误代号
+	ErrMsg  string      `json:"err_msg"`  //错误信息
+	ExtData interface{} `json:"ext_data"` // 错误扩展数据
 }
 
 func NewMyError() MyError {

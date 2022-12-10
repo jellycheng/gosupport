@@ -13,32 +13,32 @@ type Method struct {
 	methodStr string
 }
 
-func (m *Method)GetMethod() string {
+func (m *Method) GetMethod() string {
 	return m.methodStr
 }
 
 //拼接请求Method值: JoinMethodOneToStr("User\\Account", "getUserInfo") 或者 JoinMethodOneToStr(`User\Account`, "getUserInfo")
-func (m *Method)JoinMethodOneToStr(prefix string, suffix string) *Method {
+func (m *Method) JoinMethodOneToStr(prefix string, suffix string) *Method {
 	prefix = strings.TrimSpace(prefix)
 	suffix = strings.TrimSpace(suffix)
 	if prefix != "" && suffix != "" {
-		m.methodStr = prefix + "." + suffix;
+		m.methodStr = prefix + "." + suffix
 	} else if prefix != "" {
-		m.methodStr = prefix;
+		m.methodStr = prefix
 	} else if suffix != "" {
-		m.methodStr = suffix;
+		m.methodStr = suffix
 	}
 	return m
 }
 
 //解析Method
-func (m *Method)ParseMethodOne() map[string]string {
+func (m *Method) ParseMethodOne() map[string]string {
 	ret := make(map[string]string)
-	ret["prefix"] = "";
-	ret["suffix"] = "";
+	ret["prefix"] = ""
+	ret["suffix"] = ""
 	methodVal := m.methodStr
 	//分隔
-	methodSplit := strings.SplitN(methodVal, ".",  2)
+	methodSplit := strings.SplitN(methodVal, ".", 2)
 	if len(methodSplit) == 1 {
 		ret["prefix"] = methodVal
 	} else {
@@ -47,7 +47,6 @@ func (m *Method)ParseMethodOne() map[string]string {
 	}
 	return ret
 }
-
 
 //转成json字符串
 func ToJson(v interface{}) string {
@@ -61,7 +60,7 @@ func ToJson(v interface{}) string {
 func JsonToRPCRequestStruct(str string) RPCRequest {
 	var reqRpcObj RPCRequest
 	err := json.Unmarshal([]byte(str), &reqRpcObj)
-	if err!=nil {
+	if err != nil {
 		return RPCRequest{}
 	}
 	return reqRpcObj
@@ -70,7 +69,7 @@ func JsonToRPCRequestStruct(str string) RPCRequest {
 func JsonToRPCResponseStruct(str string) RPCResponse {
 	var repRpcObj RPCResponse
 	err := json.Unmarshal([]byte(str), &repRpcObj)
-	if err!=nil {
+	if err != nil {
 		return RPCResponse{}
 	}
 	return repRpcObj
@@ -79,7 +78,7 @@ func JsonToRPCResponseStruct(str string) RPCResponse {
 func JsonToRPCErrorStruct(str string) RPCError {
 	var reeRpcObj RPCError
 	err := json.Unmarshal([]byte(str), &reeRpcObj)
-	if err!=nil {
+	if err != nil {
 		return RPCError{}
 	}
 	return reeRpcObj
@@ -87,14 +86,14 @@ func JsonToRPCErrorStruct(str string) RPCError {
 
 func DecodeJsonrpcResponse(r io.Reader, reply interface{}) error {
 	var c JsonrpcResponse
-	if err := json.NewDecoder(r).Decode(&c); err != nil {// 内容解析错误
+	if err := json.NewDecoder(r).Decode(&c); err != nil { // 内容解析错误
 		return err
 	}
 	if c.Error != nil { // jsonrpc错误
 		jsonErr := RPCError{}
 		if err := json.Unmarshal(*c.Error, &jsonErr); err != nil {
 			return RPCError{
-				Code:     -32000,
+				Code:    -32000,
 				Message: string(*c.Error),
 			}
 		}

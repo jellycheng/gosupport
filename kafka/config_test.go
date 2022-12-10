@@ -18,22 +18,22 @@ func TestNewKafkaConfig(t *testing.T) {
 }
 
 func TestNewKafkaConfigManage(t *testing.T) {
-	 kafkaCfgGroup := NewKafkaConfigManage()
-	 go func() {
-	 	//新增配置
-		 for i:=0; i<10000;i++ {
-			 kafkaCfgGroup.SetData("group_" + fmt.Sprint(i), NewKafkaConfig().SetTopic("topic_" + fmt.Sprint(i)))
-		 }
-	 }()
+	kafkaCfgGroup := NewKafkaConfigManage()
+	go func() {
+		//新增配置
+		for i := 0; i < 10000; i++ {
+			kafkaCfgGroup.SetData("group_"+fmt.Sprint(i), NewKafkaConfig().SetTopic("topic_"+fmt.Sprint(i)))
+		}
+	}()
 
-	 go func() {
-	 	//获取配置
-		for i:=10000; i>0;i-- {
-			if c,err := kafkaCfgGroup.GetData("group_" + fmt.Sprint(i));err==nil {
+	go func() {
+		//获取配置
+		for i := 10000; i > 0; i-- {
+			if c, err := kafkaCfgGroup.GetData("group_" + fmt.Sprint(i)); err == nil {
 				fmt.Println("broker server: " + c.GetBrokers() + " topic:" + c.GetTopic())
 			}
 		}
-	 }()
+	}()
 
-	 time.Sleep(3 * time.Second)
+	time.Sleep(3 * time.Second)
 }

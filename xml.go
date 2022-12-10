@@ -6,7 +6,7 @@ import (
 	"io"
 )
 
-func XmlUnmarshal(str string, obj interface{}) error  {
+func XmlUnmarshal(str string, obj interface{}) error {
 	return xml.Unmarshal([]byte(str), obj)
 }
 
@@ -64,14 +64,14 @@ func Map2XML(kvs map[string]string) (text []byte, err error) {
 
 func Map2XMLV2(params map[string]string, rootName ...string) string {
 	var xmlRootName = ""
-	if len(rootName)>0 {
+	if len(rootName) > 0 {
 		xmlRootName = rootName[0]
 	}
-	if(xmlRootName == "") {
+	if xmlRootName == "" {
 		xmlRootName = "xml"
 	}
 	var buf bytes.Buffer
-	buf.WriteString(`<`+xmlRootName+`>`)
+	buf.WriteString(`<` + xmlRootName + `>`)
 	for k, v := range params {
 		buf.WriteString(`<`)
 		buf.WriteString(k)
@@ -81,7 +81,7 @@ func Map2XMLV2(params map[string]string, rootName ...string) string {
 		buf.WriteString(k)
 		buf.WriteString(`>`)
 	}
-	buf.WriteString(`</`+xmlRootName+`>`)
+	buf.WriteString(`</` + xmlRootName + `>`)
 
 	return buf.String()
 }
@@ -95,9 +95,9 @@ func XML2Map(text []byte) (result map[string]string, err error) {
 }
 
 type CDATA string
+
 func (c CDATA) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(struct {
 		string `xml:",cdata"`
 	}{string(c)}, start)
 }
-

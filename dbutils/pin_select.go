@@ -10,20 +10,19 @@ type SQLBuilderSelect struct {
 	//select字段
 	selectField string
 	//表名
-	table string
-	join string
-	where string
+	table   string
+	join    string
+	where   string
 	groupBy string
 	having  string
 	orderBy string
-	limit string
-	offset string
+	limit   string
+	offset  string
 	//条件参数值
-	whereParams []interface{}
+	whereParams  []interface{}
 	havingParams []interface{}
 	limitParams  []interface{}
 	joinParams   []interface{}
-
 }
 
 //Table("`t_user_ext` as t1")
@@ -45,13 +44,12 @@ func (sqlb *SQLBuilderSelect) Select(fields ...string) *SQLBuilderSelect {
 	return sqlb
 }
 
-
 //考虑重复调用,operator=AND、OR, condition="=,!="
 func (sqlb *SQLBuilderSelect) ConditionWhere(operator string, field string, condition string, value interface{}) *SQLBuilderSelect {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
-		buf.WriteString(" " + operator + " ")  //AND、OR
+		buf.WriteString(" " + operator + " ") //AND、OR
 	}
 	buf.WriteString(field + " " + condition + " ? ")
 	sqlb.where = buf.String()
@@ -59,7 +57,6 @@ func (sqlb *SQLBuilderSelect) ConditionWhere(operator string, field string, cond
 
 	return sqlb
 }
-
 
 func (sqlb *SQLBuilderSelect) Where(field string, condition string, value interface{}) *SQLBuilderSelect {
 	return sqlb.ConditionWhere("AND", field, condition, value)
@@ -78,20 +75,20 @@ func (sqlb *SQLBuilderSelect) WhereNotIn(field string, values ...interface{}) *S
 }
 
 func (sqlb *SQLBuilderSelect) OrWhereIn(field string, values ...interface{}) *SQLBuilderSelect {
-	return sqlb.conditionIn("OR",  field,"IN", values)
+	return sqlb.conditionIn("OR", field, "IN", values)
 }
 
 func (sqlb *SQLBuilderSelect) OrWhereNotIn(field string, values ...interface{}) *SQLBuilderSelect {
-	return sqlb.conditionIn("OR",  field,"NOT IN", values)
+	return sqlb.conditionIn("OR", field, "NOT IN", values)
 }
 
-func (sqlb *SQLBuilderSelect) conditionIn(operator string, field string,condition string, values []interface{}) *SQLBuilderSelect {
+func (sqlb *SQLBuilderSelect) conditionIn(operator string, field string, condition string, values []interface{}) *SQLBuilderSelect {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
 		buf.WriteString(" " + operator + " ")
 	}
-	s,_ := PinConditionIn(field, condition, values)
+	s, _ := PinConditionIn(field, condition, values)
 	buf.WriteString(s)
 
 	sqlb.where = buf.String()
@@ -165,7 +162,7 @@ func (sqlb *SQLBuilderSelect) OrderBy(order string) *SQLBuilderSelect {
 	return sqlb
 }
 
-func (sqlb *SQLBuilderSelect)GetWhereParamValues() []interface{} {
+func (sqlb *SQLBuilderSelect) GetWhereParamValues() []interface{} {
 	return sqlb.whereParams
 }
 
@@ -218,4 +215,3 @@ func (sqlb *SQLBuilderSelect) GetSQL() (string, error) {
 func NewSQLBuilderSelect() *SQLBuilderSelect {
 	return &SQLBuilderSelect{}
 }
-

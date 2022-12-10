@@ -2,10 +2,10 @@ package xlog
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"testing"
-	"fmt"
 )
 
 // go test --run="TestInfo"
@@ -15,7 +15,7 @@ func TestInfo(t *testing.T) {
 	Warn("Warn级别日志内容")
 	Error("error级别日志内容")
 
-	infoLogObj := New(os.Stdout, "[user-service] ", log.Lmicroseconds | log.LstdFlags | log.Llongfile, InfoLevel)
+	infoLogObj := New(os.Stdout, "[user-service] ", log.Lmicroseconds|log.LstdFlags|log.Llongfile, InfoLevel)
 	infoLogObj.Trace("trace信息")
 	infoLogObj.Debug("debug信息")
 	infoLogObj.Info("info信息")
@@ -28,14 +28,14 @@ func TestInfo(t *testing.T) {
 	goLogObj.Println("使用原生log日志打印")
 
 	b := bytes.Buffer{}
-	loggerObj := New(&b, "order-service ", log.LstdFlags | log.Llongfile, TraceLevel)
+	loggerObj := New(&b, "order-service ", log.LstdFlags|log.Llongfile, TraceLevel)
 	loggerObj.Info("hello world")
 	fmt.Printf("日志信息: %s \n", b.String())
 
-	levelUint8,_ := ParseLevel("error")
+	levelUint8, _ := ParseLevel("error")
 	fmt.Println(levelUint8) //4
 
-	levelUint82,_ := ParseLevel("no")
+	levelUint82, _ := ParseLevel("no")
 	fmt.Println(levelUint82) //0
 
 	fmt.Println(WarnLevel.ToString()) // warn <nil>

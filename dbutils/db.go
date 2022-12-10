@@ -23,7 +23,7 @@ func GetDsn(dbConfig map[string]interface{}) string {
 	port, ok := dbConfig["port"]
 	if !ok {
 		port = "3306"
-	} else if _, ok = port.(string);!ok {
+	} else if _, ok = port.(string); !ok {
 		port = fmt.Sprintf("%v", port)
 	}
 	dbname, ok := dbConfig["dbname"]
@@ -39,37 +39,36 @@ func GetDsn(dbConfig map[string]interface{}) string {
 	if ok && param != "" {
 		param = fmt.Sprintf("&%s", param)
 	} else {
-		param = "";
+		param = ""
 	}
-	dbDsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s%s", user_name, password, host, port, dbname, charset,param)
+	dbDsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s%s", user_name, password, host, port, dbname, charset, param)
 	return dbDsn
 }
-
 
 // 获取表字段信息
 func GetTableFields(connect *sql.DB, tbl string) ([]map[string]string, error) {
 	//结果
 	ret := []map[string]string{}
-	sqlStr := fmt.Sprintf("show full fields from %s;", tbl);
-	rows, err:=connect.Query(sqlStr)
-	if err !=nil {
+	sqlStr := fmt.Sprintf("show full fields from %s;", tbl)
+	rows, err := connect.Query(sqlStr)
+	if err != nil {
 		return ret, err
 	}
 	defer rows.Close()
-	cols,err := rows.Columns() //获取所有字段
+	cols, err := rows.Columns() //获取所有字段
 	//一行所有列的值，用[]byte表示
-	vals := make([][]byte, len(cols));
+	vals := make([][]byte, len(cols))
 	//填充一行数据
-	scans := make([]interface{}, len(cols));
+	scans := make([]interface{}, len(cols))
 	for k, _ := range vals {
-		scans[k] = &vals[k];
+		scans[k] = &vals[k]
 	}
 	for rows.Next() {
 		//每行数据
 		row := make(map[string]string)
-		if err := rows.Scan(scans...);err ==nil {
+		if err := rows.Scan(scans...); err == nil {
 			for k, v := range vals { //遍历结果
-				key := cols[k]; //字段名
+				key := cols[k] //字段名
 				//把[]byte数据转成string,放入结果集
 				row[key] = string(v)
 			}
@@ -83,16 +82,15 @@ func GetTableFields(connect *sql.DB, tbl string) ([]map[string]string, error) {
 
 }
 
-
 /*
   执行插入记录sql
   示例：insSql := "insert INTO t_user_token_1(user_id,user_token) values(?,?)"
 		id,err := InsertSql(connect, insSql, "1000", "token123")
 */
-func InsertSql(connect *sql.DB, insSql string, args ...interface{}) (id int64, err error)  {
+func InsertSql(connect *sql.DB, insSql string, args ...interface{}) (id int64, err error) {
 	id = 0
 	res, err := connect.Exec(insSql, args...)
-	if err !=nil {
+	if err != nil {
 		return
 	}
 	id, err = res.LastInsertId()
@@ -104,10 +102,10 @@ func InsertSql(connect *sql.DB, insSql string, args ...interface{}) (id int64, e
   示例：upSql := "update t_user_token_1 set user_token=?,update_time=? where user_id=? order by id desc limit 1"
 	id,err := UpdateSql(connect, upSql,  "token123abc222", time.Now().Unix(),"1000")
 */
-func UpdateSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, err error)  {
+func UpdateSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, err error) {
 	num = 0
 	res, err := connect.Exec(insSql, args...)
-	if err !=nil {
+	if err != nil {
 		return
 	}
 	num, err = res.RowsAffected()
@@ -115,10 +113,10 @@ func UpdateSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, 
 }
 
 // 删除记录sql
-func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, err error)  {
+func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, err error) {
 	num = 0
 	res, err := connect.Exec(insSql, args...)
-	if err !=nil {
+	if err != nil {
 		return
 	}
 	num, err = res.RowsAffected()
@@ -126,27 +124,27 @@ func DeleteSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, 
 }
 
 // 查询单条记录
-func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]string, error)  {
+func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]string, error) {
 	ret := make(map[string]string)
-	rows,err := connect.Query(sqlStr, args...)
-	if err !=nil {
+	rows, err := connect.Query(sqlStr, args...)
+	if err != nil {
 		return ret, err
 	}
 	defer rows.Close()
 	//查询到的字段名，返回的是一个string数组切片
 	cols, err := rows.Columns()
 	//一行所有列的值，用[]byte表示
-	vals := make([][]byte, len(cols));
+	vals := make([][]byte, len(cols))
 	//填充一行数据
-	scans := make([]interface{}, len(cols));
+	scans := make([]interface{}, len(cols))
 	for k, _ := range vals {
-		scans[k] = &vals[k];
+		scans[k] = &vals[k]
 	}
 
 	for rows.Next() {
-		if err := rows.Scan(scans...);err ==nil {
+		if err := rows.Scan(scans...); err == nil {
 			for k, v := range vals { //遍历结果
-				key := cols[k]; //字段名
+				key := cols[k] //字段名
 				//把[]byte数据转成string,放入结果集
 				ret[key] = string(v)
 			}
@@ -160,31 +158,31 @@ func SelectOne(connect *sql.DB, sqlStr string, args ...interface{}) (map[string]
 }
 
 // 查询多条记录
-func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) ([]map[string]string, error)  {
+func SelectRows(connect *sql.DB, sqlStr string, args ...interface{}) ([]map[string]string, error) {
 	//结果
 	ret := []map[string]string{}
 
-	rows,err := connect.Query(sqlStr, args...)
-	if err !=nil {
+	rows, err := connect.Query(sqlStr, args...)
+	if err != nil {
 		return ret, err
 	}
 	defer rows.Close()
 	//查询到的字段名，返回的是一个string数组切片
 	cols, err := rows.Columns()
 	//一行所有列的值，用[]byte表示
-	vals := make([][]byte, len(cols));
+	vals := make([][]byte, len(cols))
 	//填充一行数据
-	scans := make([]interface{}, len(cols));
+	scans := make([]interface{}, len(cols))
 	for k, _ := range vals {
-		scans[k] = &vals[k];
+		scans[k] = &vals[k]
 	}
 
 	for rows.Next() {
 		//每行数据
 		row := make(map[string]string)
-		if err := rows.Scan(scans...);err ==nil {
+		if err := rows.Scan(scans...); err == nil {
 			for k, v := range vals { //遍历结果
-				key := cols[k]; //字段名
+				key := cols[k] //字段名
 				//把[]byte数据转成string,放入结果集
 				row[key] = string(v)
 			}
@@ -208,28 +206,27 @@ func DbConnect(dsn string) (*sql.DB, error) {
 
 var dbObj = make(map[string]*sql.DB)
 
-func GetDbConnect(dbnameCode, dsn string) (*sql.DB, error)  {
-	db,ok := dbObj[dbnameCode]
+func GetDbConnect(dbnameCode, dsn string) (*sql.DB, error) {
+	db, ok := dbObj[dbnameCode]
 	if ok {
-		return db,nil
+		return db, nil
 	}
-	if db, err := DbConnect(dsn); err==nil{
+	if db, err := DbConnect(dsn); err == nil {
 		dbObj[dbnameCode] = db
 		return db, nil
 	} else {
-		return db,err
+		return db, err
 	}
 }
 
-
 // 获取所有表名
-func ShowTables(connect *sql.DB) ([]string) {
+func ShowTables(connect *sql.DB) []string {
 	ret := []string{}
 	fieldName := ""
 	sqlStr := "show tables;"
 	tables, err := SelectRows(connect, sqlStr)
 	if err == nil {
-		for _,v := range tables {
+		for _, v := range tables {
 			for field, _ := range v {
 				fieldName = field
 				break
@@ -239,8 +236,8 @@ func ShowTables(connect *sql.DB) ([]string) {
 			}
 		}
 
-		for _,v := range tables {
-			tblName,ok := v[fieldName]
+		for _, v := range tables {
+			tblName, ok := v[fieldName]
 			if ok {
 				ret = append(ret, tblName)
 			}
@@ -253,11 +250,11 @@ func ShowTables(connect *sql.DB) ([]string) {
 func ShowCreateTable(connect *sql.DB, tblName string) (string, error) {
 	ret := ""
 	sqlStr := fmt.Sprintf("show create table `%s`;", tblName)
-	res,err := SelectOne(connect, sqlStr)
+	res, err := SelectOne(connect, sqlStr)
 	if err != nil {
 		return ret, err
 	}
-	if tblSql,ok := res["Create Table"];ok {
+	if tblSql, ok := res["Create Table"]; ok {
 		return tblSql, nil
 	}
 	return ret, errors.New("获取表结构失败")

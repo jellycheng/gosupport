@@ -10,7 +10,7 @@ import (
 
 func GetHashOrd(str string) int64 {
 	var ret int64
-	isMatch,_ := regexp.MatchString("^[1-9][0-9]*$", str)
+	isMatch, _ := regexp.MatchString("^[1-9][0-9]*$", str)
 	if isMatch {
 		//string到int64
 		val, err := strconv.ParseInt(str, 10, 64)
@@ -18,7 +18,7 @@ func GetHashOrd(str string) int64 {
 			ret = val
 		}
 	} else {
-		for _,val := range str {//rune方式
+		for _, val := range str { //rune方式
 			//fmt.Printf("%d,%c \n", val, val)
 			strOrd := fmt.Sprintf("%d", val)
 			ord, err := strconv.ParseInt(strOrd, 10, 64)
@@ -34,14 +34,14 @@ func GetHashOrd(str string) int64 {
 //返回0～127
 func GetHashOrd127(str string) int64 {
 	ret := GetHashOrd(str)
-	return ret%128
+	return ret % 128
 }
 
-func WrapField(field string) string  {
+func WrapField(field string) string {
 	return "`" + strings.Trim(field, "`") + "`"
 }
 
-func WrapTable(field string) string  {
+func WrapTable(field string) string {
 	return "`" + strings.Trim(field, "`") + "`"
 }
 
@@ -57,12 +57,12 @@ func WenHaoPlaceholders(n int) string {
 }
 
 // db字段类型转go类型, fieldTypeStr=bigint(20)
-func FiledType2GoType(fieldTypeStr string)  string{
+func FiledType2GoType(fieldTypeStr string) string {
 	fieldTypeStr = strings.TrimSpace(fieldTypeStr)
-	typeArr := strings.Split(fieldTypeStr,"(")
+	typeArr := strings.Split(fieldTypeStr, "(")
 	realType := typeArr[0]
-	if isMatch,_ := regexp.MatchString(`\s+`, typeArr[0]);isMatch {
-		typeArr2 := strings.Split(typeArr[0]," ")
+	if isMatch, _ := regexp.MatchString(`\s+`, typeArr[0]); isMatch {
+		typeArr2 := strings.Split(typeArr[0], " ")
 		realType = typeArr2[0]
 	}
 	switch realType {
@@ -112,7 +112,6 @@ func Md5V1(str string) string {
 	return md5str
 }
 
-
 func PinInStr(strs []string) string {
 	var buf strings.Builder
 	for k, str := range strs {
@@ -125,7 +124,6 @@ func PinInStr(strs []string) string {
 	inStr := buf.String()
 	return inStr
 }
-
 
 func JoinInt642Str(data []int64, sep string) string {
 	switch len(data) {

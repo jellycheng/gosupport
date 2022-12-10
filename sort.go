@@ -25,13 +25,12 @@ func Float64Rank(data []float64, order string, isRepeatOrder bool) map[float64]i
 			temp[v] = struct{}{}
 			ret[v] = rank
 			rank++
-		} else if isRepeatOrder == false {// 不去重排序
+		} else if isRepeatOrder == false { // 不去重排序
 			rank++
 		}
 	}
 	return ret
 }
-
 
 // 对map的key进行排序，返回排序后的key切片
 func KeysOfMap(m map[string]string) []string {
@@ -71,7 +70,7 @@ func (p MyMapStringIntList) Less(i, j int) bool { return p[i].Value < p[j].Value
 func MapSortByValue(m map[string]int, so string) MyMapStringIntList {
 	p := make(MyMapStringIntList, 0)
 	for k, v := range m {
-		p = append(p, MyMapStringInt{Key:k, Value:v})
+		p = append(p, MyMapStringInt{Key: k, Value: v})
 	}
 
 	if so == "desc" {
@@ -86,17 +85,18 @@ func MapSortByValue(m map[string]int, so string) MyMapStringIntList {
 //	sort.Sort(gosupport.Int64Slice(myInt64)) // 升序，或者 gosupport.Int64s(myInt64) 或者 gosupport.Int64Slice(myInt64).Sort()
 //	fmt.Println(myInt64) //[7 8 9 10]
 type Int64Slice []int64
+
 func (x Int64Slice) Len() int           { return len(x) }
 func (x Int64Slice) Less(i, j int) bool { return x[i] < x[j] }
 func (x Int64Slice) Swap(i, j int)      { x[i], x[j] = x[j], x[i] }
-func (x Int64Slice) Sort() { sort.Sort(x) }
+func (x Int64Slice) Sort()              { sort.Sort(x) }
+
 // 升序
-func Int64s(a []int64)  {
+func Int64s(a []int64) {
 	sort.Sort(Int64Slice(a))
 }
+
 // 倒序
 func ReverseInt64s(a []int64) {
 	sort.Sort(sort.Reverse(Int64Slice(a)))
 }
-
-

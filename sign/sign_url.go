@@ -10,48 +10,48 @@ import (
 
 type UrlGetSign struct {
 	timestamp string //时间戳
-	nonce string  //随机字符串
-	secret string //公共密钥，所有内部服务使用一样的值
+	nonce     string //随机字符串
+	secret    string //公共密钥，所有内部服务使用一样的值
 }
 
-func (u *UrlGetSign)SetTimestamp(s_timestamp string) *UrlGetSign  {
+func (u *UrlGetSign) SetTimestamp(s_timestamp string) *UrlGetSign {
 	u.timestamp = s_timestamp
 	return u
 }
 
-func (u *UrlGetSign)GetTimestamp() string {
+func (u *UrlGetSign) GetTimestamp() string {
 	return u.timestamp
 }
 
-func (u *UrlGetSign)SetNonce(s_nonce string) *UrlGetSign {
+func (u *UrlGetSign) SetNonce(s_nonce string) *UrlGetSign {
 	u.nonce = s_nonce
 	return u
 }
 
-func (u *UrlGetSign)GetNonce() string {
+func (u *UrlGetSign) GetNonce() string {
 	return u.nonce
 }
 
-func (u *UrlGetSign)SetSecret(s string) *UrlGetSign {
+func (u *UrlGetSign) SetSecret(s string) *UrlGetSign {
 	u.secret = s
 	return u
 }
 
-func (u *UrlGetSign)GetSecret() string {
+func (u *UrlGetSign) GetSecret() string {
 	return u.secret
 }
 
 //自动生成拼的url参数
-func (u *UrlGetSign)AutoSpellUrlParam() string  {
+func (u *UrlGetSign) AutoSpellUrlParam() string {
 	getStrFormat := "s_timestamp=%s&s_nonce=%s&s_sign=%s"
-	var t,n,s string
-	if u.timestamp!="" {
+	var t, n, s string
+	if u.timestamp != "" {
 		t = u.timestamp
 	} else {
 		t = gosupport.ToStr(gosupport.Time())
 		u.timestamp = t
 	}
-	if u.nonce!="" {
+	if u.nonce != "" {
 		n = u.nonce
 	} else {
 		n = gosupport.GetRandString(8)
@@ -63,7 +63,7 @@ func (u *UrlGetSign)AutoSpellUrlParam() string  {
 	return getStr
 }
 
-func (u *UrlGetSign)GetSign() string {
+func (u *UrlGetSign) GetSign() string {
 	var params = []string{
 		u.timestamp,
 		u.nonce,
@@ -78,7 +78,7 @@ func (u *UrlGetSign)GetSign() string {
 }
 
 // s:= sign.NewUrlGetSign().SetSecret("cjsJellySecret123456").AutoSpellUrlParam()
-func NewUrlGetSign() *UrlGetSign  {
+func NewUrlGetSign() *UrlGetSign {
 	return &UrlGetSign{}
 }
 
@@ -91,7 +91,6 @@ func Checks2sSign(timestamp, nonce, sign, secret string) bool {
 		return false
 	}
 }
-
 
 /*
 php算法：
@@ -107,5 +106,4 @@ function checks2sSign($s_sign, $s_timestamp, $s_nonce, $secret) {
         return false;
     }
 }
- */
-
+*/

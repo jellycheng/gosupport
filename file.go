@@ -21,12 +21,12 @@ func FileGetContents(filename string) (string, error) {
 //写内容
 func FilePutContents(filename string, content string, perm ...os.FileMode) (int, error) {
 	var fileMode os.FileMode
-	if (len(perm) == 0) {
+	if len(perm) == 0 {
 		fileMode = 0666
 	} else {
 		fileMode = perm[0]
 	}
-	if f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, fileMode); err == nil{
+	if f, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, fileMode); err == nil {
 		defer f.Close()
 		n, err2 := io.WriteString(f, content)
 		return n, err2
@@ -50,7 +50,7 @@ func FileExists(path string) bool {
 // 判断文件是否存在
 func IsFile(path string) bool {
 	s, err := os.Stat(path)
-	if err != nil {//不是文件也不是目录
+	if err != nil { //不是文件也不是目录
 		return false
 	}
 	return !s.IsDir()
@@ -83,7 +83,6 @@ func FileMTime(file string) (int64, error) {
 	return f.ModTime().Unix(), nil
 }
 
-
 func IsDirWriteable(dir string) error {
 	f := filepath.Join(dir, ".touch")
 	if err := ioutil.WriteFile(f, []byte(""), PrivateFileMode); err != nil {
@@ -100,7 +99,7 @@ func IsDirWriteable(dir string) error {
 	} else {
 		fmt.Println(data)
 	}
- */
+*/
 func LoadJson(jsonFile string, t interface{}) error {
 	data, err := ioutil.ReadFile(jsonFile)
 	if err != nil {
@@ -124,7 +123,7 @@ func FileExt(f string) string {
 }
 
 // 创建上级目录,存在或者创建成功返回true、创建失败返回false
-func CreateSuperiorDir(path string) bool  {
+func CreateSuperiorDir(path string) bool {
 	if path == "" || StrInSlice(path, []string{".", "..", "./", "../", "/"}) {
 		return false
 	}
@@ -132,7 +131,7 @@ func CreateSuperiorDir(path string) bool  {
 	if spath == "" {
 		return false
 	}
-	if err := os.MkdirAll(spath, 0755);err == nil {
+	if err := os.MkdirAll(spath, 0755); err == nil {
 		return true
 	} else {
 		return false

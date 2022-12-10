@@ -5,57 +5,57 @@ import (
 )
 
 type MysqlDsn struct {
-	host       string
-	port       string
-	username   string
-	password   string
-	dbname     string   //库名
-	charset    string  //数据库编码
-	extparam   string  //扩展参数
+	host     string
+	port     string
+	username string
+	password string
+	dbname   string //库名
+	charset  string //数据库编码
+	extparam string //扩展参数
 }
 
 func (m *MysqlDsn) ToDsn() string {
-	var param string  //parseTime=True&loc=Local
+	var param string //parseTime=True&loc=Local
 	if m.extparam != "" {
 		param = fmt.Sprintf("&%s", m.extparam)
 	}
 	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s%s",
-						m.username, m.password, m.host, m.port, m.dbname,m.charset, param)
+		m.username, m.password, m.host, m.port, m.dbname, m.charset, param)
 }
 
 func (m *MysqlDsn) Key() string {
 	str := fmt.Sprintf("%s:%s:%s:%s", m.host, m.port, m.dbname, m.username)
-	if len(str)>32 {
+	if len(str) > 32 {
 		str = Md5V1(str)
 	}
 	return str
 }
 
-func (m *MysqlDsn) GetHost() string  {
+func (m *MysqlDsn) GetHost() string {
 	return m.host
 }
 
-func (m *MysqlDsn) GetPort() string  {
+func (m *MysqlDsn) GetPort() string {
 	return m.port
 }
 
-func (m *MysqlDsn) GetUsername() string  {
+func (m *MysqlDsn) GetUsername() string {
 	return m.username
 }
 
-func (m *MysqlDsn) GetPassword() string  {
+func (m *MysqlDsn) GetPassword() string {
 	return m.password
 }
 
-func (m *MysqlDsn) GetDbname() string  {
+func (m *MysqlDsn) GetDbname() string {
 	return m.dbname
 }
 
-func (m *MysqlDsn) GetCharset() string  {
+func (m *MysqlDsn) GetCharset() string {
 	return m.charset
 }
 
-func (m *MysqlDsn) GetExtparam() string  {
+func (m *MysqlDsn) GetExtparam() string {
 	return m.extparam
 }
 
@@ -63,8 +63,8 @@ func (m *MysqlDsn) GetExtparam() string  {
 func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 	dsnObj := &MysqlDsn{}
 
-	if h, ok := dbConfig["host"];ok {
-		if hStr,ok := h.(string);ok {
+	if h, ok := dbConfig["host"]; ok {
+		if hStr, ok := h.(string); ok {
 			dsnObj.host = hStr
 		} else {
 			dsnObj.host = "localhost"
@@ -73,11 +73,11 @@ func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 		dsnObj.host = "localhost"
 	}
 
-	if p, ok := dbConfig["port"];ok {
-		if pStr,ok := p.(string);ok {
+	if p, ok := dbConfig["port"]; ok {
+		if pStr, ok := p.(string); ok {
 			dsnObj.port = pStr
-		} else if p2Str,ok:=p.(int);ok{
-			dsnObj.port = fmt.Sprintf("%d",p2Str)
+		} else if p2Str, ok := p.(int); ok {
+			dsnObj.port = fmt.Sprintf("%d", p2Str)
 		} else {
 			dsnObj.port = "3306"
 		}
@@ -85,8 +85,8 @@ func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 		dsnObj.port = "3306"
 	}
 
-	if u, ok := dbConfig["username"];ok {
-		if uStr,ok := u.(string);ok {
+	if u, ok := dbConfig["username"]; ok {
+		if uStr, ok := u.(string); ok {
 			dsnObj.username = uStr
 		} else {
 			dsnObj.username = "root"
@@ -95,8 +95,8 @@ func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 		dsnObj.username = "root"
 	}
 
-	if p, ok := dbConfig["password"];ok {
-		if pStr,ok := p.(string);ok {
+	if p, ok := dbConfig["password"]; ok {
+		if pStr, ok := p.(string); ok {
 			dsnObj.password = pStr
 		} else {
 			dsnObj.password = ""
@@ -105,8 +105,8 @@ func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 		dsnObj.password = ""
 	}
 
-	if d, ok := dbConfig["dbname"];ok {
-		if dStr,ok := d.(string);ok {
+	if d, ok := dbConfig["dbname"]; ok {
+		if dStr, ok := d.(string); ok {
 			dsnObj.dbname = dStr
 		} else {
 			dsnObj.dbname = ""
@@ -115,8 +115,8 @@ func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 		dsnObj.dbname = ""
 	}
 
-	if c, ok := dbConfig["charset"];ok {
-		if cStr,ok := c.(string);ok {
+	if c, ok := dbConfig["charset"]; ok {
+		if cStr, ok := c.(string); ok {
 			dsnObj.charset = cStr
 		} else {
 			dsnObj.charset = "utf8"
@@ -125,12 +125,11 @@ func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 		dsnObj.charset = "utf8"
 	}
 
-	if param, ok := dbConfig["extparam"];ok && param != "" {
+	if param, ok := dbConfig["extparam"]; ok && param != "" {
 		dsnObj.extparam = fmt.Sprintf("%s", param)
 	} else {
-		dsnObj.extparam = "";
+		dsnObj.extparam = ""
 	}
 
 	return dsnObj
 }
-

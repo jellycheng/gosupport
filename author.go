@@ -11,7 +11,7 @@ import "fmt"
 	for _,v:=range Authors{
 		fmt.Println(v.String())
 	}
- */
+*/
 type Author struct {
 	Name  string //作者
 	Email string //作者邮箱
@@ -25,5 +25,3 @@ func (a Author) String() string {
 	}
 	return fmt.Sprintf("%v%v", a.Name, e)
 }
-
-

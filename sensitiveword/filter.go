@@ -19,6 +19,7 @@ type FilterSensitiveWord struct {
 func (f *FilterSensitiveWord) SensitiveWordDict() string {
 	return f.sensitiveWordDict
 }
+
 //设置敏感词，会覆盖以前设置的
 func (f *FilterSensitiveWord) SetSensitiveWordDict(sensitiveWordDict string) *FilterSensitiveWord {
 	f.sensitiveWordDict = strings.TrimSpace(sensitiveWordDict)
@@ -30,7 +31,7 @@ func (f *FilterSensitiveWord) AppendSensitiveWordDict(sensitiveWordDict string) 
 	if f.sensitiveWordDict == "" {
 		f.sensitiveWordDict = strings.TrimSpace(sensitiveWordDict)
 	} else {
-		f.sensitiveWordDict = fmt.Sprintf("%s|%s", f.sensitiveWordDict,strings.TrimSpace(sensitiveWordDict))
+		f.sensitiveWordDict = fmt.Sprintf("%s|%s", f.sensitiveWordDict, strings.TrimSpace(sensitiveWordDict))
 	}
 	return f
 }
@@ -41,15 +42,16 @@ func (f *FilterSensitiveWord) ReplaceSymbol() string {
 }
 
 //设置替换符
-func (f *FilterSensitiveWord) SetReplaceSymbol(replaceSymbol string) *FilterSensitiveWord  {
+func (f *FilterSensitiveWord) SetReplaceSymbol(replaceSymbol string) *FilterSensitiveWord {
 	f.replaceSymbol = replaceSymbol
 	return f
 }
+
 //过滤敏感词
-func (f *FilterSensitiveWord) Filter(src string) (string, error)  {
+func (f *FilterSensitiveWord) Filter(src string) (string, error) {
 	pattern01 := f.sensitiveWordDict //敏感词过滤, 内容如 `涉黄|X大片`
 	re, err := regexp.Compile(pattern01)
-	if err!=nil {
+	if err != nil {
 		return src, errors.New("正则表达式错误")
 	} else {
 		newStr := re.ReplaceAllStringFunc(src, func(s string) string {
@@ -66,5 +68,3 @@ func NewFilterSensitiveWord(sensitiveWordDict string, replaceSymbol string) *Fil
 	}
 	return &FilterSensitiveWord{sensitiveWordDict: sensitiveWordDict, replaceSymbol: replaceSymbol}
 }
-
-

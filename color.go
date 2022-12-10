@@ -29,4 +29,3 @@ func ClearColorCode(str string) string {
 	codeRegex := regexp.MustCompile(colorExpr)
 	return codeRegex.ReplaceAllString(str, "")
 }
-

@@ -13,14 +13,14 @@ import (
 /*
   url中追加参数
   调用示例：gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
- */
+*/
 func UrlDeal(reqUrl string, otherGetParam string) string {
 	if otherGetParam == "" {
 		return reqUrl
 	}
 	ret := ""
 	suffix := ""
-	if index := strings.Index(reqUrl, "#");index>=0 {
+	if index := strings.Index(reqUrl, "#"); index >= 0 {
 		ret = reqUrl[:index]
 		suffix = reqUrl[index:]
 	} else {
@@ -34,14 +34,13 @@ func UrlDeal(reqUrl string, otherGetParam string) string {
 	return ret
 }
 
-
 /*
   对特殊字符使用中划线替换
   CreateAnchor("abc？你好?中=国123abc") 返回 abc-你好-中-国123abc
   CreateAnchor("你好中国123abc")返回 你好中国123abc
   CreateAnchor("你好中国 123 abc") 返回 你好中国-123-abc
   CreateAnchor("how 你好 中国123a!bc#de") 返回 how-你好-中国123a-bc-de
- */
+*/
 func CreateAnchor(str string) string {
 	var anchorName []rune
 	var futureDash = false
@@ -81,13 +80,11 @@ func ToCamelCase(str string) string {
 	return buff.String()
 }
 
-
 //转为snake格式: 全部转小写，空格转_，如：Abc_Xy z_eLsW中国 转 abc_xy_z_elsw中国
 func ToSnakeCase(str string) string {
 	str = strings.TrimSpace(strings.ToLower(str))
 	return strings.Replace(str, " ", "_", -1)
 }
-
 
 // 下划线写法转为驼峰写法，如：img_key 转 ImgKey
 func Case2Camel(name string) string {
@@ -95,6 +92,7 @@ func Case2Camel(name string) string {
 	name = strings.Title(name)
 	return strings.Replace(name, " ", "", -1)
 }
+
 // 驼峰转下划线，如：ImgKeyXyz 转 Img_Key_Xyz
 func Camel2Case(name string) string {
 	var wordBarrierRegex = regexp.MustCompile(`(\w)([A-Z])`)
@@ -120,7 +118,6 @@ func Lcfirst(str string) string {
 	}
 	return ""
 }
-
 
 //获取指定charset字符集下指定长度length的随机字符串
 func GetRandStringWithCharset(length int, charset string) string {
@@ -188,7 +185,7 @@ func ReplaceStar4String(str string, start int, maxLen int) string {
 		return str
 	}
 	var realMax = maxLen
-	if l - start < maxLen {
+	if l-start < maxLen {
 		realMax = l - start
 	}
 	return string(b[:start]) + strings.Repeat("*", realMax) + string(b[realMax+start:])
@@ -197,12 +194,12 @@ func ReplaceStar4String(str string, start int, maxLen int) string {
 // column列从1开始
 func GetExcelLetter(column int) string {
 	result := ""
-	if column<1 {
+	if column < 1 {
 		return result
 	}
-	var Letters = []string{"A","B","C","D","E","F","G","H","I","J","K",
-		"L","M","N","O","P","Q","R","S","T","U",
-		"V","W","X","Y","Z"}
+	var Letters = []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+		"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+		"V", "W", "X", "Y", "Z"}
 	column = column - 1
 	result = Letters[column%26]
 	column = column / 26

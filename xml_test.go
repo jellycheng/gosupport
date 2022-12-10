@@ -18,8 +18,8 @@ func TestMap2XML(t *testing.T) {
 	}
 
 	p := map[string]string{
-		"return_code":"SUCCESS",
-		"return_msg":"ok",
+		"return_code": "SUCCESS",
+		"return_msg":  "ok",
 	}
 	fmt.Println(Map2XMLV2(p))
 
@@ -29,7 +29,7 @@ func TestMap2XML(t *testing.T) {
 func TestXML2Map(t *testing.T) {
 	xmlByte := []byte("<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>")
 
-	if res, err := XML2Map(xmlByte);err == nil {
+	if res, err := XML2Map(xmlByte); err == nil {
 		fmt.Println(fmt.Sprintf("%T, %#v", res, res))
 
 	} else {

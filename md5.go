@@ -15,15 +15,15 @@ func Md5(str string) string {
 
 //md5加密
 func Md5V1(str string) string {
-	h := md5.New()  //返回hash.Hash接口对象
-	h.Write([]byte(str))  //字符串转byte数组,并写入内容
-	has := h.Sum([]byte(""))  //返回[]byte
+	h := md5.New()           //返回hash.Hash接口对象
+	h.Write([]byte(str))     //字符串转byte数组,并写入内容
+	has := h.Sum([]byte("")) //返回[]byte
 	md5str := fmt.Sprintf("%x", has)
 	return md5str
 }
 
 //使用md5加密方式2
-func Md5V2(str string) string  {
+func Md5V2(str string) string {
 	h := md5.New()
 	h.Write([]byte(str))
 	return hex.EncodeToString(h.Sum(nil))
@@ -48,7 +48,6 @@ func Md5V5(bt []byte) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
-
 // 获取文件的md5值
 func Md5File(path string) (string, error) {
 	data, err := ioutil.ReadFile(path)
@@ -59,4 +58,3 @@ func Md5File(path string) (string, error) {
 	hash.Write([]byte(data))
 	return hex.EncodeToString(hash.Sum(nil)), nil
 }
-

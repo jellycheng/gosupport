@@ -27,7 +27,7 @@ func Timestamp2Time(timestamp int64, timezone ...*time.Location) time.Time {
 
 // 获取上海时区
 func GetShanghaiTimezone() *time.Location {
-	loc, _:= time.LoadLocation("Asia/Shanghai")
+	loc, _ := time.LoadLocation("Asia/Shanghai")
 	return loc
 }
 
@@ -41,12 +41,12 @@ func Time(timezone ...*time.Location) int64 {
 	return time.Now().In(loc).Unix()
 }
 
-// TimeNow 获取时间戳
+// TimeNow 获取当前时间戳
 func TimeNow(timezone ...*time.Location) int64 {
 	return Time(timezone...)
 }
 
-// TimeNowMillisecond 获取毫秒
+// TimeNowMillisecond 获取当前毫秒
 func TimeNowMillisecond(timezone ...*time.Location) int64 {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -54,7 +54,7 @@ func TimeNowMillisecond(timezone ...*time.Location) int64 {
 	} else {
 		loc = timezone[0]
 	}
-	return time.Now().In(loc).UnixNano() /1e6
+	return time.Now().In(loc).UnixNano() / 1e6
 }
 
 // 当前时间转指定日期格式，s:= gosupport.TimeNow2Format("20060102") fmt.Println(gosupport.TimeNow2Format("2006.01.02 15:04:05"))
@@ -69,7 +69,7 @@ func TimeNow2Format(format string, timezone ...*time.Location) string {
 }
 
 // 按日期格式+时间转时间戳 unixTime,_ := gosupport.Strtotime(gosupport.TimeFormat,"2021-01-02 02:36:43")
-func Strtotime(format, strtime string,timezone ...*time.Location) (int64, error) {
+func Strtotime(format, strtime string, timezone ...*time.Location) (int64, error) {
 	var loc *time.Location
 	if len(timezone) == 0 {
 		loc = GetShanghaiTimezone()
@@ -100,7 +100,6 @@ func TimeNowPtr() *time.Time {
 	return &t
 }
 
-
 // 调用示例：gosupport.TimeFormat2Date(time.Date(2019, 07, 01, 0, 0, 0, 0, time.UTC))
 // 返回格式为 年/月/日，如：2019/07/01 、 2019/11/28
 func TimeFormat2Date(t time.Time) string {
@@ -112,16 +111,16 @@ func TimeFormat2DateWay(t time.Time, way int) string {
 	var ret string
 	year, month, day := t.Date()
 	switch way {
-		case 1:
-			ret = fmt.Sprintf("%d-%02d-%02d", year, month, day)
-		case 2:
-			ret = fmt.Sprintf("%d.%02d.%02d", year, month, day)
-		case 3:
-			ret = fmt.Sprintf("%d年%02d月%02d日", year, month, day)
-		case 99:
-			fallthrough
-		default:
-			ret = fmt.Sprintf("%d/%02d/%02d", year, month, day)
+	case 1:
+		ret = fmt.Sprintf("%d-%02d-%02d", year, month, day)
+	case 2:
+		ret = fmt.Sprintf("%d.%02d.%02d", year, month, day)
+	case 3:
+		ret = fmt.Sprintf("%d年%02d月%02d日", year, month, day)
+	case 99:
+		fallthrough
+	default:
+		ret = fmt.Sprintf("%d/%02d/%02d", year, month, day)
 	}
 	return ret
 }
@@ -212,7 +211,7 @@ func TimeNow2YearMonth(timezone ...*time.Location) int {
 }
 
 // 当前时间返回年月日
-func TimeNow2YMD(timezone ...*time.Location) (int, int, int)  {
+func TimeNow2YMD(timezone ...*time.Location) (int, int, int) {
 	var loc *time.Location
 	if len(timezone) == 0 {
 		loc = GetShanghaiTimezone()
@@ -224,12 +223,12 @@ func TimeNow2YMD(timezone ...*time.Location) (int, int, int)  {
 }
 
 // 时间戳转日期时间格式,调用示例： gosupport.Timestamp2DateTime(1569152644, 7)
-func Timestamp2DateTime(timestamp int, way int,timezone ...*time.Location) string  {
+func Timestamp2DateTime(timestamp int, way int, timezone ...*time.Location) string {
 	return Timestamp2DateTime4int64(int64(timestamp), way, timezone...)
 }
 
 // 时间戳转日期时间格式,调用示例： gosupport.Timestamp2DateTime4int64(1622039023, 1)
-func Timestamp2DateTime4int64(timestamp int64, way int,timezone ...*time.Location) string  {
+func Timestamp2DateTime4int64(timestamp int64, way int, timezone ...*time.Location) string {
 	var ret string
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -239,35 +238,34 @@ func Timestamp2DateTime4int64(timestamp int64, way int,timezone ...*time.Locatio
 	}
 
 	timeObj := time.Unix(timestamp, 0).In(loc) //将时间戳转为时间格式
-	year := timeObj.Year()     //年
-	month := timeObj.Month()   //月
-	day := timeObj.Day()       //日
-	hour := timeObj.Hour()     //小时
-	minute := timeObj.Minute() //分钟
-	second := timeObj.Second() //秒
+	year := timeObj.Year()                     //年
+	month := timeObj.Month()                   //月
+	day := timeObj.Day()                       //日
+	hour := timeObj.Hour()                     //小时
+	minute := timeObj.Minute()                 //分钟
+	second := timeObj.Second()                 //秒
 	switch way {
-		case 1:
-			ret = fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
-		case 2:
-			ret = fmt.Sprintf("%d.%02d.%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
-		case 3:
-			ret = fmt.Sprintf("%d年%02d月%02d日 %02d时%02d分%02d秒", year, month, day, hour, minute, second)
-		case 4:
-			ret = fmt.Sprintf("%d.%02d.%02d", year, month, day)
-		case 5:
-			ret = fmt.Sprintf("%d-%02d-%02d", year, month, day)
-		case 6:
-			ret = fmt.Sprintf("%d/%02d/%02d", year, month, day)
-		case 7:
-			ret = fmt.Sprintf("%02d:%02d:%02d", hour, minute, second)
-		case 99:
-				fallthrough
-		default:
-			ret = fmt.Sprintf("%d/%02d/%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
+	case 1:
+		ret = fmt.Sprintf("%d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
+	case 2:
+		ret = fmt.Sprintf("%d.%02d.%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
+	case 3:
+		ret = fmt.Sprintf("%d年%02d月%02d日 %02d时%02d分%02d秒", year, month, day, hour, minute, second)
+	case 4:
+		ret = fmt.Sprintf("%d.%02d.%02d", year, month, day)
+	case 5:
+		ret = fmt.Sprintf("%d-%02d-%02d", year, month, day)
+	case 6:
+		ret = fmt.Sprintf("%d/%02d/%02d", year, month, day)
+	case 7:
+		ret = fmt.Sprintf("%02d:%02d:%02d", hour, minute, second)
+	case 99:
+		fallthrough
+	default:
+		ret = fmt.Sprintf("%d/%02d/%02d %02d:%02d:%02d", year, month, day, hour, minute, second)
 	}
 	return ret
 }
-
 
 // Y年，4位
 // y年，后2位
@@ -283,7 +281,7 @@ func Timestamp2DateTime4int64(timestamp int64, way int,timezone ...*time.Locatio
 // ii 分钟，无前导0
 // s 秒，有前导0
 // ss 秒，无前导0
-//类似php的写法 Y-m-d H:i:s
+// 类似php的写法 Y-m-d H:i:s
 func DateT(format string, t time.Time) string {
 	res := strings.Replace(format, "Y", t.Format("2006"), -1)
 	res = strings.Replace(res, "y", t.Format("06"), -1)
@@ -304,8 +302,6 @@ func DateT(format string, t time.Time) string {
 	return res
 }
 
-
-
 /*
   1分钟以内显示为：刚刚
   1小时以内显示为：N分钟前
@@ -325,18 +321,18 @@ func SubTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	t1 := time.Now().In(loc)
 	t1UnixTime := t1.Unix() //当前时间
 	t2UnixTime := t2.Unix()
-	if t1UnixTime<t2UnixTime {
+	if t1UnixTime < t2UnixTime {
 		ret = t2.Format("2006-01-02 15:04:05")
 		return ret
 	}
 	subVal := t1UnixTime - t2UnixTime
 	if subVal <= 60 {
 		ret = "刚刚"
-	} else if subVal <= 60 * 60 {
+	} else if subVal <= 60*60 {
 		ret = fmt.Sprintf("%d分钟前", subVal/60)
 	} else if t1.Format("20060102") == t2.Format("20060102") {
 		ret = fmt.Sprintf("今天 %s", t2.Format("15:04"))
-	} else if t1.Format("20060102") == time.Unix(t2.Unix() + 86400, 0).Format("20060102") {
+	} else if t1.Format("20060102") == time.Unix(t2.Unix()+86400, 0).Format("20060102") {
 		ret = fmt.Sprintf("昨天 %s", t2.Format("15:04"))
 	} else if t1.Format("2006") == t2.Format("2006") {
 		ret = t2.Format("01-02 15:04")
@@ -345,7 +341,6 @@ func SubTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	}
 	return ret
 }
-
 
 // 已运行时长: d天h小时m分钟s秒
 func AlreadyTimeStr(t2 time.Time, timezone ...*time.Location) string {
@@ -359,29 +354,29 @@ func AlreadyTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	t1 := time.Now().In(loc)
 	t1UnixTime := t1.Unix() //当前时间秒
 	t2UnixTime := t2.Unix()
-	if t1UnixTime<t2UnixTime {
+	if t1UnixTime < t2UnixTime {
 		ret = "时间倒挂了"
 		return ret
 	}
-	var day int64 //天
-	var hour int64 //小时
+	var day int64    //天
+	var hour int64   //小时
 	var minute int64 //分
 	var second int64 //秒
 	//总时差
 	subVal := t1UnixTime - t2UnixTime
-	if subVal/86400>0 { //超过1天
-		day = subVal/86400
+	if subVal/86400 > 0 { //超过1天
+		day = subVal / 86400
 	}
-	if subVal%86400 >0 { //1天内
-		hour = (subVal%86400)/3600 //小时
+	if subVal%86400 > 0 { //1天内
+		hour = (subVal % 86400) / 3600 //小时
 	}
-	if subVal%3600>0 { //1小时内
-		minute = (subVal%3600)/60 //分
+	if subVal%3600 > 0 { //1小时内
+		minute = (subVal % 3600) / 60 //分
 	}
-	if subVal % 60>0 {
+	if subVal%60 > 0 {
 		second = subVal % 60
 	}
-	ret = fmt.Sprintf("%d天%d小时%d分%d秒", day,hour,minute,second)
+	ret = fmt.Sprintf("%d天%d小时%d分%d秒", day, hour, minute, second)
 	return ret
 }
 
@@ -390,7 +385,6 @@ func SubDays(t1, t2 time.Time) (day int) {
 	day = int(t1.Sub(t2).Hours() / 24)
 	return
 }
-
 
 //今天开始时间和结束时间
 func TodayStartEndTime(timezone ...*time.Location) (time.Time, time.Time) {
@@ -420,10 +414,16 @@ func DayStartEndTime(t time.Time, timezone ...*time.Location) (time.Time, time.T
 	return start, end
 }
 
+// 睡眠多少秒
 func Sleep(t int64) {
 	time.Sleep(time.Duration(t) * time.Second)
 }
 
+func Sleep4int(n int) {
+	time.Sleep(time.Duration(n) * time.Second)
+}
+
+// 睡眠多少毫秒
 func Usleep(t int64) {
 	time.Sleep(time.Duration(t) * time.Microsecond)
 }
@@ -434,7 +434,6 @@ func TimeToSlice(t time.Time) []int {
 	// 年 月 日 时 分 秒 纳秒
 	return []int{year, int(month), day, hour, min, sec, t.Nanosecond()}
 }
-
 
 type AssertTime struct {
 	// 支持的日期格式
@@ -449,7 +448,7 @@ func NewAssertTime() *AssertTime {
 			"1-2",
 			"15:4:5", "15:4", "15",
 			"15:4:5 Jan 2, 2006 MST", "2006-01-02 15:04:05.999999999 -0700 MST", "2006-01-02T15:04:05-07:00",
-			"2006.1","2006.1.2", "2006.1.2 15:04:05", "2006.01.02", "2006.01.02 15:04:05", "2006.01.02 15:04:05.999999999",
+			"2006.1", "2006.1.2", "2006.1.2 15:04:05", "2006.01.02", "2006.01.02 15:04:05", "2006.01.02 15:04:05.999999999",
 			"1/2/2006", "1/2/2006 15:4:5", "2006/01/02", "2006/01/02 15:04:05",
 			time.ANSIC, time.UnixDate, time.RubyDate, time.RFC822, time.RFC822Z, time.RFC850,
 			time.RFC1123, time.RFC1123Z, time.RFC3339, time.RFC3339Nano,

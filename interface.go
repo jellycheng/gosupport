@@ -4,7 +4,6 @@ type Handler interface{}
 
 //标识性接口
 type IdentifyInterface interface {
-
 }
 
 type StrMaper interface {

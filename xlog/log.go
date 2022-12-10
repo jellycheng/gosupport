@@ -46,11 +46,10 @@ func (level LogLevel) ToString() (string, error) {
 
 }
 
-
 // 自定义日志结构体，继承原生go日志结构体，在此基础上增加日志级别封装
 type Logger struct {
 	*log.Logger
-	level LogLevel  //日志级别，一个级别对应一个方法，后期考虑可对应多个方法（如带f、ln等结尾的）
+	level LogLevel //日志级别，一个级别对应一个方法，后期考虑可对应多个方法（如带f、ln等结尾的）
 }
 
 func (l *Logger) output(level LogLevel, v ...interface{}) {
@@ -83,7 +82,7 @@ func (l *Logger) Warn(v ...interface{}) {
 	l.output(WarnLevel, v...)
 }
 
-func (l *Logger) Warning(v ...interface{})  {
+func (l *Logger) Warning(v ...interface{}) {
 	l.output(WarnLevel, v...)
 }
 
@@ -162,13 +161,12 @@ const (
 	InfoPrefix  = "[info] "
 	DebugPrefix = "[debug] "
 	WarnPrefix  = "[warn] "
-	ErrorPrefix  = "[error] "
+	ErrorPrefix = "[error] "
 )
 
 var (
-	debug = New(os.Stdout, DebugPrefix, log.LstdFlags | log.Llongfile, DebugLevel)
-	info = New(os.Stdout, InfoPrefix, log.LstdFlags | log.Llongfile, InfoLevel)
-	warn = New(os.Stdout, WarnPrefix, log.LstdFlags | log.Llongfile, WarnLevel)
-	err01 = New(os.Stdout, ErrorPrefix, log.LstdFlags | log.Llongfile, WarnLevel)
+	debug = New(os.Stdout, DebugPrefix, log.LstdFlags|log.Llongfile, DebugLevel)
+	info  = New(os.Stdout, InfoPrefix, log.LstdFlags|log.Llongfile, InfoLevel)
+	warn  = New(os.Stdout, WarnPrefix, log.LstdFlags|log.Llongfile, WarnLevel)
+	err01 = New(os.Stdout, ErrorPrefix, log.LstdFlags|log.Llongfile, WarnLevel)
 )
-

@@ -6,11 +6,11 @@ import "strings"
 
 type SQLBuilderUpdate struct {
 	//表名
-	table string
-	set string
-	where string
+	table   string
+	set     string
+	where   string
 	orderBy string
-	limit string
+	limit   string
 	//更新参数值
 	setParams []interface{}
 	//条件参数值
@@ -51,7 +51,7 @@ func (sqlb *SQLBuilderUpdate) SetUpdateData(fileds []string, values ...interface
 	sqlb.set = buf.String()
 
 	for k, value := range values {
-		if k>=fieldLen {
+		if k >= fieldLen {
 			break
 		}
 		sqlb.setParams = append(sqlb.setParams, value)
@@ -95,20 +95,20 @@ func (sqlb *SQLBuilderUpdate) WhereNotIn(field string, values ...interface{}) *S
 }
 
 func (sqlb *SQLBuilderUpdate) OrWhereIn(field string, values ...interface{}) *SQLBuilderUpdate {
-	return sqlb.conditionIn("OR",  field,"IN", values)
+	return sqlb.conditionIn("OR", field, "IN", values)
 }
 
 func (sqlb *SQLBuilderUpdate) OrWhereNotIn(field string, values ...interface{}) *SQLBuilderUpdate {
-	return sqlb.conditionIn("OR",  field,"NOT IN", values)
+	return sqlb.conditionIn("OR", field, "NOT IN", values)
 }
 
-func (sqlb *SQLBuilderUpdate) conditionIn(operator string, field string,condition string, values []interface{}) *SQLBuilderUpdate {
+func (sqlb *SQLBuilderUpdate) conditionIn(operator string, field string, condition string, values []interface{}) *SQLBuilderUpdate {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
 	if buf.Len() != 0 {
 		buf.WriteString(" " + operator + " ")
 	}
-	s,_ := PinConditionIn(field, condition, values)
+	s, _ := PinConditionIn(field, condition, values)
 	buf.WriteString(s)
 
 	sqlb.where = buf.String()
@@ -148,15 +148,15 @@ func (sqlb *SQLBuilderUpdate) Raw(operator string, raw string, values []interfac
 	return sqlb
 }
 
-func (sqlb *SQLBuilderUpdate)GetParamValues() []interface{} {
+func (sqlb *SQLBuilderUpdate) GetParamValues() []interface{} {
 	return sqlb.allParams
 }
 
-func (sqlb *SQLBuilderUpdate)GetSetParamValues() []interface{} {
+func (sqlb *SQLBuilderUpdate) GetSetParamValues() []interface{} {
 	return sqlb.setParams
 }
 
-func (sqlb *SQLBuilderUpdate)GetWhereParamValues() []interface{} {
+func (sqlb *SQLBuilderUpdate) GetWhereParamValues() []interface{} {
 	return sqlb.whereParams
 }
 
@@ -195,4 +195,3 @@ func (sqlb *SQLBuilderUpdate) GetSQL() (string, error) {
 func NewSQLBuilderUpdate() *SQLBuilderUpdate {
 	return &SQLBuilderUpdate{}
 }
-

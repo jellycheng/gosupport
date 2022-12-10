@@ -56,6 +56,7 @@ func Pkcs7UnPadding(origData []byte) []byte {
 	unPadding := int(origData[length-1])
 	return origData[:(length - unPadding)]
 }
+
 // 创建公钥、私钥
 func CreateRsaKey(keySize int, priKeyFile, pubKeyFile string) error {
 	privateKey, err := rsa.GenerateKey(rand.Reader, keySize)

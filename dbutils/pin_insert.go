@@ -17,6 +17,7 @@ func (sqlb *SQLBuilderInsert) SetTable(tbl string) *SQLBuilderInsert {
 	sqlb.table = tbl
 	return sqlb
 }
+
 //SetInsertData([]string{"`name`", "`age`"}, "tom", 18)
 func (sqlb *SQLBuilderInsert) SetInsertData(fileds []string, values ...interface{}) *SQLBuilderInsert {
 	fieldLen := len(fileds)
@@ -40,7 +41,7 @@ func (sqlb *SQLBuilderInsert) SetInsertData(fileds []string, values ...interface
 	sqlb.insert = buf.String()
 
 	for k, value := range values {
-		if k>=fieldLen {
+		if k >= fieldLen {
 			break
 		}
 		sqlb.insertParams = append(sqlb.insertParams, value)
@@ -49,12 +50,12 @@ func (sqlb *SQLBuilderInsert) SetInsertData(fileds []string, values ...interface
 	return sqlb
 }
 
-func (sqlb *SQLBuilderInsert)GetParamValues() []interface{} {
+func (sqlb *SQLBuilderInsert) GetParamValues() []interface{} {
 	return sqlb.insertParams
 }
 
 //INSERT INTO [表名] ([字段名]) VALUES ([要插入的值]): INSERT INTO `bbs_user`(`email`,`username`,`qq`) VALUES (?,?,?)
-func (sqlb *SQLBuilderInsert)GetSql() (string, error)  {
+func (sqlb *SQLBuilderInsert) GetSql() (string, error) {
 	if sqlb.table == "" {
 		return "", ErrTableEmpty
 	}
@@ -74,4 +75,3 @@ func (sqlb *SQLBuilderInsert)GetSql() (string, error)  {
 func NewSQLBuilderInsert() *SQLBuilderInsert {
 	return &SQLBuilderInsert{}
 }
-

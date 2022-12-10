@@ -1,7 +1,7 @@
 package xlanguage
 
 var CN = LangSet{
-	"username":      "用户名",
+	"username":  "用户名",
 	"nickname":  "昵称",
 	"role":      "角色",
 	"createdat": "创建时间",
@@ -35,4 +35,3 @@ var CN = LangSet{
 	"browse":          "打开",
 	"remove":          "移除",
 }
-

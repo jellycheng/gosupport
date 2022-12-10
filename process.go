@@ -1,13 +1,13 @@
 package gosupport
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-	"errors"
 )
 
 //对pid文件的操作
@@ -15,6 +15,7 @@ type PIDFile struct {
 	//pid文件
 	pidFile string
 }
+
 //创建pid文件,存在pid文件则写失败, pid=os.Getpid()
 func (f PIDFile) CreatePidFile(pid int) error {
 	path := filepath.Dir(f.pidFile)
@@ -32,13 +33,14 @@ func (f PIDFile) CreatePidFile(pid int) error {
 	}
 	return nil
 }
+
 //移除pid文件
 func (f PIDFile) Remove() error {
 	return os.Remove(f.pidFile)
 }
 
 func (f PIDFile) GetPid() (int, error) {
-	if pid,err := FileGetContents(f.pidFile);err == nil {
+	if pid, err := FileGetContents(f.pidFile); err == nil {
 		pid = strings.TrimSpace(pid)
 		return strconv.Atoi(pid)
 	} else {
@@ -58,9 +60,8 @@ func (f PIDFile) GetPid() (int, error) {
 	pid2,_ := pidFileObj.GetPid()
 	fmt.Println("pidfile=", pidFile, "pid=", pid2)
 	pidFileObj.Remove()
- */
-func NewPIDFile(pidfile string) *PIDFile  {
+*/
+func NewPIDFile(pidfile string) *PIDFile {
 	pidfile = strings.TrimSpace(pidfile)
 	return &PIDFile{pidFile: pidfile}
 }
-

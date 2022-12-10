@@ -18,7 +18,6 @@ func TestNewParseKV(t *testing.T) {
 	//key=abc,val=123,comment=
 	fmt.Println(fmt.Sprintf("key=%s,val=%s,comment=%s", key, val, comment))
 
-
 	//示例2: key=abc,val=123,comment=我是注释内容了
 	obj2 := NewParseKV()
 	obj2.SetCommnetFlag("#;").SetContent(" abc='123' #我是注释内容了 ").Parse()

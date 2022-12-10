@@ -63,7 +63,7 @@ func (m *Apisign01) Md5Sign() string {
 	return sign
 }
 
-func (m Apisign01) GetSignString() string  {
+func (m Apisign01) GetSignString() string {
 	return m.signStr
 }
 
@@ -72,6 +72,3 @@ func NewApiSign01() *Apisign01 {
 	apisign.params = make(map[string]interface{})
 	return apisign
 }
-
-
-

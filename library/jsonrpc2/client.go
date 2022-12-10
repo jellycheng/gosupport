@@ -10,10 +10,10 @@ import (
 )
 
 type RpcClient struct {
-	url         string
-	httpClient  *http.Client
-	headers     map[string]string
-	timeout     int64
+	url        string
+	httpClient *http.Client
+	headers    map[string]string
+	timeout    int64
 
 	//rpc的id
 	id string
@@ -23,22 +23,22 @@ type RpcClient struct {
 
 func NewRpcClient(url string, timeout int64) *RpcClient {
 	rpcCli := &RpcClient{
-				url:url,
-				httpClient:&http.Client{},
-				headers:make(map[string]string),
-				timeout:timeout,
+		url:        url,
+		httpClient: &http.Client{},
+		headers:    make(map[string]string),
+		timeout:    timeout,
 	}
 	rpcCli.headers["Content-Type"] = "application/json"
 
 	return rpcCli
 }
 
-func (client *RpcClient)SetTimeout(timeout int64) *RpcClient {
+func (client *RpcClient) SetTimeout(timeout int64) *RpcClient {
 	client.timeout = timeout
 	return client
 }
 
-func (client *RpcClient)SetId(traceid string) *RpcClient {
+func (client *RpcClient) SetId(traceid string) *RpcClient {
 	client.id = traceid
 	return client
 }
@@ -49,25 +49,25 @@ func (this *RpcClient) AddHeader(header, val string) *RpcClient {
 }
 
 func (this *RpcClient) AddHeaders(header map[string]string) *RpcClient {
-	for k,v := range header {
+	for k, v := range header {
 		this.headers[k] = v
 	}
 	return this
 }
 
 //发起单个调用
-func (client *RpcClient)Call(method string, params ...interface{}) *RpcClient  {
+func (client *RpcClient) Call(method string, params ...interface{}) *RpcClient {
 	url := client.url
 	id := client.id
-	if id=="" {
+	if id == "" {
 		id = gosupport.FromatUUIDString(uuid.GenerateUUID(time.Now()))
 	}
 	rpcReqObj := RPCRequest{
-							Jsonrpc:JsonrpcVersion,
-							Method:method,
-							Id:id,
-							Params:params,
-						}
+		Jsonrpc: JsonrpcVersion,
+		Method:  method,
+		Id:      id,
+		Params:  params,
+	}
 	payload := strings.NewReader(rpcReqObj.ToJson())
 	//fmt.Println(url, payload,rpcReqObj.ToJson())
 	req, _ := http.NewRequest("POST", url, payload)
@@ -78,9 +78,9 @@ func (client *RpcClient)Call(method string, params ...interface{}) *RpcClient  {
 	}
 
 	cliObj := &http.Client{
-							Timeout: time.Duration(client.timeout),
-						}
-	res, err := cliObj.Do(req);
+		Timeout: time.Duration(client.timeout),
+	}
+	res, err := cliObj.Do(req)
 	if err != nil {
 		return client
 	}
@@ -91,11 +91,10 @@ func (client *RpcClient)Call(method string, params ...interface{}) *RpcClient  {
 }
 
 //获取结果
-func (client *RpcClient)GetResult() (string, error) {
+func (client *RpcClient) GetResult() (string, error) {
 	ret := client.responseRawContent
 
 	return ret, nil
 }
-
 
 //发起批量调用
