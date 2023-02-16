@@ -145,8 +145,8 @@ func GetMpVerifyVal(str string) string {
 	return ret
 }
 
-// extractCode 提取{code}中的code值
-func extractCode(src string) []string {
+// ExtractCode 提取{code}中的code值
+func ExtractCode(src string) []string {
 	ret := []string{}
 	pattern01 := `{(\w+)}`
 	re := regexp.MustCompile(pattern01)
@@ -174,7 +174,7 @@ func Replace4code(src, code, val string) (string, error) {
 func Replace4Map(src string, data map[string]string) string {
 	ret := src
 	// 提取code
-	codes := extractCode(src)
+	codes := ExtractCode(src)
 	if len(codes) == 0 {
 		return ret
 	}
