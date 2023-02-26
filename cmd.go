@@ -99,5 +99,5 @@ func GitCloneIntoPath(url, branch, codeHome string) error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
-	return nil
+	return err
 }
