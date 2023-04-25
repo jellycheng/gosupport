@@ -47,5 +47,27 @@ func Fen2yuan(price int64, isTrimZero bool) string {
 
 // 调用示例：gosupport.RemoveDian00("18.00") 返回 18
 func RemoveDian00(priceStr string) string {
-	return strings.TrimRight(priceStr, ".00")
+	if priceStr == "" {
+		return priceStr
+	}
+	parts := strings.Split(priceStr, ".")
+	if len(parts) == 2 {
+		tmpStr := strings.TrimRight(parts[1], ".0")
+		if tmpStr == "" {
+			return parts[0]
+		} else {
+			return parts[0] + "." + tmpStr
+		}
+	} else {
+		tmpStr := strings.TrimRight(priceStr, ".0")
+		if tmpStr != "" {
+			return tmpStr
+		}
+		return "0"
+	}
+}
+
+// GiveUpFloat64ToInt64 舍弃小数取整
+func GiveUpFloat64ToInt64(f float64) int64 {
+	return int64(f)
 }
