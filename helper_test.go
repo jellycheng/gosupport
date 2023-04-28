@@ -91,3 +91,11 @@ func TestIsStrMaper(t *testing.T) {
 	fmt.Println(IsStrMaper("he")) // false
 
 }
+
+// go test -run=TestMatchEnvStr
+func TestMatchEnvStr(t *testing.T) {
+	str := "APP_ENV = prod "
+	key, val := MatchEnvStr(str)
+	fmt.Println("key=", key)
+	fmt.Println("val=", val)
+}

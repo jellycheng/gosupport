@@ -185,3 +185,15 @@ func Replace4Map(src string, data map[string]string) string {
 	}
 	return ret
 }
+
+func MatchEnvStr(str string) (string, string) {
+	k := ""
+	v := ""
+	regObj, _ := regexp.Compile(`^\s*([\w.-]+)\s*=\s*(.*)?\s*$`)
+	res := regObj.FindStringSubmatch(str)
+	if len(res) == 3 {
+		k = res[1]
+		v = res[2]
+	}
+	return k, v
+}
