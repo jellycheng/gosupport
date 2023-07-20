@@ -141,3 +141,21 @@ func TestTencentSign(t *testing.T) {
 	fmt.Println(string(body))
 
 }
+
+// go test -run=TestNewXimalayaSign
+func TestNewXimalayaSign(t *testing.T) {
+	obj := NewXimalayaSign()
+	obj.SetAppSecret("4d8e605fa7ed546c4bcb33dee1381179")
+	obj.SetServerAuthenticateStaticKey("z0hh5l9A")
+	obj.AppendParam("timestamp", "1533203363618")
+	obj.AppendParam("nonce", "d15d792875807b0fec620f4db2ac1667")
+	obj.AppendParam("page", "1")
+	obj.AppendParam("q", "聪明与智慧")
+	obj.AppendParam("client_os_type", "4")
+	obj.AppendParam("category_id", "0")
+	obj.AppendParam("count", "20")
+	obj.AppendParam("calc_dimension", "1")
+	obj.AppendParam("app_key", "b617866c20482d133d5de66fceb37da3")
+
+	fmt.Println(obj.GetSign())
+}
