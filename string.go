@@ -248,6 +248,18 @@ func IsNotBlank(str string) bool {
 	return !IsBlank(str)
 }
 
+func IsString(v interface{}) bool {
+	if v == nil {
+		return false
+	}
+	switch v.(type) {
+	case string:
+		return true
+	default:
+		return false
+	}
+}
+
 func GetBigLetter() []string {
 	ret := make([]string, 0)
 	for i := 0; i < 26; i++ {

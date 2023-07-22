@@ -3,6 +3,7 @@ package gosupport
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"net/http"
 )
 
@@ -65,4 +66,11 @@ func WriteContentType(w http.ResponseWriter, value []string) {
 	if val := header["Content-Type"]; len(val) == 0 {
 		header["Content-Type"] = value
 	}
+}
+
+// const RedisKey01 StringFormat = "user:%s:%d"; s := RedisKey01.Format("info", 123);
+type StringFormat string
+
+func (m StringFormat) Format(args ...interface{}) string {
+	return fmt.Sprintf(string(m), args...)
 }
