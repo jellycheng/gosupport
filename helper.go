@@ -297,7 +297,7 @@ func Nl2br(str string) string {
 
 // RemoveLine 移除换行，拼接一行
 func RemoveLine(s string) string {
-	return strings.Replace(s, "\n", "",-1)
+	return strings.Replace(s, "\n", "", -1)
 }
 
 //获取调用我的函数名，即获取当前方法名，返回 包名.方法名、包名.结构体名.方法名

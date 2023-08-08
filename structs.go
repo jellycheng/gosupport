@@ -63,3 +63,8 @@ func GetStructTagContent(i interface{}, fieldNname string, tagName string) (stri
 	}
 	return "", false
 }
+
+type KV struct {
+	Key   string
+	Value interface{}
+}
