@@ -17,3 +17,4 @@ cjs.json
 cjs.yml
 go.sum
 .DS_Store
+.env

@@ -53,3 +53,12 @@ func TestLoadEnv2DataManage(t *testing.T) {
 	fmt.Println(globalenv.Data["USER_1_DB_READ_HOST"])
 
 }
+
+func TestGetEnvConfig(t *testing.T) {
+	f := "./.env"
+	if e, envObj, envmap := GetEnvConfig(f); e == nil {
+		fmt.Println(envObj, envmap)
+	} else {
+		t.Error(e.Error())
+	}
+}
