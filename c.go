@@ -25,6 +25,7 @@ const (
 	SignTypeMD5        = "MD5"
 	SignTypeHmacSHA256 = "HMAC-SHA256"
 	SignTypeRSA        = "RSA"
+	SignTypeRSA2       = "RSA2"
 
 	PrivateFileMode = 0600
 )
