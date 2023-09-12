@@ -3,6 +3,7 @@ package xcrypto
 import (
 	"crypto/aes"
 	"crypto/cipher"
+	"encoding/base64"
 )
 
 // aes cbc加密
@@ -58,4 +59,20 @@ func AesEcbDecrypt(encrypted, key []byte) []byte {
 		trim = len(decrypted) - int(decrypted[len(decrypted)-1])
 	}
 	return decrypted[:trim]
+}
+
+// 加密，对应mysql功能： SELECT to_base64(AES_ENCRYPT("helloworld", "abc123key"));
+func MysqlAesEncrypt(src, key string) string {
+	bt := AesEcbEncrypt([]byte(src), []byte(key))
+	return base64.StdEncoding.EncodeToString(bt)
+}
+
+// 解密，对应mysql功能： SELECT AES_DECRYPT(from_base64("irigEC0Ta0t8Bms/KO+Ocw=="), "abc123key")
+func MysqlAesDecrypt(src, key string) string {
+	if src, err := base64.StdEncoding.DecodeString(src); err == nil {
+		bt := AesEcbDecrypt([]byte(src), []byte(key))
+		return string(bt)
+	} else {
+		return ""
+	}
 }
