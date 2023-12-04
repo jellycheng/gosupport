@@ -45,3 +45,13 @@ func Unescape2json(v interface{}) ([]byte, error) {
 	b := writer.Bytes()
 	return b[:len(b)-1], nil
 }
+
+func GetJsonAllKeys(str string) []string {
+	var ret []string
+	m := map[string]interface{}{}
+	_ = JsonUnmarshal(str, &m)
+	for k, _ := range m {
+		ret = append(ret, k)
+	}
+	return ret
+}
