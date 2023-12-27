@@ -141,6 +141,30 @@ func Lcfirst(str string) string {
 	return ""
 }
 
+// 首字母转大写
+func Ucfirst4PHP(s string) string {
+	if len(s) == 0 {
+		return ""
+	}
+	data := []byte(s)
+	if data[0] >= 'a' && data[0] <= 'z' {
+		data[0] -= 32
+	}
+
+	return string(data)
+}
+// 首字母转小写
+func Lcfirst4PHP(s string) string {
+	if len(s) == 0 {
+		return ""
+	}
+	data := []byte(s)
+	if data[0] >= 'A' && data[0] <= 'Z' {
+		data[0] += 32
+	}
+	return string(data)
+}
+
 //获取指定charset字符集下指定长度length的随机字符串
 func GetRandStringWithCharset(length int, charset string) string {
 	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
