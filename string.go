@@ -153,6 +153,7 @@ func Ucfirst4PHP(s string) string {
 
 	return string(data)
 }
+
 // 首字母转小写
 func Lcfirst4PHP(s string) string {
 	if len(s) == 0 {
