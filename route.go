@@ -76,11 +76,17 @@ func (m *MyRoute) AddRoute(method string, pattern string, handler MyHandlerFunc)
 		m.postRouter[pattern] = handler
 	}
 }
+
 func (m *MyRoute) GET(pattern string, handler MyHandlerFunc) {
 	m.AddRoute("GET", pattern, handler)
 }
 
 func (m *MyRoute) POST(pattern string, handler MyHandlerFunc) {
+	m.AddRoute("POST", pattern, handler)
+}
+
+func (m *MyRoute) Any(pattern string, handler MyHandlerFunc) {
+	m.AddRoute("GET", pattern, handler)
 	m.AddRoute("POST", pattern, handler)
 }
 
