@@ -141,3 +141,22 @@ func main() {
 
 ```
 
+## 用户ID生成唯一邀请码
+```
+package main
+
+import (
+	"fmt"
+	"github.com/jellycheng/gosupport/utils"
+)
+
+func main() {
+	inviteObj := utils.NewGetInviteCode()
+	var userid int64 = 1234567
+	code := inviteObj.EnCode(userid)
+	fmt.Println(code) //deahx
+
+}
+
+```
+
