@@ -54,6 +54,8 @@ const (
 	DateFormat        = "2006-01-02"
 	TFormat           = "15:04:05"
 	DTNoSecondsFormat = "2006-01-02 15:04"
+	Shanghai          = "Asia/Shanghai"  // 上海
+	Chongqing         = "Asia/Chongqing" // 重庆
 )
 
 const (
