@@ -469,3 +469,25 @@ func (m *AssertTime) ParseAssertFormat(str string, location *time.Location) (t t
 	err = errors.New("不符合的日期时间格式,传入的日期时间是: " + str)
 	return
 }
+
+// 是否是闰年
+func IsLeapYear(year int) bool {
+	if year%400 == 0 || (year%4 == 0 && year%100 != 0) {
+		return true
+	}
+	return false
+}
+
+func GetMonthDay(year, m int) int {
+	if m > 12 || m < 1 {
+		return 0
+	}
+	m = m - 1
+	// 31天月份：1,3,5,7,8,10,12
+	// 30天月份：4,6,9,11
+	d := []int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+	if m == 1 && IsLeapYear(year) {
+		d[1] = 29
+	}
+	return d[m]
+}

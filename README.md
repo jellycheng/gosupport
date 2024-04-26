@@ -160,3 +160,55 @@ func main() {
 
 ```
 
+## 日期时间
+```
+package main
+
+import (
+	"fmt"
+	"github.com/jellycheng/gosupport"
+	"time"
+)
+
+func main() {
+	// 今天：2024-04-25
+	today := gosupport.Now().Format(gosupport.DateFormat)
+	fmt.Println("今天：", today)
+
+	// 明天：2024-04-26
+	tomorrow := gosupport.Tomorrow().Format(gosupport.DateFormat)
+	fmt.Println("明天：", tomorrow)
+
+	// 昨天：2024-04-24
+	yesterday := gosupport.Yesterday().Format(gosupport.DateFormat)
+	fmt.Println("昨天：", yesterday)
+	// 昨天时间戳：1713924837
+	yesterdayTimestamp := gosupport.Yesterday().Timestamp()
+	fmt.Println("昨天时间戳:", yesterdayTimestamp)
+	// 本周一日期：2024-04-22
+	fmt.Println("本周一日期：", gosupport.Now().ToMondayString())
+	// 本周日日期：2024-04-29
+	fmt.Println("本周日日期：", gosupport.Now().ToSundayString())
+	// 上周周一日期：2024-04-15
+	fmt.Println("上周周一日期:", gosupport.PrevWeekMonday())
+	// 上周周日日期：2024-04-21
+	fmt.Println("上周周日日期:", gosupport.PrevWeekSunday())
+
+	// 本月1号: 2024-04-01
+	now := time.Now()
+	month1 := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, gosupport.GetShanghaiTimezone()).Format(gosupport.DateFormat)
+	fmt.Println("本月1号:", month1)
+
+	// 本月最后1天日期：2024-04-30
+	now2 := time.Now()
+	month2 := time.Date(now2.Year(), now2.Month(), gosupport.GetMonthDay(now.Year(), int(now.Month())), 0, 0, 0, 0, gosupport.GetShanghaiTimezone()).Format(gosupport.DateFormat)
+	fmt.Println("本月最后1天日期:", month2)
+
+	// 获取当前季度: 2
+	fmt.Println("获取当前季度: ", gosupport.Now().Quarter())
+
+}
+
+
+```
+
