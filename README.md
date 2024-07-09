@@ -212,3 +212,47 @@ func main() {
 
 ```
 
+## web上传示例
+```
+package main
+
+import (
+	"fmt"
+	"github.com/jellycheng/gosupport/curl"
+	"net/http"
+	"strconv"
+)
+
+// w响应请求对象，r接收请求对象
+func UploadFileFunc(w http.ResponseWriter, r *http.Request) {
+	upObj := curl.NewUploadFile()
+	// 接收上传文件
+	f, err := upObj.FormFile(r, "upfile")
+	if err == nil {
+		fmt.Println("文件名：" + f.Filename)
+		fmt.Println("文件大小：" + strconv.FormatInt(f.Size, 10))
+		// 保存文件
+		_ = upObj.SaveUploadedFile(f, "./"+f.Filename)
+	} else {
+		fmt.Println("err:" + err.Error())
+	}
+
+	_, _ = w.Write([]byte("响应内容：hi，你好"))
+}
+
+
+func main() {
+	listenIpPort := ":8080" // 监听端口
+	// 配置路由
+	http.HandleFunc("/", UploadFileFunc)
+	err := http.ListenAndServe(listenIpPort, nil)
+	if err != nil {
+		fmt.Printf("服务启动失败, err:%v\n", err)
+	} else {
+		fmt.Println("服务启动成功, server:" + listenIpPort)
+	}
+}
+
+
+```
+
