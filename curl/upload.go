@@ -1,6 +1,8 @@
 package curl
 
 import (
+	"crypto/md5"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -46,6 +48,16 @@ func (m UploadFile) SaveUploadedFile(file *multipart.FileHeader, dst string) err
 
 	_, err = io.Copy(out, src)
 	return err
+}
+
+// 获取文件MD5值
+func (m UploadFile) GetFileMd5(file *multipart.FileHeader) string {
+	src, _ := file.Open()
+	defer src.Close()
+	md5h := md5.New()
+	_, _ = io.Copy(md5h, src)
+	md5Str := fmt.Sprintf("%x", md5h.Sum([]byte("")))
+	return md5Str
 }
 
 func NewUploadFile() *UploadFile {
