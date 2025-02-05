@@ -36,3 +36,11 @@ type MaxwellDto struct {
 	Data              json.RawMessage `json:"data"`
 	Old               json.RawMessage `json:"old,omitempty"`
 }
+
+type IdReqDto struct {
+	Id int64 `json:"id" binding:"required"`
+}
+
+type IdRespDto struct {
+	Id int64 `json:"id"`
+}
