@@ -41,6 +41,10 @@ type IdReqDto struct {
 	Id int64 `json:"id" binding:"required"`
 }
 
+type IdsReqDto struct {
+	Ids []int64 `json:"ids" binding:"required"`
+}
+
 type IdRespDto struct {
 	Id int64 `json:"id"`
 }
