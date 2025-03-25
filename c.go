@@ -86,3 +86,32 @@ const (
 	BgCyan
 	BgWhite
 )
+
+const (
+	IsDelete0 int = 0
+	IsDelete1 int = 1
+)
+
+func GetIsDeleteName(code int) string {
+	var retCfg = map[int]string{
+		IsDelete0: "正常",
+		IsDelete1: "删除",
+	}
+	name, _ := retCfg[code]
+	return name
+}
+
+// 状态 1-启用 2-禁用
+const (
+	StatusEnable  int = 1
+	StatusDisable int = 2
+)
+
+func GetStatusName(code int) string {
+	var retCfg = map[int]string{
+		StatusEnable:  "启用",
+		StatusDisable: "禁用",
+	}
+	name, _ := retCfg[code]
+	return name
+}
