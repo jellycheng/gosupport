@@ -303,12 +303,12 @@ func DateT(format string, t time.Time) string {
 }
 
 /*
-  1分钟以内显示为：刚刚
-  1小时以内显示为：N分钟前
-  当天以内显示为：今天 N点N分（如：今天 22:33）
-  昨天时间显示为：昨天 N点N分（如：昨天 10:15）
-  在今年显示为：N月N日 N点N分（如：02月03日 09:33）
-  今年以前显示为：N年N月N日 N点N分（如：2020年09月18日 15:59）
+1分钟以内显示为：刚刚
+1小时以内显示为：N分钟前
+当天以内显示为：今天 N点N分（如：今天 22:33）
+昨天时间显示为：昨天 N点N分（如：昨天 10:15）
+在今年显示为：N月N日 N点N分（如：02月03日 09:33）
+今年以前显示为：N年N月N日 N点N分（如：2020年09月18日 15:59）
 */
 func SubTimeStr(t2 time.Time, timezone ...*time.Location) string {
 	var ret string
@@ -386,7 +386,7 @@ func SubDays(t1, t2 time.Time) (day int) {
 	return
 }
 
-//今天开始时间和结束时间
+// 今天开始时间和结束时间
 func TodayStartEndTime(timezone ...*time.Location) (time.Time, time.Time) {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -400,7 +400,7 @@ func TodayStartEndTime(timezone ...*time.Location) (time.Time, time.Time) {
 	return start, end
 }
 
-//某天的开始时间和结束时间
+// 某天的开始时间和结束时间
 func DayStartEndTime(t time.Time, timezone ...*time.Location) (time.Time, time.Time) {
 	var loc *time.Location
 	if len(timezone) == 0 {
@@ -412,6 +412,10 @@ func DayStartEndTime(t time.Time, timezone ...*time.Location) (time.Time, time.T
 	start, _ := time.ParseInLocation("2006-01-02 15:04:05", today+" 00:00:00", loc)
 	end, _ := time.ParseInLocation("2006-01-02 15:04:05", today+" 23:59:59", loc)
 	return start, end
+}
+
+func PointerSleep(n *int) {
+	time.Sleep(time.Duration(Pointer2Int(n)) * time.Second)
 }
 
 // 睡眠多少秒

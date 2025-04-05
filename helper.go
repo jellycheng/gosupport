@@ -31,7 +31,7 @@ func Die(status int) {
 	os.Exit(status)
 }
 
-//获取环境变量值
+// 获取环境变量值
 func GetEnv(env, defaultValue string) string {
 	v := os.Getenv(env)
 	if v == "" {
@@ -40,7 +40,7 @@ func GetEnv(env, defaultValue string) string {
 	return v
 }
 
-//求和
+// 求和
 func IntSum(nums ...int) int {
 	total := 0
 	for _, num := range nums {
@@ -119,7 +119,7 @@ func RandStr4Byte(n int, way int) string {
 	return ret
 }
 
-//截取字符串 start 起点下标 end 终点下标(不包括)
+// 截取字符串 start 起点下标 end 终点下标(不包括)
 func Substr(str string, start int, end int) string {
 	rs := []rune(str)
 	length := len(rs)
@@ -135,12 +135,12 @@ func Substr(str string, start int, end int) string {
 	return string(rs[start:end])
 }
 
-//获取变量or值的类型
+// 获取变量or值的类型
 func Typeof(v interface{}) string {
 	return fmt.Sprintf("%T", v)
 }
 
-//获取默认gopath目录
+// 获取默认gopath目录
 func DefaultGOPATH() string {
 	env := "HOME"
 	if runtime.GOOS == "windows" {
@@ -154,7 +154,7 @@ func DefaultGOPATH() string {
 	return ""
 }
 
-//list切片中是否有a字符串
+// list切片中是否有a字符串
 func StrInSlice(a string, list []string) bool {
 	for _, b := range list {
 		if b == a {
@@ -164,7 +164,7 @@ func StrInSlice(a string, list []string) bool {
 	return false
 }
 
-//示例：fmt.Println(gosupport.Int64InSlice(9, []int64{5, 6, 9}))
+// 示例：fmt.Println(gosupport.Int64InSlice(9, []int64{5, 6, 9}))
 func Int64InSlice(a int64, list []int64) bool {
 	for _, b := range list {
 		if b == a {
@@ -183,7 +183,7 @@ func IntInSlice(a int, list []int) bool {
 	return false
 }
 
-//返回 xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+// 返回 xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 func FromatUUIDString(s string) string {
 	pattern01 := `^(.{8})(.{0,4})(.{0,4})(.{0,4})(.{1,})$`
 	re, err := regexp.Compile(pattern01)
@@ -206,12 +206,12 @@ func Uniq(salt string, isFormat bool) string {
 
 }
 
-//获取当前go版本
+// 获取当前go版本
 func GetGoVersion() string {
 	return strings.Trim(runtime.Version(), "go")
 }
 
-//调用示例：gosupport.GenerateUserAgent("user-service", "1.0.0")
+// 调用示例：gosupport.GenerateUserAgent("user-service", "1.0.0")
 func GenerateUserAgent(appname string, ext ...string) string {
 	appversion := ""
 	extString := ""
@@ -231,7 +231,7 @@ func GenerateUserAgent(appname string, ext ...string) string {
 	return userAgent
 }
 
-//判断code值是否为0，c := '0'认为是int32类型对应ascii值为48
+// 判断code值是否为0，c := '0'认为是int32类型对应ascii值为48
 func IsZeroCode(code interface{}) bool {
 	var ret bool = false
 	switch v := code.(type) {
@@ -252,7 +252,7 @@ func IsZeroCode(code interface{}) bool {
 	return ret
 }
 
-//判断是否为空或零
+// 判断是否为空或零
 func IsEmpty(val interface{}) bool {
 	var ret bool
 	switch v := val.(type) {
@@ -290,7 +290,7 @@ func IsNotEmptyV2(str string) bool {
 	return !IsEmpty(str)
 }
 
-//换行符转html换行标签
+// 换行符转html换行标签
 func Nl2br(str string) string {
 	return strings.Replace(str, "\n", "<br/>", -1)
 }
@@ -300,7 +300,7 @@ func RemoveLine(s string) string {
 	return strings.Replace(s, "\n", "", -1)
 }
 
-//获取调用我的函数名，即获取当前方法名，返回 包名.方法名、包名.结构体名.方法名
+// 获取调用我的函数名，即获取当前方法名，返回 包名.方法名、包名.结构体名.方法名
 func GetCallFuncName() string {
 	//func Caller(skip int) (pc uintptr, file string, line int, ok bool)
 	if pc, _, _, ok := runtime.Caller(1); ok {
@@ -322,7 +322,7 @@ func GetCallInfo() map[string]string {
 	return ret
 }
 
-//获取网关env配置名，即配置key
+// 获取网关env配置名，即配置key
 func GetGwHostEnvName(gwName string) string {
 	gwName = strings.ToUpper(strings.TrimSpace(gwName))
 	domainEnvName := fmt.Sprintf("DOMAIN_%s_GW_SERVICE_HOST", gwName)
@@ -331,7 +331,7 @@ func GetGwHostEnvName(gwName string) string {
 
 //===============类型转换方法
 
-//float64类型转int64，丢弃小数部分
+// float64类型转int64，丢弃小数部分
 func Float64Toint64(fNum float64) (int64, error) {
 	s := fmt.Sprintf("%1.3f", fNum)
 	sSlice := strings.SplitN(s, ".", 2)
@@ -339,7 +339,7 @@ func Float64Toint64(fNum float64) (int64, error) {
 	return ret, err
 }
 
-//float64类型转int，丢弃小数部分
+// float64类型转int，丢弃小数部分
 func Float64Toint(fNum float64) (int, error) {
 	s := fmt.Sprintf("%1.3f", fNum)
 	sSlice := strings.SplitN(s, ".", 2)
@@ -379,4 +379,36 @@ func ShuffleStr4Copy(s []string) []string {
 		dst[i], dst[j] = dst[j], dst[i]
 	}
 	return dst
+}
+
+func ContainsKind(kind reflect.Kind, kinds []reflect.Kind) bool {
+	for i := 0; i < len(kinds); i++ {
+		if kind == kinds[i] {
+			return true
+		}
+	}
+	return false
+}
+
+func IsNil(i interface{}) bool {
+	if i == nil {
+		return true
+	}
+
+	refVal := reflect.ValueOf(i)
+	kind := refVal.Kind()
+	isContain := ContainsKind(
+		kind,
+		[]reflect.Kind{
+			reflect.Chan, reflect.Func,
+			reflect.Ptr, reflect.Slice,
+			reflect.Map, reflect.Interface,
+		},
+	)
+
+	if isContain && refVal.IsNil() {
+		return true
+	}
+
+	return false
 }
