@@ -11,8 +11,8 @@ type WaitGroupWrapper struct {
 func (w *WaitGroupWrapper) Wrap(callback func()) {
 	w.Add(1)
 	go func() {
+		defer w.Done()
 		callback()
-		w.Done()
 	}()
 }
 

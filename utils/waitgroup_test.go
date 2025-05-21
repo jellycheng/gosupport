@@ -23,4 +23,5 @@ func TestWaitGroupWrapper_Wrap(t *testing.T) {
 	})
 
 	wg.Wait()
+	fmt.Println("end")
 }
