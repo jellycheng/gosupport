@@ -11,8 +11,8 @@ import (
 )
 
 /*
-  url中追加参数
-  调用示例：gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
+url中追加参数
+调用示例：gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
 */
 func UrlDeal(reqUrl string, otherGetParam string) string {
 	if otherGetParam == "" {
@@ -35,11 +35,11 @@ func UrlDeal(reqUrl string, otherGetParam string) string {
 }
 
 /*
-  对特殊字符使用中划线替换
-  CreateAnchor("abc？你好?中=国123abc") 返回 abc-你好-中-国123abc
-  CreateAnchor("你好中国123abc")返回 你好中国123abc
-  CreateAnchor("你好中国 123 abc") 返回 你好中国-123-abc
-  CreateAnchor("how 你好 中国123a!bc#de") 返回 how-你好-中国123a-bc-de
+对特殊字符使用中划线替换
+CreateAnchor("abc？你好?中=国123abc") 返回 abc-你好-中-国123abc
+CreateAnchor("你好中国123abc")返回 你好中国123abc
+CreateAnchor("你好中国 123 abc") 返回 你好中国-123-abc
+CreateAnchor("how 你好 中国123a!bc#de") 返回 how-你好-中国123a-bc-de
 */
 func CreateAnchor(str string) string {
 	var anchorName []rune
@@ -59,7 +59,7 @@ func CreateAnchor(str string) string {
 	return string(anchorName)
 }
 
-//转为小驼峰格式： 空格的首字母转大写，如：hello world_abc厉害 转 helloWorld_abc厉害
+// 转为小驼峰格式： 空格的首字母转大写，如：hello world_abc厉害 转 helloWorld_abc厉害
 func ToCamelCase(str string) string {
 	str = strings.TrimSpace(str)
 	if utf8.RuneCountInString(str) < 2 {
@@ -80,7 +80,7 @@ func ToCamelCase(str string) string {
 	return buff.String()
 }
 
-//转为snake格式: 全部转小写，空格转_，如：Abc_Xy z_eLsW中国 转 abc_xy_z_elsw中国
+// 转为snake格式: 全部转小写，空格转_，如：Abc_Xy z_eLsW中国 转 abc_xy_z_elsw中国
 func ToSnakeCase(str string) string {
 	str = strings.TrimSpace(strings.ToLower(str))
 	return strings.Replace(str, " ", "_", -1)
@@ -125,7 +125,7 @@ func Camel2Case(name string) string {
 	return string(sb)
 }
 
-//首字母大写
+// 首字母大写
 func Ucfirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToUpper(v)) + str[i+1:]
@@ -133,7 +133,7 @@ func Ucfirst(str string) string {
 	return ""
 }
 
-//首字母小写
+// 首字母小写
 func Lcfirst(str string) string {
 	for i, v := range str {
 		return string(unicode.ToLower(v)) + str[i+1:]
@@ -166,7 +166,7 @@ func Lcfirst4PHP(s string) string {
 	return string(data)
 }
 
-//获取指定charset字符集下指定长度length的随机字符串
+// 获取指定charset字符集下指定长度length的随机字符串
 func GetRandStringWithCharset(length int, charset string) string {
 	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
 	b := make([]byte, length)
@@ -176,7 +176,7 @@ func GetRandStringWithCharset(length int, charset string) string {
 	return string(b)
 }
 
-//获取指定长度的随机字符串
+// 获取指定长度的随机字符串
 func GetRandString(length int) string {
 	return GetRandStringWithCharset(length, CharsetStr1)
 }
@@ -204,7 +204,7 @@ func ToBoolOr(s string, defaultValue bool) bool {
 	return b
 }
 
-//忽略大小写比较字符串
+// 忽略大小写比较字符串
 func EqualsIgnoreCase(a, b string) bool {
 	return a == b || strings.ToUpper(a) == strings.ToUpper(b)
 }
@@ -325,6 +325,9 @@ func GetSmallLetter() []string {
 
 // GetExcelNo 下标从0开始，A-Z，AA-AZ，AAA-AAZ
 func GetExcelNo(column int) string {
+	if column < 0 {
+		return ""
+	}
 	ret := ""
 	start := 65
 	i := column % 26
@@ -333,4 +336,19 @@ func GetExcelNo(column int) string {
 		ret += GetExcelNo(column - 1)
 	}
 	return ret + string(rune(start+i))
+}
+
+// ExcelColumnToNumber 将Excel列号转换为数字（"A" → 0, "B" → 1, "Z" → 25, "AA" → 26）,返回-1表示无效输入
+func ExcelColumnToNumber(col string) int {
+	col = strings.ToUpper(col)
+	result := 0
+
+	for _, ch := range col {
+		if !unicode.IsUpper(ch) {
+			return -1
+		}
+		result = result*26 + int(ch-'A') + 1
+	}
+
+	return result - 1
 }
