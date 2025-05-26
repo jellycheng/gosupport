@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // 读取文件内容
@@ -18,7 +19,7 @@ func FileGetContents(filename string) (string, error) {
 	return string(content), nil
 }
 
-//写内容
+// 写内容
 func FilePutContents(filename string, content string, perm ...os.FileMode) (int, error) {
 	var fileMode os.FileMode
 	if len(perm) == 0 {
@@ -65,7 +66,7 @@ func IsDir(path string) bool {
 	return s.IsDir()
 }
 
-//获取文件大小
+// 获取文件大小
 func FileSize(file string) (int64, error) {
 	f, err := os.Stat(file)
 	if err != nil {
@@ -74,7 +75,7 @@ func FileSize(file string) (int64, error) {
 	return f.Size(), nil
 }
 
-//获取文件修改时间
+// 获取文件修改时间
 func FileMTime(file string) (int64, error) {
 	f, err := os.Stat(file)
 	if err != nil {
@@ -92,11 +93,13 @@ func IsDirWriteable(dir string) error {
 }
 
 /*
-	调用示例：
-	data := make(map[string]interface{})
+调用示例：
+data := make(map[string]interface{})
+
 	if err :=LoadJson("./cjs.json", &data);err!=nil{
 		fmt.Println("解析失败", err.Error())
 	} else {
+
 		fmt.Println(data)
 	}
 */
@@ -136,4 +139,38 @@ func CreateSuperiorDir(path string) bool {
 	} else {
 		return false
 	}
+}
+
+// 遍历目录
+func WalkDirRecursive(dir string, isIgnoreHide bool) ([]string, []string, error) {
+	fileList := []string{}
+	dirList := []string{}
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return fileList, dirList, err
+	}
+
+	for _, f := range files {
+		if isIgnoreHide && strings.HasPrefix(f.Name(), ".") {
+			continue
+		}
+
+		if f.IsDir() {
+			// 当前目录
+			dirList = append(dirList, filepath.Join(dir, f.Name()))
+
+			// 递归调用处理子目录
+			subDirPath := filepath.Join(dir, f.Name())
+			subFileList, subDirList, err := WalkDirRecursive(subDirPath, isIgnoreHide)
+			if err != nil {
+				return fileList, dirList, err
+			}
+			// 将子目录中的文件和目录添加到当前列表中
+			fileList = append(fileList, subFileList...)
+			dirList = append(dirList, subDirList...)
+		} else {
+			fileList = append(fileList, filepath.Join(dir, f.Name()))
+		}
+	}
+	return fileList, dirList, nil
 }
