@@ -83,9 +83,9 @@ func GetTableFields(connect *sql.DB, tbl string) ([]map[string]string, error) {
 }
 
 /*
-  执行插入记录sql
-  示例：insSql := "insert INTO t_user_token_1(user_id,user_token) values(?,?)"
-		id,err := InsertSql(connect, insSql, "1000", "token123")
+	  执行插入记录sql
+	  示例：insSql := "insert INTO t_user_token_1(user_id,user_token) values(?,?)"
+			id,err := InsertSql(connect, insSql, "1000", "token123")
 */
 func InsertSql(connect *sql.DB, insSql string, args ...interface{}) (id int64, err error) {
 	id = 0
@@ -98,9 +98,9 @@ func InsertSql(connect *sql.DB, insSql string, args ...interface{}) (id int64, e
 }
 
 /*
-  更新记录sql
-  示例：upSql := "update t_user_token_1 set user_token=?,update_time=? where user_id=? order by id desc limit 1"
-	id,err := UpdateSql(connect, upSql,  "token123abc222", time.Now().Unix(),"1000")
+	  更新记录sql
+	  示例：upSql := "update t_user_token_1 set user_token=?,update_time=? where user_id=? order by id desc limit 1"
+		id,err := UpdateSql(connect, upSql,  "token123abc222", time.Now().Unix(),"1000")
 */
 func UpdateSql(connect *sql.DB, insSql string, args ...interface{}) (num int64, err error) {
 	num = 0
@@ -217,6 +217,15 @@ func GetDbConnect(dbnameCode, dsn string) (*sql.DB, error) {
 	} else {
 		return db, err
 	}
+}
+
+func DbConnectClose(dbnameCode string) error {
+	if db, ok := dbObj[dbnameCode]; ok {
+		e := db.Close()
+		delete(dbObj, dbnameCode)
+		return e
+	}
+	return nil
 }
 
 // 获取所有表名

@@ -31,7 +31,7 @@ GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/jellychen
 ## Documentation
 [https://pkg.go.dev/github.com/jellycheng/gosupport](https://pkg.go.dev/github.com/jellycheng/gosupport)
 
-## Usage调用示例
+## 调用示例
 ```
 package main
 
@@ -86,6 +86,45 @@ func main() {
 	} else {
 		fmt.Println("代码拉取失败：", err.Error())
 	}
+}
+
+```
+
+## db操作
+```
+package main
+
+import (
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jellycheng/gosupport/dbutils"
+)
+
+func main() {
+	dsn := dbutils.NewMysqlDsn(map[string]interface{}{
+		"host":     "127.0.0.1",
+		"port":     3306,
+		"user":     "root",
+		"password": "123456",
+		"dbname":   "db_crm",
+	}).ToDsn()
+	crmDbcon, err := dbutils.GetDbConnect("db_crm", dsn)
+	if err != nil {
+		fmt.Println("连接失败：", err.Error())
+		return
+	}
+	// 查询多条记录
+	res, _ := dbutils.SelectRows(crmDbcon, "select * from t_user limit 10")
+	for _, v := range res {
+		fmt.Println(v)
+	}
+	// 插入
+	id, _ := dbutils.InsertSql(crmDbcon, "insert into t_user(name,age) values(?,?)", "jelly", 18)
+	fmt.Println("插入成功：", id)
+
+	// 关闭连接
+	dbutils.DbConnectClose("db_crm")
+
 }
 
 ```

@@ -125,6 +125,11 @@ func FileExt(f string) string {
 	return ext[1:]
 }
 
+func FileBaseName(f string) string {
+	n := filepath.Base(f)
+	return n
+}
+
 // 创建上级目录,存在或者创建成功返回true、创建失败返回false
 func CreateSuperiorDir(path string) bool {
 	if path == "" || StrInSlice(path, []string{".", "..", "./", "../", "/"}) {
