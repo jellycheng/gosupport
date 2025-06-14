@@ -48,3 +48,12 @@ type IdsReqDto struct {
 type IdRespDto struct {
 	Id int64 `json:"id"`
 }
+
+type SeqRespDto struct {
+	Seq string `json:"seq"`
+}
+
+type IdAndSeqRespDto struct {
+	Id  int64  `json:"id"`
+	Seq string `json:"seq"`
+}
