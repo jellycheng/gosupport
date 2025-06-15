@@ -57,3 +57,8 @@ type IdAndSeqRespDto struct {
 	Id  int64  `json:"id"`
 	Seq string `json:"seq"`
 }
+
+// 仅状态过滤入参
+type StatusReq struct {
+	Status *int `json:"status"` //状态 1-启用 2-停用,0-不限（默认）
+}
