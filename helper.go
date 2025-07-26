@@ -412,3 +412,15 @@ func IsNil(i interface{}) bool {
 
 	return false
 }
+
+func RangeInt(min, max int) []int {
+	if min > max {
+		min, max = max, min
+	}
+	n := max - min + 1
+	ret := make([]int, n)
+	for i := 0; i < n; i++ {
+		ret[i] = min + i
+	}
+	return ret
+}

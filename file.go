@@ -37,8 +37,8 @@ func FilePutContents(filename string, content string, perm ...os.FileMode) (int,
 }
 
 // 判断文件/文件夹是否存在，true存在，false不存在
-func FileExists(path string) bool {
-	_, err := os.Stat(path) //os.Stat获取文件信息
+func FileExists(filename string) bool {
+	_, err := os.Stat(filename) //os.Stat获取文件信息
 	if err != nil {
 		if os.IsExist(err) { //只是没有权限
 			return true
@@ -49,8 +49,8 @@ func FileExists(path string) bool {
 }
 
 // 判断文件是否存在
-func IsFile(path string) bool {
-	s, err := os.Stat(path)
+func IsFile(filename string) bool {
+	s, err := os.Stat(filename)
 	if err != nil { //不是文件也不是目录
 		return false
 	}
@@ -67,12 +67,23 @@ func IsDir(path string) bool {
 }
 
 // 获取文件大小
-func FileSize(file string) (int64, error) {
-	f, err := os.Stat(file)
+func FileSize(filename string) (int64, error) {
+	f, err := os.Stat(filename)
 	if err != nil {
 		return 0, err
 	}
 	return f.Size(), nil
+}
+
+func FileExistAndSize(filename string) (int64, bool, error) {
+	f, err := os.Stat(filename)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return 0, false, nil
+		}
+		return 0, false, err
+	}
+	return f.Size(), true, nil
 }
 
 // 获取文件修改时间
@@ -94,12 +105,11 @@ func IsDirWriteable(dir string) error {
 
 /*
 调用示例：
-data := make(map[string]interface{})
 
+	data := make(map[string]interface{})
 	if err :=LoadJson("./cjs.json", &data);err!=nil{
 		fmt.Println("解析失败", err.Error())
 	} else {
-
 		fmt.Println(data)
 	}
 */

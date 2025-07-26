@@ -197,3 +197,32 @@ func MatchEnvStr(str string) (string, string) {
 	}
 	return k, v
 }
+
+// MatchOneOf 从多个正则表达式中匹配一个，返回匹配到的字符串，如果匹配不到返回nil，例如:res := MatchOneOf("BV12xugzmExZ", `^(av|BV|ep)\w+`)
+func MatchOneOf(str string, patterns ...string) []string {
+	var (
+		re    *regexp.Regexp
+		value []string
+	)
+	for _, pattern := range patterns {
+		re = regexp.MustCompile(pattern)
+		value = re.FindStringSubmatch(str)
+		if len(value) > 0 { // 匹配到了
+			return value
+		}
+	}
+	return nil
+}
+
+// Domain 从url中提取域名，例如: Domain("https://www.baidu.com") 返回 baidu
+func Domain(url string) string {
+	domainPattern := `([a-z0-9][-a-z0-9]{0,62})\.` +
+		`(com\.cn|com\.hk|net\.cn|org\.cn|` +
+		`cn|com|net|edu|gov|biz|org|info|online|shop|site|store|tech|top|pro|name|xin|xyz|art|asia|club|` +
+		`fun|group|cc|ltd|work|me|plus)`
+	domain := MatchOneOf(url, domainPattern)
+	if domain != nil {
+		return domain[1]
+	}
+	return ""
+}

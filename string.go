@@ -191,6 +191,17 @@ func GetSummary(s string, length int) string {
 	return summary
 }
 
+func GetSummaryV2(s string, length int) string {
+	if length <= 0 {
+		return s
+	}
+	str := []rune(s)
+	if len(str) > length {
+		return string(str[:length-len(ELLIPSES)]) + ELLIPSES
+	}
+	return s
+}
+
 func ToBool(s string) bool {
 	s = strings.ToLower(s)
 	return s == "true" || s == "yes" || s == "on" || s == "1"

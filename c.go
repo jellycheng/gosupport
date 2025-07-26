@@ -59,8 +59,9 @@ const (
 )
 
 const (
-	PHP_EOL = "\n"
-	GO_EOL  = "\n"
+	PHP_EOL  = "\n"
+	GO_EOL   = "\n"
+	ELLIPSES = "..."
 )
 
 // 前景色即文字颜色
