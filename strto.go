@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-//使用示例： gosupport.StrTo("123456789").MustUint64()
+// 使用示例： gosupport.StrTo("123456789").MustUint64()
 type StrTo string
 
 func (f StrTo) String() string {
@@ -80,7 +80,7 @@ func (f StrTo) MustFloat64() float64 {
 	return v
 }
 
-//任意值转字符串
+// 任意值转字符串
 func ToStr(value interface{}, args ...int) (s string) {
 	switch v := value.(type) {
 	case bool:
@@ -121,9 +121,11 @@ func ToStr(value interface{}, args ...int) (s string) {
 
 type ArgInt []int
 
-//示例：var abc gosupport.ArgInt = []int{101, 11,12,33}
+// 示例：var abc gosupport.ArgInt = []int{101, 11,12,33}
+//
 //	fmt.Println(abc.Get(1, 10)) //11
-//i表取切片第i个值，小于0则取args的第1个值
+//
+// i表取切片第i个值，小于0则取args的第1个值
 func (a ArgInt) Get(i int, args ...int) (r int) {
 	if i >= 0 && i < len(a) {
 		r = a[i]
@@ -131,4 +133,8 @@ func (a ArgInt) Get(i int, args ...int) (r int) {
 		r = args[0]
 	}
 	return
+}
+
+func Str2Byte(str string) []byte {
+	return []byte(str)
 }
