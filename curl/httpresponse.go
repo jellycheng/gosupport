@@ -1,7 +1,7 @@
 package curl
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -15,43 +15,43 @@ func NewHttpResponse() *HttpResponse {
 	return &HttpResponse{}
 }
 
-func (this *HttpResponse) SetRaw(r *http.Response) *HttpResponse {
-	this.raw = r
-	return this
+func (m *HttpResponse) SetRaw(r *http.Response) *HttpResponse {
+	m.raw = r
+	return m
 }
 
-func (this *HttpResponse) GetRaw() *http.Response {
-	return this.raw
+func (m *HttpResponse) GetRaw() *http.Response {
+	return m.raw
 }
 
-func (this *HttpResponse) IsOk() bool {
-	return this.raw.StatusCode == 200
+func (m *HttpResponse) IsOk() bool {
+	return m.raw.StatusCode == 200
 }
 
-func (this *HttpResponse) parseHeaders() error {
+func (m *HttpResponse) parseHeaders() error {
 	headers := map[string]string{}
-	for k, v := range this.raw.Header {
+	for k, v := range m.raw.Header {
 		headers[k] = v[0]
 	}
-	this.headers = headers
+	m.headers = headers
 	return nil
 }
 
-func (this HttpResponse) GetHeaders() map[string]string {
-	return this.headers
+func (m HttpResponse) GetHeaders() map[string]string {
+	return m.headers
 }
 
-func (this *HttpResponse) parseBody() error {
-	if body, err := ioutil.ReadAll(this.raw.Body); err != nil {
+func (m *HttpResponse) parseBody() error {
+	if body, err := io.ReadAll(m.raw.Body); err != nil {
 		//发生错误
 		panic(err)
 	} else {
-		this.body = string(body)
+		m.body = string(body)
 	}
 	return nil
 }
 
-//响应内容
-func (this HttpResponse) GetBody() string {
-	return this.body
+// 响应内容
+func (m HttpResponse) GetBody() string {
+	return m.body
 }

@@ -11,8 +11,7 @@ import (
 
 // 读取文件内容
 func FileGetContents(filename string) (string, error) {
-	//io/ioutil包：func ReadFile(filename string) ([]byte, error) 读取整个文件内容
-	content, err := ioutil.ReadFile(filename)
+	content, err := os.ReadFile(filename)
 	if err != nil {
 		return "", err
 	}
@@ -97,7 +96,7 @@ func FileMTime(file string) (int64, error) {
 
 func IsDirWriteable(dir string) error {
 	f := filepath.Join(dir, ".touch")
-	if err := ioutil.WriteFile(f, []byte(""), PrivateFileMode); err != nil {
+	if err := os.WriteFile(f, []byte(""), PrivateFileMode); err != nil {
 		return err
 	}
 	return os.Remove(f)
@@ -114,7 +113,7 @@ func IsDirWriteable(dir string) error {
 	}
 */
 func LoadJson(jsonFile string, t interface{}) error {
-	data, err := ioutil.ReadFile(jsonFile)
+	data, err := os.ReadFile(jsonFile)
 	if err != nil {
 		return err
 	}

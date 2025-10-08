@@ -3,7 +3,7 @@ package jsonrpc2
 import (
 	"github.com/jellycheng/gosupport"
 	"github.com/jellycheng/gosupport/uuid"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -33,32 +33,32 @@ func NewRpcClient(url string, timeout int64) *RpcClient {
 	return rpcCli
 }
 
-func (client *RpcClient) SetTimeout(timeout int64) *RpcClient {
-	client.timeout = timeout
-	return client
+func (m *RpcClient) SetTimeout(timeout int64) *RpcClient {
+	m.timeout = timeout
+	return m
 }
 
-func (client *RpcClient) SetId(traceid string) *RpcClient {
-	client.id = traceid
-	return client
+func (m *RpcClient) SetId(traceid string) *RpcClient {
+	m.id = traceid
+	return m
 }
 
-func (this *RpcClient) AddHeader(header, val string) *RpcClient {
-	this.headers[header] = val
-	return this
+func (m *RpcClient) AddHeader(header, val string) *RpcClient {
+	m.headers[header] = val
+	return m
 }
 
-func (this *RpcClient) AddHeaders(header map[string]string) *RpcClient {
+func (m *RpcClient) AddHeaders(header map[string]string) *RpcClient {
 	for k, v := range header {
-		this.headers[k] = v
+		m.headers[k] = v
 	}
-	return this
+	return m
 }
 
-//发起单个调用
-func (client *RpcClient) Call(method string, params ...interface{}) *RpcClient {
-	url := client.url
-	id := client.id
+// 发起单个调用
+func (m *RpcClient) Call(method string, params ...interface{}) *RpcClient {
+	url := m.url
+	id := m.id
 	if id == "" {
 		id = gosupport.FromatUUIDString(uuid.GenerateUUID(time.Now()))
 	}
@@ -73,27 +73,26 @@ func (client *RpcClient) Call(method string, params ...interface{}) *RpcClient {
 	req, _ := http.NewRequest("POST", url, payload)
 	req.Header.Set("content-type", "application/json")
 	//处理header,追加头，存在不修改
-	for k, v := range client.headers {
+	for k, v := range m.headers {
 		req.Header.Add(k, v)
 	}
 
 	cliObj := &http.Client{
-		Timeout: time.Duration(client.timeout),
+		Timeout: time.Duration(m.timeout),
 	}
 	res, err := cliObj.Do(req)
 	if err != nil {
-		return client
+		return m
 	}
 	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	client.responseRawContent = string(body)
-	return client
+	body, _ := io.ReadAll(res.Body)
+	m.responseRawContent = string(body)
+	return m
 }
 
-//获取结果
-func (client *RpcClient) GetResult() (string, error) {
-	ret := client.responseRawContent
-
+// 获取结果
+func (m *RpcClient) GetResult() (string, error) {
+	ret := m.responseRawContent
 	return ret, nil
 }
 

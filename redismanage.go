@@ -143,43 +143,43 @@ func NewRedisInfo() redisinfo {
 	return redisinfo{}
 }
 
-//redis组管理
+// redis组管理
 type RedisGroupManage struct {
 	redisGroup map[string]redisinfo
 }
 
-func (this *RedisGroupManage) Set(groupName string, cfg redisinfo) {
-	if this.redisGroup == nil {
-		this.redisGroup = make(map[string]redisinfo)
+func (m *RedisGroupManage) Set(groupName string, cfg redisinfo) {
+	if m.redisGroup == nil {
+		m.redisGroup = make(map[string]redisinfo)
 	}
-	this.redisGroup[groupName] = cfg
+	m.redisGroup[groupName] = cfg
 }
 
-func (this *RedisGroupManage) SetMap(groupName string, info map[string]interface{}) {
-	if this.redisGroup == nil {
-		this.redisGroup = make(map[string]redisinfo)
+func (m *RedisGroupManage) SetMap(groupName string, info map[string]interface{}) {
+	if m.redisGroup == nil {
+		m.redisGroup = make(map[string]redisinfo)
 	}
 	redisinfoObj := NewRedisInfo()
 	redisinfoObj.SetRedisInfo(info)
-	this.redisGroup[groupName] = redisinfoObj
+	m.redisGroup[groupName] = redisinfoObj
 }
 
-func (this RedisGroupManage) Get(groupName string) (redisinfo, error) {
-	if ret, ok := this.redisGroup[groupName]; ok {
+func (m RedisGroupManage) Get(groupName string) (redisinfo, error) {
+	if ret, ok := m.redisGroup[groupName]; ok {
 		return ret, nil
 	}
 	return redisinfo{}, errors.New(fmt.Sprintf("redis组%s未配置", groupName))
 }
 
-//获取当前redis组的配置key前缀
-func (this RedisGroupManage) GetPrefix(groupName string) string {
-	if ret, ok := this.redisGroup[groupName]; ok {
+// 获取当前redis组的配置key前缀
+func (m RedisGroupManage) GetPrefix(groupName string) string {
+	if ret, ok := m.redisGroup[groupName]; ok {
 		return ret.GetPrefix()
 	}
 	return ""
 }
 
-//单例
+// 单例
 var muRedisgroup_1 sync.Mutex
 var redisGroupManage_1 *RedisGroupManage
 var redisGroupManageInit_1 uint32
