@@ -105,7 +105,7 @@ func (%s)TableName() string {
 	return content
 }
 
-//获取字段说明
+// 获取字段说明
 func GetFieldComment(field map[string]string) string {
 	if comment, ok := field["Comment"]; ok && comment != "" {
 		return "// " + comment

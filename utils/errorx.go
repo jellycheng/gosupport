@@ -2,14 +2,14 @@ package utils
 
 import "fmt"
 
-//  错误结构体，并实现了error接口
-//  myErr := utils.NewMyError()
-//  myErr.ErrCode = 100
-//  myErr.ErrMsg = "参数错误"
-//  fmt.Println(myErr.Error())
-//  fmt.Println(myErr.ErrCode)
-//  fmt.Println(myErr.ErrMsg)
-//  fmt.Print(myErr.ToString())
+// 错误结构体，并实现了error接口
+// myErr := utils.NewMyError()
+// myErr.ErrCode = 100
+// myErr.ErrMsg = "参数错误"
+// fmt.Println(myErr.Error())
+// fmt.Println(myErr.ErrCode)
+// fmt.Println(myErr.ErrMsg)
+// fmt.Print(myErr.ToString())
 type MyError struct {
 	ErrCode int         `json:"err_code"` //错误代号
 	ErrMsg  string      `json:"err_msg"`  //错误信息

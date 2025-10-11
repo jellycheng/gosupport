@@ -31,7 +31,7 @@ func (sqlb *SQLBuilderDelete) OrderBy(order string) *SQLBuilderDelete {
 	return sqlb
 }
 
-//考虑重复调用,operator=AND、OR, condition="=,!="
+// 考虑重复调用,operator=AND、OR, condition="=,!="
 func (sqlb *SQLBuilderDelete) ConditionWhere(operator string, field string, condition string, value interface{}) *SQLBuilderDelete {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
@@ -87,12 +87,12 @@ func (sqlb *SQLBuilderDelete) conditionIn(operator string, field string, conditi
 	return sqlb
 }
 
-//WhereRaw("`title` = ?", "hello")
+// WhereRaw("`title` = ?", "hello")
 func (sqlb *SQLBuilderDelete) WhereRaw(raw string, values ...interface{}) *SQLBuilderDelete {
 	return sqlb.Raw("AND", raw, values)
 }
 
-//OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
+// OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
 func (sqlb *SQLBuilderDelete) OrWhereRaw(raw string, values ...interface{}) *SQLBuilderDelete {
 	return sqlb.Raw("OR", raw, values)
 }

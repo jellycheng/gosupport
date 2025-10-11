@@ -1,6 +1,6 @@
 package xlanguage
 
-//单个语言的key-vaule集合
+// 单个语言的key-vaule集合
 type LangSet map[string]string
 
 func (l LangSet) Add(key, value string) {

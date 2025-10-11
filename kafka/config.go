@@ -78,7 +78,7 @@ func (cm *ConfigManage) GetData(group string) (*Config, error) {
 	return nil, errors.New("配置组不存在：" + group)
 }
 
-//单例
+// 单例
 var kafkaCfgManageOnce sync.Once
 var kafkaCfgManage *ConfigManage
 

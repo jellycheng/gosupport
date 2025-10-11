@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-//go test -run="TestNewApiSign01"
+// go test -run="TestNewApiSign01"
 func TestNewApiSign01(t *testing.T) {
 
 	apisign := NewApiSign01()
@@ -40,7 +40,7 @@ func TestNewApiSign01(t *testing.T) {
 
 }
 
-//go test -run="TestWxPaySign"
+// go test -run="TestWxPaySign"
 func TestWxPaySign(t *testing.T) {
 	params := map[string]string{
 		"xyz":   "123",
@@ -64,13 +64,13 @@ func TestWxPaySign(t *testing.T) {
 
 }
 
-//go test -run="TestNewUrlGetSign"
+// go test -run="TestNewUrlGetSign"
 func TestNewUrlGetSign(t *testing.T) {
 	s := NewUrlGetSign().SetSecret("cjsJellySecret123456").AutoSpellUrlParam()
 	fmt.Println(s)
 }
 
-//go test -run="TestDingtalkSign"
+// go test -run="TestDingtalkSign"
 func TestDingtalkSign(t *testing.T) {
 	secret := "改成机器人密钥"
 	timestamp := gosupport.TimeNowMillisecond()
@@ -81,7 +81,7 @@ func TestDingtalkSign(t *testing.T) {
 
 }
 
-//go test -run="TestWxCheckSign_Check"
+// go test -run="TestWxCheckSign_Check"
 func TestWxCheckSign_Check(t *testing.T) {
 	obj := WxCheckSign{
 		Token:     "helloWorld123!",

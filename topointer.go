@@ -33,3 +33,11 @@ func Int32Ptr(i int32) *int32 {
 func IntPtr(i int) *int {
 	return &i
 }
+
+func Uint32Ptr(i uint32) *uint32 {
+	return &i
+}
+
+func Uint64Ptr(i uint64) *uint64 {
+	return &i
+}

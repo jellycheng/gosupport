@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-//go test -run="TestMap2XML"
+// go test -run="TestMap2XML"
 func TestMap2XML(t *testing.T) {
 	param := map[string]string{
 		"abc": "hello",

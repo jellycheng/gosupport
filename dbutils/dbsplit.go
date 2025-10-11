@@ -6,7 +6,7 @@ import (
 
 //分库分表算法
 
-//分库分表数量结构体
+// 分库分表数量结构体
 type SplitDbAndTbl struct {
 	totalDbNum  int64 //总库数,必须大于0，即最小1
 	totalTblNum int64 //总表数,必须大于0，即最小1

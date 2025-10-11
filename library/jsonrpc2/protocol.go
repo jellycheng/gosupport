@@ -17,7 +17,7 @@ const (
 
 )
 
-//请求对象
+// 请求对象
 type RPCRequest struct {
 	Jsonrpc string      `json:"jsonrpc"`
 	Method  string      `json:"method"`
@@ -33,7 +33,7 @@ func NewRPCRequest() *RPCRequest {
 	return &RPCRequest{Jsonrpc: JsonrpcVersion}
 }
 
-//响应对象
+// 响应对象
 type RPCResponse struct {
 	Jsonrpc string      `json:"jsonrpc"`
 	Result  interface{} `json:"result,omitempty"`
@@ -52,7 +52,7 @@ type JsonrpcResponse struct {
 	Id      interface{}      `json:"id"`
 }
 
-//错误对象
+// 错误对象
 type RPCError struct {
 	Code    int         `json:"code"` //整数
 	Message string      `json:"message"`

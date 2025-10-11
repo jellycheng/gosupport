@@ -18,7 +18,7 @@ func (sqlb *SQLBuilderInsert) SetTable(tbl string) *SQLBuilderInsert {
 	return sqlb
 }
 
-//SetInsertData([]string{"`name`", "`age`"}, "tom", 18)
+// SetInsertData([]string{"`name`", "`age`"}, "tom", 18)
 func (sqlb *SQLBuilderInsert) SetInsertData(fileds []string, values ...interface{}) *SQLBuilderInsert {
 	fieldLen := len(fileds)
 	if fieldLen == 0 {
@@ -54,7 +54,7 @@ func (sqlb *SQLBuilderInsert) GetParamValues() []interface{} {
 	return sqlb.insertParams
 }
 
-//INSERT INTO [表名] ([字段名]) VALUES ([要插入的值]): INSERT INTO `bbs_user`(`email`,`username`,`qq`) VALUES (?,?,?)
+// INSERT INTO [表名] ([字段名]) VALUES ([要插入的值]): INSERT INTO `bbs_user`(`email`,`username`,`qq`) VALUES (?,?,?)
 func (sqlb *SQLBuilderInsert) GetSql() (string, error) {
 	if sqlb.table == "" {
 		return "", ErrTableEmpty

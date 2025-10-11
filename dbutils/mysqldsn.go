@@ -59,7 +59,7 @@ func (m *MysqlDsn) GetExtparam() string {
 	return m.extparam
 }
 
-//mysqlDsnObj := dbutils.NewMysqlDsn(map[string]interface{}{"dbname":"db_user","username":"root","password":"123456","port":3307})
+// mysqlDsnObj := dbutils.NewMysqlDsn(map[string]interface{}{"dbname":"db_user","username":"root","password":"123456","port":3307})
 func NewMysqlDsn(dbConfig map[string]interface{}) *MysqlDsn {
 	dsnObj := &MysqlDsn{}
 

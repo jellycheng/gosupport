@@ -81,9 +81,9 @@ func MapSortByValue(m map[string]int, so string) MyMapStringIntList {
 	return p
 }
 
-//	myInt64 := []int64{9, 8,10,7}
-//	sort.Sort(gosupport.Int64Slice(myInt64)) // 升序，或者 gosupport.Int64s(myInt64) 或者 gosupport.Int64Slice(myInt64).Sort()
-//	fmt.Println(myInt64) //[7 8 9 10]
+// myInt64 := []int64{9, 8,10,7}
+// sort.Sort(gosupport.Int64Slice(myInt64)) // 升序，或者 gosupport.Int64s(myInt64) 或者 gosupport.Int64Slice(myInt64).Sort()
+// fmt.Println(myInt64) //[7 8 9 10]
 type Int64Slice []int64
 
 func (x Int64Slice) Len() int           { return len(x) }

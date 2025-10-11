@@ -15,7 +15,7 @@ var (
 	ErrUpdateEmpty = errors.New("The update cannot be empty")
 )
 
-//in, v := PinWhereIn("username", "in", []interface{}{11, 22,33}) 返回 username IN (?,?,?) 、[11 22 33]
+// in, v := PinWhereIn("username", "in", []interface{}{11, 22,33}) 返回 username IN (?,?,?) 、[11 22 33]
 func PinConditionIn(field string, condition string, values []interface{}) (string, []interface{}) {
 	var buf strings.Builder
 	wps := WenHaoPlaceholders(len(values))
@@ -24,7 +24,7 @@ func PinConditionIn(field string, condition string, values []interface{}) (strin
 	return newWhere, values
 }
 
-//in, v := PinWhereNotIn("username", []interface{}{11, 22,33}) 返回 username NOT IN (?,?,?) 、[11 22 33]
+// in, v := PinWhereNotIn("username", []interface{}{11, 22,33}) 返回 username NOT IN (?,?,?) 、[11 22 33]
 func PinWhereNotIn(field string, values []interface{}) (string, []interface{}) {
 	var buf strings.Builder
 	wps := WenHaoPlaceholders(len(values))

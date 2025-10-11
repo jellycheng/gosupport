@@ -26,7 +26,7 @@ func (builder *ResponseData) Get(key string) (value interface{}, exists bool) {
 	return
 }
 
-//删
+// 删
 func (builder *ResponseData) Del(key string) *ResponseData {
 	delete(builder.Data, key)
 	return builder

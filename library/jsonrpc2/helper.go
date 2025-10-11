@@ -17,7 +17,7 @@ func (m *Method) GetMethod() string {
 	return m.methodStr
 }
 
-//拼接请求Method值: JoinMethodOneToStr("User\\Account", "getUserInfo") 或者 JoinMethodOneToStr(`User\Account`, "getUserInfo")
+// 拼接请求Method值: JoinMethodOneToStr("User\\Account", "getUserInfo") 或者 JoinMethodOneToStr(`User\Account`, "getUserInfo")
 func (m *Method) JoinMethodOneToStr(prefix string, suffix string) *Method {
 	prefix = strings.TrimSpace(prefix)
 	suffix = strings.TrimSpace(suffix)
@@ -31,7 +31,7 @@ func (m *Method) JoinMethodOneToStr(prefix string, suffix string) *Method {
 	return m
 }
 
-//解析Method
+// 解析Method
 func (m *Method) ParseMethodOne() map[string]string {
 	ret := make(map[string]string)
 	ret["prefix"] = ""
@@ -48,7 +48,7 @@ func (m *Method) ParseMethodOne() map[string]string {
 	return ret
 }
 
-//转成json字符串
+// 转成json字符串
 func ToJson(v interface{}) string {
 	b, err := json.Marshal(v)
 	if err != nil {

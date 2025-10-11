@@ -2,7 +2,7 @@ package utils
 
 import "sort"
 
-//对取出map的所有key，并按key排序
+// 对取出map的所有key，并按key排序
 func KeysOfMap(m map[string]string) []string {
 	keys := make(sort.StringSlice, len(m))
 	i := 0

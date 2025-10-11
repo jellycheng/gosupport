@@ -31,7 +31,7 @@ func GetHashOrd(str string) int64 {
 	return ret
 }
 
-//返回0～127
+// 返回0～127
 func GetHashOrd127(str string) int64 {
 	ret := GetHashOrd(str)
 	return ret % 128
@@ -206,7 +206,7 @@ func CamelCase(s string) string {
 	return string(t)
 }
 
-//list切片中是否有a字符串
+// list切片中是否有a字符串
 func StrInSlice(a string, list []string) bool {
 	for _, b := range list {
 		if b == a {

@@ -41,7 +41,7 @@ func (u *UrlGetSign) GetSecret() string {
 	return u.secret
 }
 
-//自动生成拼的url参数
+// 自动生成拼的url参数
 func (u *UrlGetSign) AutoSpellUrlParam() string {
 	getStrFormat := "s_timestamp=%s&s_nonce=%s&s_sign=%s"
 	var t, n, s string

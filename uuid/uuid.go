@@ -16,7 +16,7 @@ func init() {
 	randInstance = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
-//示例：uuid.GenerateUUID(time.Now())
+// 示例：uuid.GenerateUUID(time.Now())
 func GenerateUUID(seedTime time.Time) string {
 	var u [16]byte
 	utcTime := seedTime.In(time.UTC)
@@ -46,7 +46,6 @@ func GenerateUUID(seedTime time.Time) string {
 	return string(r)
 }
 
-//
 func GenerateID() string {
 	return fmt.Sprintf("%016x", uint64(randInstance.Int63()))
 }

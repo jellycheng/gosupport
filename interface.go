@@ -2,7 +2,7 @@ package gosupport
 
 type Handler interface{}
 
-//标识性接口
+// 标识性接口
 type IdentifyInterface interface {
 }
 

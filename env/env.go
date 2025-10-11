@@ -31,12 +31,12 @@ var (
 	currentDM  = map[string]bool{}
 )
 
-//加载.env文件，支持多个env文件，但不覆盖已经在的key值
+// 加载.env文件，支持多个env文件，但不覆盖已经在的key值
 func LoadEnv(filenames ...string) (err error) {
 	return load(false, StoreTypeEnv, filenames...)
 }
 
-//加载.env文件，支持多个env文件，会覆盖已经在的key值
+// 加载.env文件，支持多个env文件，会覆盖已经在的key值
 func Overload(filenames ...string) (err error) {
 	return load(true, StoreTypeEnv, filenames...)
 }
@@ -67,7 +67,7 @@ func filenamesOrDefault(filenames []string) []string {
 	return filenames
 }
 
-//加载文件
+// 加载文件
 func loadFile(filename string, overload bool, storeType int) error {
 	envMap, err := readFile(filename) //读文件并分析内容
 	if err != nil {
@@ -100,7 +100,7 @@ func loadFile(filename string, overload bool, storeType int) error {
 	return nil
 }
 
-//读文件内容
+// 读文件内容
 func readFile(filename string) (envMap map[string]string, err error) {
 	isFile := gosupport.IsFile(filename)
 	if !isFile {
@@ -247,7 +247,7 @@ func expandVariables(v string, m map[string]string) string {
 	})
 }
 
-//判断是否空字符串或以#开头的字符串
+// 判断是否空字符串或以#开头的字符串
 func isIgnoredLine(line string) bool {
 	trimmedLine := strings.TrimSpace(line)
 	return len(trimmedLine) == 0 || strings.HasPrefix(trimmedLine, "#")

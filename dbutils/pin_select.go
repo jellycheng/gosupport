@@ -25,7 +25,7 @@ type SQLBuilderSelect struct {
 	joinParams   []interface{}
 }
 
-//Table("`t_user_ext` as t1")
+// Table("`t_user_ext` as t1")
 func (sqlb *SQLBuilderSelect) SetTable(tbl string) *SQLBuilderSelect {
 	sqlb.table = tbl
 	return sqlb
@@ -44,7 +44,7 @@ func (sqlb *SQLBuilderSelect) Select(fields ...string) *SQLBuilderSelect {
 	return sqlb
 }
 
-//考虑重复调用,operator=AND、OR, condition="=,!="
+// 考虑重复调用,operator=AND、OR, condition="=,!="
 func (sqlb *SQLBuilderSelect) ConditionWhere(operator string, field string, condition string, value interface{}) *SQLBuilderSelect {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
@@ -100,12 +100,12 @@ func (sqlb *SQLBuilderSelect) conditionIn(operator string, field string, conditi
 	return sqlb
 }
 
-//WhereRaw("`title` = ?", "hello")
+// WhereRaw("`title` = ?", "hello")
 func (sqlb *SQLBuilderSelect) WhereRaw(raw string, values ...interface{}) *SQLBuilderSelect {
 	return sqlb.Raw("AND", raw, values)
 }
 
-//OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
+// OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
 func (sqlb *SQLBuilderSelect) OrWhereRaw(raw string, values ...interface{}) *SQLBuilderSelect {
 	return sqlb.Raw("OR", raw, values)
 }
@@ -127,7 +127,7 @@ func (sqlb *SQLBuilderSelect) Raw(operator string, raw string, values []interfac
 	return sqlb
 }
 
-//JoinRaw("LEFT JOIN `t_user` as `t2` ON `t1`.`userid` = `t2`.`userid`").
+// JoinRaw("LEFT JOIN `t_user` as `t2` ON `t1`.`userid` = `t2`.`userid`").
 func (sqlb *SQLBuilderSelect) JoinRaw(join string, values ...interface{}) *SQLBuilderSelect {
 	var buf strings.Builder
 	buf.WriteString(sqlb.join)
@@ -143,7 +143,7 @@ func (sqlb *SQLBuilderSelect) JoinRaw(join string, values ...interface{}) *SQLBu
 	return sqlb
 }
 
-//GroupBy("`age`", "`id`")
+// GroupBy("`age`", "`id`")
 func (sqlb *SQLBuilderSelect) GroupBy(fields ...string) *SQLBuilderSelect {
 	var buf strings.Builder
 	fieldLen := len(fields)

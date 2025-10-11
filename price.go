@@ -11,9 +11,9 @@ func Fen2yuan4int(price int, isTrimZero bool) string {
 }
 
 /*
-	分转元
-	price := 1909
-	s1 := gosupport.Fen2yuan(int64(price), true)
+分转元
+price := 1909
+s1 := gosupport.Fen2yuan(int64(price), true)
 */
 func Fen2yuan(price int64, isTrimZero bool) string {
 	mathSymbol := ""

@@ -102,8 +102,8 @@ func (dm *DataManage) GetFloat64(key string) (f64 float64) {
 	return
 }
 
-//	globalCfg := gosupport.NewGlobalCfgSingleton()
-//	globalCfg.Set("host", "127.0.0.1")
+// globalCfg := gosupport.NewGlobalCfgSingleton()
+// globalCfg.Set("host", "127.0.0.1")
 var muGlobalcfgDM_1 sync.Mutex
 var globalcfgDM_1 *DataManage
 var globalcfgInit_1 uint32

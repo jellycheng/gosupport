@@ -6,11 +6,11 @@ import (
 )
 
 /*
-	页码处理
-	调用示例：
-	pageObj := utils.NewPage()
-	pageObj.MustSetPage(1).MustSetPageSize(15)
-	fmt.Println(pageObj.GetLimit())
+页码处理
+调用示例：
+pageObj := utils.NewPage()
+pageObj.MustSetPage(1).MustSetPageSize(15)
+fmt.Println(pageObj.GetLimit())
 */
 type Page struct {
 	page     int64 //页码，起始页码从1开始，计算limit或offset时，如果值小于1则强制修改为1
@@ -66,7 +66,7 @@ func (p *Page) GetPageSize2int() int {
 	return int(p.pageSize)
 }
 
-//返回mysql limit部分的内容，格式："0,15"
+// 返回mysql limit部分的内容，格式："0,15"
 func (p *Page) GetLimitStr() string {
 	limit := p.GetLimit()
 	return fmt.Sprintf("%d,%d", limit[0], limit[1])
@@ -104,7 +104,7 @@ func (p *Page) GetEndLimit2int() int {
 	return int(p.GetEndLimit())
 }
 
-//获取mysql offset 部分的值： SELECT * FROM 表名 OFFSET 偏移量 LIMIT 每页记录数
+// 获取mysql offset 部分的值： SELECT * FROM 表名 OFFSET 偏移量 LIMIT 每页记录数
 func (p *Page) GetOffset() int64 {
 	return p.GetStartLimit()
 }

@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-//通过结构体的default标签设置结构体默认值,入参为指针类型
+// 通过结构体的default标签设置结构体默认值,入参为指针类型
 func InitStruct4DefaultTag(bean interface{}) {
 	configType := reflect.TypeOf(bean) //返回reflect.Type接口类型
 	for i := 0; i < configType.Elem().NumField(); i++ {

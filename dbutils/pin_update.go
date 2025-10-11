@@ -61,7 +61,7 @@ func (sqlb *SQLBuilderUpdate) SetUpdateData(fileds []string, values ...interface
 	return sqlb
 }
 
-//考虑重复调用,operator=AND、OR,condition=<、<=、=、!=、>
+// 考虑重复调用,operator=AND、OR,condition=<、<=、=、!=、>
 func (sqlb *SQLBuilderUpdate) ConditionWhere(operator string, field string, condition string, value interface{}) *SQLBuilderUpdate {
 	var buf strings.Builder
 	buf.WriteString(sqlb.where)
@@ -120,12 +120,12 @@ func (sqlb *SQLBuilderUpdate) conditionIn(operator string, field string, conditi
 	return sqlb
 }
 
-//WhereRaw("`title` = ?", "hello")
+// WhereRaw("`title` = ?", "hello")
 func (sqlb *SQLBuilderUpdate) WhereRaw(raw string, values ...interface{}) *SQLBuilderUpdate {
 	return sqlb.Raw("AND", raw, values)
 }
 
-//OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
+// OrWhereRaw("(`age` = ? OR `sex` = ?) AND `class` = ?", 7, 1, "一年级2班")
 func (sqlb *SQLBuilderUpdate) OrWhereRaw(raw string, values ...interface{}) *SQLBuilderUpdate {
 	return sqlb.Raw("OR", raw, values)
 }
@@ -160,7 +160,7 @@ func (sqlb *SQLBuilderUpdate) GetWhereParamValues() []interface{} {
 	return sqlb.whereParams
 }
 
-//UPDATE [表名] [SET 子句] [WHERE 子句] [ORDER BY ...] [LIMIT row_count]
+// UPDATE [表名] [SET 子句] [WHERE 子句] [ORDER BY ...] [LIMIT row_count]
 func (sqlb *SQLBuilderUpdate) GetSQL() (string, error) {
 	if sqlb.table == "" {
 		return "", ErrTableEmpty

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-//分析注释、env、ini配置行的key-value值
+// 分析注释、env、ini配置行的key-value值
 type ParseKV struct {
 	commentFlag   string //支持的注释标识符，如 #、;、
 	content       string //原内容
@@ -45,7 +45,7 @@ func (p *ParseKV) GetResultComment() string {
 	return p.resultComment
 }
 
-//把内容和注释分开,返回内容、注释、是否存在注释
+// 把内容和注释分开,返回内容、注释、是否存在注释
 func (p *ParseKV) SplitContent4Flag(in []byte) ([]byte, []byte, bool) {
 	i := bytes.IndexAny(in, p.commentFlag) //"#;"
 	if i == -1 {

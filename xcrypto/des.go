@@ -30,7 +30,7 @@ func EncryptDESECB2Base64(src, key string) string {
 	return base64.StdEncoding.EncodeToString(out)
 }
 
-//des ECB hex加密
+// des ECB hex加密
 func EncryptDESECB2Hex(src, key string) string {
 	data := []byte(src)
 	keyByte := []byte(key)
@@ -53,7 +53,7 @@ func EncryptDESECB2Hex(src, key string) string {
 	return fmt.Sprintf("%X", out)
 }
 
-//des ECB hex解密: src := xcrypto.DecryptDESECB4Hex(xcrypto.EncryptDESECB2Hex("123456", "basesoft"),"basesoft")
+// des ECB hex解密: src := xcrypto.DecryptDESECB4Hex(xcrypto.EncryptDESECB2Hex("123456", "basesoft"),"basesoft")
 func DecryptDESECB4Hex(src, key string) string {
 	data, err := hex.DecodeString(src)
 	if err != nil {
@@ -79,7 +79,7 @@ func DecryptDESECB4Hex(src, key string) string {
 	return string(out)
 }
 
-//des ECB hex解密: src := xcrypto.DecryptDESECB4Base64(xcrypto.EncryptDESECB2Base64("hello'!@123", "basesoft"),"basesoft")
+// des ECB hex解密: src := xcrypto.DecryptDESECB4Base64(xcrypto.EncryptDESECB2Base64("hello'!@123", "basesoft"),"basesoft")
 func DecryptDESECB4Base64(src, key string) string {
 	data, err := base64.StdEncoding.DecodeString(src)
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-//调用示例：gosupport.DebugPrintReflect(time.Hour)
+// 调用示例：gosupport.DebugPrintReflect(time.Hour)
 func DebugPrintReflect(x interface{}) {
 	v := reflect.ValueOf(x) //反射，返回reflect.Value结构体对象
 	t := v.Type()           //返回reflect.Type接口对象

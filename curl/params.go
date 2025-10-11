@@ -8,22 +8,22 @@ import (
 
 //参数管理
 
-//自定义类型
+// 自定义类型
 type Params map[string]interface{}
 
-//为类型添加方法，设置参数值
+// 为类型添加方法，设置参数值
 func (p Params) Set(key string, value interface{}) {
 	p[key] = value
 }
 
-//批量设置参数
+// 批量设置参数
 func (p Params) SetParams(params Params) {
 	for key, value := range params {
 		p[key] = value
 	}
 }
 
-//获取
+// 获取
 func (p Params) GetParam(key string, defaultVal interface{}) interface{} {
 	ret, ok := p[key]
 	if !ok {
@@ -32,12 +32,12 @@ func (p Params) GetParam(key string, defaultVal interface{}) interface{} {
 	return ret
 }
 
-//删除
+// 删除
 func (p Params) Del(key string) {
 	delete(p, key)
 }
 
-//返回结果示例：empty=&is_supper=true&price=100.25&userid=123&username=tom
+// 返回结果示例：empty=&is_supper=true&price=100.25&userid=123&username=tom
 func (p Params) ToQueryString() string {
 	u := url.Values{}
 	for k, v := range p {

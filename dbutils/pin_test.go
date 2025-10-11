@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-//go test -run="TestInsertSql"
+// go test -run="TestInsertSql"
 func TestInsertSql(t *testing.T) {
 	sqlObj := NewSQLBuilderInsert().SetTable("bbs_user").SetInsertData([]string{"`email`", "username", "qq"}, "tom899@qq.com", "admin899", 12345)
 	sql, _ := sqlObj.GetSql()
@@ -26,7 +26,7 @@ func TestInsertSql(t *testing.T) {
 
 }
 
-//go test -run="TestUpdateSql"
+// go test -run="TestUpdateSql"
 func TestUpdateSql(t *testing.T) {
 	sqlObj := NewSQLBuilderUpdate().SetTable("bbs_user").SetUpdateData([]string{"qq"}, 123, 444).Where("uid", "=", 5)
 	sql, _ := sqlObj.GetSQL()
@@ -43,7 +43,7 @@ func TestUpdateSql(t *testing.T) {
 
 }
 
-//go test -run="TestDeleteSql"
+// go test -run="TestDeleteSql"
 func TestDeleteSql(t *testing.T) {
 	sqlObj1 := NewSQLBuilderDelete().SetTable("bbs_user")
 	sql1, _ := sqlObj1.GetSQL()
@@ -68,7 +68,7 @@ func TestDeleteSql(t *testing.T) {
 
 }
 
-//go test -run="TestSelectSql"
+// go test -run="TestSelectSql"
 func TestSelectSql(t *testing.T) {
 	sqlObj1 := NewSQLBuilderSelect().SetTable("t_user")
 	sqlObj1.Select("`age`", "COUNT(age)")

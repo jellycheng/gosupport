@@ -24,17 +24,17 @@ type CorsConfig struct {
 	MaxAge time.Duration
 }
 
-//设置允许的请求方式
+// 设置允许的请求方式
 func (c *CorsConfig) AddAllowMethods(methods ...string) {
 	c.AllowMethods = append(c.AllowMethods, methods...)
 }
 
-//设置允许的请求头
+// 设置允许的请求头
 func (c *CorsConfig) AddAllowHeaders(headers ...string) {
 	c.AllowHeaders = append(c.AllowHeaders, headers...)
 }
 
-//生成http类型头,类型：type Header map[string][]string
+// 生成http类型头,类型：type Header map[string][]string
 func (c *CorsConfig) GenerateHttpHeaders() http.Header {
 	headers := make(http.Header)
 	if c.AllowCredentials {
@@ -59,12 +59,12 @@ func (c *CorsConfig) GenerateHttpHeaders() http.Header {
 	return headers
 }
 
-//设置允许的源
+// 设置允许的源
 func (c *CorsConfig) SetAllowOrigins(origin string) {
 	c.AllowOrigins = origin
 }
 
-//获取允许的源
+// 获取允许的源
 func (c *CorsConfig) GetAllowOrigins() string {
 	var ret string
 	if c.AllowOrigins == "" {
@@ -75,7 +75,7 @@ func (c *CorsConfig) GetAllowOrigins() string {
 	return ret
 }
 
-//corsConfig := gosupport.DefaultCorsConfig()
+// corsConfig := gosupport.DefaultCorsConfig()
 func DefaultCorsConfig() CorsConfig {
 	return CorsConfig{
 		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},

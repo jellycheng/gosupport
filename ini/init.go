@@ -27,7 +27,7 @@ func init() {
 
 }
 
-//获取注释内容
+// 获取注释内容
 func GetComment(in []byte) ([]byte, bool) {
 	i := bytes.IndexAny(in, "#;")
 	if i == -1 {
@@ -36,7 +36,7 @@ func GetComment(in []byte) ([]byte, bool) {
 	return in[i:], true
 }
 
-//去除注释内容
+// 去除注释内容
 func GetCleanComment(in []byte) []byte {
 	i := bytes.IndexAny(in, "#;")
 	if i == -1 {
