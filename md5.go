@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
-	"io/ioutil"
+	"os"
 )
 
 // md5加密
@@ -31,7 +31,7 @@ func Md5V2(str string) string {
 
 func Md5V3(str string) string {
 	w := md5.New()
-	io.WriteString(w, str)
+	_, _ = io.WriteString(w, str)
 	md5str := fmt.Sprintf("%x", w.Sum(nil))
 	return md5str
 }
@@ -50,11 +50,30 @@ func Md5V5(bt []byte) string {
 
 // 获取文件的md5值
 func Md5File(path string) (string, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
 	}
 	hash := md5.New()
 	hash.Write([]byte(data))
 	return hex.EncodeToString(hash.Sum(nil)), nil
+}
+
+// 获取文件的MD5值
+func GetFileMD5(filePath string) (string, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "", fmt.Errorf("打开文件失败: %v", err)
+	}
+	defer file.Close()
+	hash := md5.New()
+	// 将文件内容写入哈希计算器
+	if _, err := io.Copy(hash, file); err != nil {
+		return "", fmt.Errorf("计算哈希失败: %v", err)
+	}
+	// 计算哈希值并转换为16进制字符串
+	md5Bytes := hash.Sum(nil)
+	md5Str := hex.EncodeToString(md5Bytes)
+
+	return md5Str, nil
 }
