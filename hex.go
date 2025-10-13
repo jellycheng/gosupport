@@ -32,6 +32,12 @@ func HexToBytes(hexStr string) []byte {
 	return bytes
 }
 
+// hex 转 string
+func HexToString(hexStr string) string {
+	b1 := HexToBytes(hexStr)
+	return string(b1)
+}
+
 // []byte 转 hex 字符串（不带 0x，全部小写）
 func BytesToHex(data []byte) string {
 	if len(data) == 0 {
