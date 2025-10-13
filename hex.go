@@ -48,6 +48,18 @@ func BytesToHex(data []byte) string {
 	return string(dst)
 }
 
+// 字符串 转 hex 字符串（不带 0x，全部小写）
+func String2Hex(str string) string {
+	strBytes := []byte(str)
+	hexStr := hex.EncodeToString(strBytes)
+	return hexStr
+}
+
+func String2HexV2(str string) string {
+	str = TrimAll(str)
+	return String2Hex(str)
+}
+
 func Hex2Base64(hexStr string) string {
 	hexBytes, err := hex.DecodeString(hexStr)
 	if err != nil {
@@ -58,6 +70,7 @@ func Hex2Base64(hexStr string) string {
 	return base64Str
 }
 
+// aInt64 := gosupport.Hex2int64("0x4090500") 返回 67699968
 func Hex2int64(hexStr string) int64 {
 	baseVal := 16
 	if strings.HasPrefix(hexStr, "0x") || strings.HasPrefix(hexStr, "0X") {
