@@ -10,10 +10,7 @@ import (
 	"unicode/utf8"
 )
 
-/*
-url中追加参数
-调用示例：gosupport.UrlDeal("nfangbian.com/fangan/index/?xyz=1#ab", "a=1&b=2")
-*/
+// url中追加参数,调用示例：gosupport.UrlDeal("xxx.com/fangan/index/?xyz=1#ab", "a=1&b=2")
 func UrlDeal(reqUrl string, otherGetParam string) string {
 	if otherGetParam == "" {
 		return reqUrl

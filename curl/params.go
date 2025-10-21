@@ -6,8 +6,6 @@ import (
 	"strconv"
 )
 
-//参数管理
-
 // 自定义类型
 type Params map[string]interface{}
 
@@ -68,4 +66,30 @@ func ParamValueToString(i interface{}) string {
 		return string(bytes)
 	}
 	return ""
+}
+
+// ParseQueryParams("app_id=1128&userid=456").Get("app_id")
+func ParseQueryParams(params string) url.Values {
+	urlValues, err := url.ParseQuery(params)
+	if err != nil {
+		return url.Values{}
+	}
+	return urlValues
+}
+
+// 分析url并追加参数
+func ParseUrlAndAppendParam(reqUrl string, queryParams map[string][]string) (string, error) {
+	varURL, err := url.Parse(reqUrl)
+	if err != nil {
+		return "", err
+	}
+	query := varURL.Query()
+	for k, values := range queryParams {
+		for _, v := range values {
+			query.Add(k, v)
+		}
+	}
+
+	varURL.RawQuery = query.Encode()
+	return varURL.String(), nil
 }
