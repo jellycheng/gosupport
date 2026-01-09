@@ -77,6 +77,40 @@ func ToCamelCase(str string) string {
 	return buff.String()
 }
 
+// 首字母大写
+func Upfirst(s string) string {
+	if s == "" {
+		return ""
+	}
+	r, size := utf8.DecodeRuneInString(s)
+	return string(unicode.ToUpper(r)) + s[size:]
+}
+
+// 小驼峰：helloWorldDemo
+func ToCamelCaseV2(s string) string {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return ""
+	}
+	// 统一分隔符为空格
+	s = strings.NewReplacer(
+		"_", " ",
+		"-", " ",
+		".", " ",
+		"/", " ",
+	).Replace(s)
+
+	words := strings.Fields(s)
+	for i := range words {
+		if i == 0 {
+			words[i] = strings.ToLower(words[i])
+		} else {
+			words[i] = Upfirst(strings.ToLower(words[i]))
+		}
+	}
+	return strings.Join(words, "")
+}
+
 // 转为snake格式: 全部转小写，空格转_，如：Abc_Xy z_eLsW中国 转 abc_xy_z_elsw中国
 func ToSnakeCase(str string) string {
 	str = strings.TrimSpace(strings.ToLower(str))
@@ -359,4 +393,21 @@ func ExcelColumnToNumber(col string) int {
 	}
 
 	return result - 1
+}
+
+// 替换变量
+func ReplaceVars(tmpl string, vars map[string]string) string {
+	for k, v := range vars {
+		tmpl = strings.ReplaceAll(tmpl, "{{"+k+"}}", v)
+	}
+	for k, v := range vars {
+		tmpl = strings.ReplaceAll(tmpl, "{$"+k+"}", v)
+	}
+	return tmpl
+}
+
+// 字符串转int64
+func String2Int64(s string) int64 {
+	i, _ := strconv.ParseInt(s, 10, 64)
+	return i
 }

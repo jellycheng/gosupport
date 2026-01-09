@@ -3,6 +3,7 @@ package gosupport
 import (
 	"bytes"
 	"encoding/json"
+	"sort"
 )
 
 // ToJson 转成json字符串
@@ -54,4 +55,18 @@ func GetJsonAllKeys(str string) []string {
 		ret = append(ret, k)
 	}
 	return ret
+}
+
+// 提取1级json key并排序
+func TopLevelKeys4Json(data string) ([]string, error) {
+	var obj map[string]json.RawMessage
+	if err := json.Unmarshal([]byte(data), &obj); err != nil {
+		return nil, err
+	}
+	keys := make([]string, 0, len(obj))
+	for k := range obj {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys, nil
 }
